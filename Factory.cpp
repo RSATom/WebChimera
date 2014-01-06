@@ -8,7 +8,11 @@
 \**********************************************************/
 
 #include "FactoryBase.h"
+#ifdef FB_WIN
+#include "Win/Chimera_Win.h"
+#else
 #include "Chimera.h"
+#endif
 #include <boost/make_shared.hpp>
 
 class PluginFactory : public FB::FactoryBase
@@ -20,11 +24,15 @@ public:
     /// @brief  Creates a plugin object matching the provided mimetype
     ///         If mimetype is empty, returns the default plugin
     ///////////////////////////////////////////////////////////////////////////////
-    FB::PluginCorePtr createPlugin(const std::string& mimetype)
+    FB::PluginCorePtr createPlugin( const std::string& mimetype )
     {
+#ifdef FB_WIN
+        return boost::make_shared<Chimera_Win>();
+#else
         return boost::make_shared<Chimera>();
+#endif
     }
-    
+
     ///////////////////////////////////////////////////////////////////////////////
     /// @see FB::FactoryBase::globalPluginInitialize
     ///////////////////////////////////////////////////////////////////////////////
@@ -32,7 +40,7 @@ public:
     {
         Chimera::StaticInitialize();
     }
-    
+
     ///////////////////////////////////////////////////////////////////////////////
     /// @see FB::FactoryBase::globalPluginDeinitialize
     ///////////////////////////////////////////////////////////////////////////////

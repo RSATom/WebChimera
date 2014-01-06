@@ -1,0 +1,1 @@
+configure -prefix e:/qt5-vs2012-lib -opensource -confirm-license -static -nomake examples -nomake tests -nomake tools -no-compile-examples -skip qtwebkit -skip qtwebkit-examples -skip qtwinextras -skip qtactiveqt -skip qtserialport -skip qtsensors

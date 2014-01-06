@@ -1,4 +1,4 @@
-#/**********************************************************\ 
+#/**********************************************************\
 # Auto-generated Windows project definition file for the
 # Chimera Web Plugin project
 #\**********************************************************/
@@ -19,12 +19,48 @@ add_definitions(
     /D "_ATL_STATIC_REGISTRY"
 )
 
+# get PCH related files
+file (GLOB PCH RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
+    StdAfx.*
+)
+
+# make sure that PCH-related files is NOT part of ${SOURCES}
+LIST(REMOVE_ITEM SOURCES ${PCH})
+
+SOURCE_GROUP("PCH files" FILES ${PCH})
 SOURCE_GROUP(Win FILES ${PLATFORM})
 
 set (SOURCES
     ${SOURCES}
     ${PLATFORM}
     )
+
+# set PCH
+MACRO(ADD_MSVC_PRECOMPILED_HEADER PrecompiledHeader PrecompiledSource SourcesVar)
+ GET_FILENAME_COMPONENT(PrecompiledBasename ${PrecompiledHeader} NAME_WE)
+ SET(__PrecompiledBinary "$(IntDir)\\$(TargetName).pch")
+
+ SET_SOURCE_FILES_PROPERTIES(${PrecompiledSource}
+   PROPERTIES COMPILE_FLAGS "/Yc -Zm160")
+   #OBJECT_OUTPUTS "${__PrecompiledBinary}"
+
+ foreach(CURFILE ${${SourcesVar}})
+   GET_FILENAME_COMPONENT(CURFILE_EXT ${CURFILE} EXT)
+   GET_FILENAME_COMPONENT(CURFILE_NAME ${CURFILE} NAME)
+   if (CURFILE_EXT STREQUAL ".cpp" AND NOT CURFILE_NAME STREQUAL PrecompiledBasename)
+     SET_SOURCE_FILES_PROPERTIES(${CURFILE}
+       PROPERTIES COMPILE_FLAGS "/Yu /FI\"${PrecompiledHeader}\" -Zm160")
+       #OBJECT_DEPENDS "${__PrecompiledBinary}"
+   endif()
+ endforeach()
+
+ # Add precompiled header to SourcesVar
+ LIST(APPEND ${SourcesVar} ${PrecompiledSource})
+ LIST(APPEND ${SourcesVar} ${PrecompiledHeader})
+ENDMACRO(ADD_MSVC_PRECOMPILED_HEADER)
+
+# activate PCH
+ADD_MSVC_PRECOMPILED_HEADER("stdafx.h" "stdafx.cpp" SOURCES)
 
 add_windows_plugin(${PROJECT_NAME} SOURCES)
 
@@ -45,10 +81,40 @@ add_windows_plugin(${PROJECT_NAME} SOURCES)
 #    "${CMAKE_CURRENT_SOURCE_DIR}/sign/passphrase.txt"
 #    "http://timestamp.verisign.com/scripts/timestamp.dll")
 
+get_property(LINK_FLAGS TARGET ${PROJECT_NAME} PROPERTY LINK_FLAGS)
+set(LINK_FLAGS "${LINK_FLAGS} /INCLUDE:__imp__D3DCompile@44")
+set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS ${LINK_FLAGS})
+
 # add library dependencies here; leave ${PLUGIN_INTERNAL_DEPS} there unless you know what you're doing!
 target_link_libraries(${PROJECT_NAME}
     ${PLUGIN_INTERNAL_DEPS}
+    libvlc.lib
+    ${Qt5Gui_EGL_LIBRARIES}
+    ${Qt5Gui_OPENGL_LIBRARIES}
+    ${Qt5Gui_PLUGINS}
+    d3dcompiler.lib
+    Winmm.lib
+    Imm32.lib
+    D3d9.lib
+    dxguid.lib
+    strmiids.lib
     )
+
+target_link_libraries( ${PROJECT_NAME} debug "$ENV{QTDIR}/lib/translator_commond.lib" )
+target_link_libraries( ${PROJECT_NAME} debug "$ENV{QTDIR}/lib/translator_hlsld.lib" )
+target_link_libraries( ${PROJECT_NAME} debug "$ENV{QTDIR}/lib/preprocessord.lib" )
+target_link_libraries( ${PROJECT_NAME} debug "$ENV{QTDIR}/lib/Qt5PlatformSupportd.lib" )
+target_link_libraries( ${PROJECT_NAME} debug "$ENV{QTDIR}/qml/QtQuick.2/qtquick2plugind.lib" )
+target_link_libraries( ${PROJECT_NAME} debug "$ENV{QTDIR}/qml/QtMultimedia/declarative_multimediad.lib" )
+target_link_libraries( ${PROJECT_NAME} debug "$ENV{QTDIR}/lib/Qt5MultimediaQuick_pd.lib" )
+
+target_link_libraries( ${PROJECT_NAME} optimized "$ENV{QTDIR}/lib/translator_common.lib" )
+target_link_libraries( ${PROJECT_NAME} optimized "$ENV{QTDIR}/lib/translator_hlsl.lib" )
+target_link_libraries( ${PROJECT_NAME} optimized "$ENV{QTDIR}/lib/preprocessor.lib" )
+target_link_libraries( ${PROJECT_NAME} optimized "$ENV{QTDIR}/lib/Qt5PlatformSupport.lib" )
+target_link_libraries( ${PROJECT_NAME} optimized "$ENV{QTDIR}/qml/QtQuick.2/qtquick2plugin.lib" )
+target_link_libraries( ${PROJECT_NAME} optimized "$ENV{QTDIR}/qml/QtMultimedia/declarative_multimedia.lib" )
+target_link_libraries( ${PROJECT_NAME} optimized "$ENV{QTDIR}/lib/Qt5MultimediaQuick_p.lib" )
 
 set(WIX_HEAT_FLAGS
     -gg                 # Generate GUIDs
@@ -57,8 +123,24 @@ set(WIX_HEAT_FLAGS
     -dr INSTALLDIR      # Set the directory ID to put the files in
     )
 
-add_wix_installer( ${PLUGIN_NAME}
+set(VLC_PATH ${CMAKE_CURRENT_SOURCE_DIR}/Win/WiX/vlc-${VLC_VERSION})
+
+#generate vlc.wxs
+execute_process(
+    COMMAND ${WIX_HEAT} dir ${VLC_PATH} -cg VLC -dr INSTALLDIR -var var.VLC -template fragment -gg -srd -sfrag -sreg -out vlc.wxs -t vlc.xslt
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/Win/Wix
+    )
+
+set (WIX_SOURCES_WITH_VLC
     ${CMAKE_CURRENT_SOURCE_DIR}/Win/WiX/ChimeraInstaller.wxs
+    ${CMAKE_CURRENT_SOURCE_DIR}/Win/WiX/vlc.wxs
+    )
+
+set(WIX_LINK_FLAGS ${WIX_LINK_FLAGS} -dVLC=${VLC_PATH})
+set(FB_WIX_DEST ${FB_BIN_DIR}/${PLUGIN_NAME}/${CMAKE_CFG_INTDIR}/${PROJNAME}_${FBSTRING_PLUGIN_VERSION}_vlc_${VLC_VERSION}.msi)
+
+add_wix_installer( ${PLUGIN_NAME}
+    "${WIX_SOURCES_WITH_VLC}"
     PluginDLLGroup
     ${FB_BIN_DIR}/${PLUGIN_NAME}/${CMAKE_CFG_INTDIR}/
     ${FB_BIN_DIR}/${PLUGIN_NAME}/${CMAKE_CFG_INTDIR}/${FBSTRING_PluginFileName}.dll

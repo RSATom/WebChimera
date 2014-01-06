@@ -6,18 +6,32 @@
   implementation for the Chimera Web Plugin project
 
 \**********************************************************/
-#ifndef H_ChimeraPLUGIN
-#define H_ChimeraPLUGIN
+#ifndef H_CHIMERA_PLUGIN
+#define H_CHIMERA_PLUGIN
 
 #include "PluginWindow.h"
 #include "PluginEvents/MouseEvents.h"
 #include "PluginEvents/AttachedEvent.h"
+#include "PluginEvents/DrawingEvents.h"
 
 #include "PluginCore.h"
 
+#include <vlc/vlc.h>
+
+#include <QScopedPointer>
+#include <QWeakPointer>
+#include <QQuickView>
+
+#include "libvlc_wrapper/vlc_player.h"
+#include "vlc_player_options.h"
+
+#include "QmlVlc/QmlVlcPlayer.h"
 
 FB_FORWARD_PTR(Chimera)
-class Chimera : public FB::PluginCore
+class Chimera 
+    : public FB::PluginCore,
+      protected vlc_player,
+      protected vlc_player_options
 {
 public:
     static void StaticInitialize();
@@ -38,23 +52,61 @@ public:
     virtual bool isWindowless() { return false; }
 
     BEGIN_PLUGIN_EVENT_MAP()
-        EVENTTYPE_CASE(FB::MouseDownEvent, onMouseDown, FB::PluginWindow)
-        EVENTTYPE_CASE(FB::MouseUpEvent, onMouseUp, FB::PluginWindow)
-        EVENTTYPE_CASE(FB::MouseMoveEvent, onMouseMove, FB::PluginWindow)
-        EVENTTYPE_CASE(FB::MouseMoveEvent, onMouseMove, FB::PluginWindow)
-        EVENTTYPE_CASE(FB::AttachedEvent, onWindowAttached, FB::PluginWindow)
-        EVENTTYPE_CASE(FB::DetachedEvent, onWindowDetached, FB::PluginWindow)
     END_PLUGIN_EVENT_MAP()
 
+private:
     /** BEGIN EVENTDEF -- DON'T CHANGE THIS LINE **/
-    virtual bool onMouseDown(FB::MouseDownEvent *evt, FB::PluginWindow *);
-    virtual bool onMouseUp(FB::MouseUpEvent *evt, FB::PluginWindow *);
-    virtual bool onMouseMove(FB::MouseMoveEvent *evt, FB::PluginWindow *);
-    virtual bool onWindowAttached(FB::AttachedEvent *evt, FB::PluginWindow *);
-    virtual bool onWindowDetached(FB::DetachedEvent *evt, FB::PluginWindow *);
     /** END EVENTDEF -- DON'T CHANGE THIS LINE **/
-};
 
+public:
+    libvlc_instance_t* getLibVlc()
+        { return m_libvlc; };
+    vlc_player& get_player()
+        { return *static_cast<vlc_player*>( this ); };
+    vlc_player_options& get_options()
+        { return *static_cast<vlc_player_options*>( this ); }
+    const vlc_player_options& get_options() const
+        { return *static_cast<const vlc_player_options*>( this ); }
+
+    int add_playlist_item( const std::string& mrl );
+    int add_playlist_item( const std::string& mrl, const std::vector<std::string>& options );
+
+public:
+    virtual bool is_fullscreen() = 0;
+    virtual void set_fullscreen( bool fs ) = 0;
+    virtual void toggle_fullscreen() = 0;
+
+private:
+    const FB::variant& getParamVariant( const std::string& key ) const;
+
+    void init_libvlc_options( std::vector<std::string>* );
+
+    std::string detectHttpProxy( const std::string& mrl ) const;
+    bool isTrustedOption( const std::string& option );
+
+protected:
+    void vlc_open();
+    void init_player_options();
+    void process_startup_options();
+    void vlc_close();
+
+    void setBgColorQmlProperty();
+
+protected:
+    virtual void on_option_change( vlc_player_option_e );
+
+private:
+    static void OnLibVlcEvent_proxy( const libvlc_event_t* e, void *param );
+    void OnLibVlcEvent( const libvlc_event_t* e );
+    void VlcEvents( bool Attach );
+
+protected:
+    QScopedPointer<QQuickView> m_quickViewPtr;
+    QmlVlcPlayer* m_qmlVlcPlayer;
+
+private:
+    libvlc_instance_t* m_libvlc;
+};
 
 #endif
 

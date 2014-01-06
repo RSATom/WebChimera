@@ -6,18 +6,25 @@
 #\**********************************************************/
 
 set(PLUGIN_NAME "Chimera")
-set(PLUGIN_PREFIX "CH_")
+set(PLUGIN_PREFIX "Chimera")
 set(COMPANY_NAME "RSATom")
+set(PLUGIN_VERSION "0.1.0")
+
+#if you want embed vlc into FBVLC distribution:
+# 1) place vlc into FBVLC\Win\WiX\vlc-${VLC_VERSION}
+# 2) uncomment following line
+set(VLC_VERSION "2.1.2")
+# 3) run prepXXXX.cmd from FireBreath
 
 # ActiveX constants:
 set(FBTYPELIB_NAME ChimeraLib)
-set(FBTYPELIB_DESC "Chimera 1.0 Type Library")
+set(FBTYPELIB_DESC "Chimera ${PLUGIN_VERSION} Type Library")
 set(IFBControl_DESC "Chimera Control Interface")
 set(FBControl_DESC "Chimera Control Class")
 set(IFBComJavascriptObject_DESC "Chimera IComJavascriptObject Interface")
 set(FBComJavascriptObject_DESC "Chimera ComJavascriptObject Class")
 set(IFBComEventSource_DESC "Chimera IFBComEventSource Interface")
-set(AXVERSION_NUM "1")
+set(AXVERSION_NUM "${PLUGIN_VERSION}")
 
 # NOTE: THESE GUIDS *MUST* BE UNIQUE TO YOUR PLUGIN/ACTIVEX CONTROL!  YES, ALL OF THEM!
 set(FBTYPELIB_GUID 2b642482-539b-5158-b60c-725219b3a4b6)
@@ -43,9 +50,9 @@ endif ( FB_PLATFORM_ARCH_32 )
 # strings
 set(FBSTRING_CompanyName "RSATom")
 set(FBSTRING_PluginDescription "Web Plugin powered by Firebreath/Qt Qml/Vlc")
-set(FBSTRING_PLUGIN_VERSION "1.0.0.0")
+set(FBSTRING_PLUGIN_VERSION "${PLUGIN_VERSION}")
 set(FBSTRING_LegalCopyright "Copyright 2014 RSATom")
-set(FBSTRING_PluginFileName "np${PLUGIN_NAME}")
+set(FBSTRING_PluginFileName "np${PLUGIN_NAME}.dll")
 set(FBSTRING_ProductName "Chimera Web Plugin")
 set(FBSTRING_FileExtents "")
 if ( FB_PLATFORM_ARCH_32 )
@@ -62,7 +69,7 @@ set(FBSTRING_MIMEType "application/x-chimera-plugin")
 
 # Mac plugin settings. If your plugin does not draw, set these all to 0
 set(FBMAC_USE_QUICKDRAW 0)
-set(FBMAC_USE_CARBON 1)
+set(FBMAC_USE_CARBON 0)
 set(FBMAC_USE_COCOA 1)
 set(FBMAC_USE_COREGRAPHICS 1)
 set(FBMAC_USE_COREANIMATION 0)

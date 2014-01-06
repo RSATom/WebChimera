@@ -1,24 +1,724 @@
-/**********************************************************\
-
-  Auto-generated ChimeraAPI.h
-
-\**********************************************************/
-
 #include <string>
-#include <sstream>
 #include <boost/weak_ptr.hpp>
 #include "JSAPIAuto.h"
 #include "BrowserHost.h"
 #include "Chimera.h"
 
-#ifndef H_ChimeraAPI
-#define H_ChimeraAPI
+#include <vlc/vlc.h>
 
-class ChimeraAPI : public FB::JSAPIAuto
+#ifndef H_CHIMERA_API
+#define H_CHIMERA_API
+
+////////////////////////////////////////////////////////////////////////////
+/// JSAudioAPI
+////////////////////////////////////////////////////////////////////////////
+FB_FORWARD_PTR(JSAudioAPI)
+class JSAudioAPI : public FB::JSAPIAuto
+{
+public:
+    JSAudioAPI( const ChimeraPtr& plugin, const FB::BrowserHostPtr& host )
+        : m_plugin( plugin ), m_host( host )
+    {
+        registerProperty( "count",
+                          make_property( this,
+                                        &JSAudioAPI::get_trackCount ) );
+        registerProperty( "trackCount",
+                          make_property( this,
+                                        &JSAudioAPI::get_trackCount ) );
+        registerProperty( "track",
+                          make_property( this, &JSAudioAPI::get_track,
+                                              &JSAudioAPI::set_track ) );
+        registerProperty( "mute",
+                          make_property( this, &JSAudioAPI::get_mute,
+                                               &JSAudioAPI::set_mute ) );
+        registerProperty( "volume",
+                          make_property( this, &JSAudioAPI::get_volume,
+                                               &JSAudioAPI::set_volume ) );
+
+        registerAttribute( "libvlc_AudioChannel_Error",   libvlc_AudioChannel_Error,   true );
+        registerAttribute( "libvlc_AudioChannel_Stereo",  libvlc_AudioChannel_Stereo,  true );
+        registerAttribute( "libvlc_AudioChannel_RStereo", libvlc_AudioChannel_RStereo, true );
+        registerAttribute( "libvlc_AudioChannel_Left",    libvlc_AudioChannel_Left,    true );
+        registerAttribute( "libvlc_AudioChannel_Right",   libvlc_AudioChannel_Right,   true );
+        registerAttribute( "libvlc_AudioChannel_Dolbys",  libvlc_AudioChannel_Dolbys,  true );
+
+        registerAttribute( "stereo",                      libvlc_AudioChannel_Stereo,  true );
+        registerAttribute( "reverseStereoeo",             libvlc_AudioChannel_RStereo, true );
+        registerAttribute( "left",                        libvlc_AudioChannel_Left,    true );
+        registerAttribute( "right",                       libvlc_AudioChannel_Right,   true );
+        registerAttribute( "dolby",                       libvlc_AudioChannel_Dolbys,  true );
+
+        registerProperty( "channel",
+                          make_property( this, &JSAudioAPI::get_channel,
+                                              &JSAudioAPI::set_channel ) );
+
+        registerMethod( "toggleMute",
+                        make_method( this, &JSAudioAPI::toggleMute ) );
+        registerMethod( "description",
+                        make_method( this, &JSAudioAPI::description ) );
+    }
+
+    virtual ~JSAudioAPI() {};
+
+    ChimeraPtr getPlugin();
+
+    unsigned get_trackCount();
+
+    bool get_mute();
+    void set_mute( bool );
+
+    unsigned int get_volume();
+    void set_volume( unsigned int );
+
+    int get_track();
+    void set_track( int idx );
+
+    unsigned int get_channel();
+    void set_channel( unsigned int );
+
+    void toggleMute();
+
+    std::string description( unsigned int trackID );
+
+private:
+    ChimeraWeakPtr m_plugin;
+    FB::BrowserHostPtr m_host;
+};
+
+////////////////////////////////////////////////////////////////////////////
+/// JSInputAPI
+////////////////////////////////////////////////////////////////////////////
+FB_FORWARD_PTR(JSInputAPI)
+class JSInputAPI : public FB::JSAPIAuto
+{
+public:
+    JSInputAPI( const ChimeraPtr& plugin, const FB::BrowserHostPtr& host )
+        :m_plugin( plugin ), m_host( host )
+    {
+        registerProperty( "length",
+                          make_property( this, &JSInputAPI::get_length ) );
+        registerProperty( "fps",
+                          make_property( this, &JSInputAPI::get_fps ) );
+        registerProperty( "hasVout",
+                          make_property( this, &JSInputAPI::get_hasVout ) );
+        registerProperty( "state",
+                          make_property( this, &JSInputAPI::get_state ) );
+
+        registerProperty( "position",
+                          make_property( this, &JSInputAPI::get_position,
+                                               &JSInputAPI::set_position ) );
+        registerProperty( "time",
+                          make_property( this, &JSInputAPI::get_time,
+                                               &JSInputAPI::set_time ) );
+        registerProperty( "rate",
+                          make_property( this, &JSInputAPI::get_rate,
+                                               &JSInputAPI::set_rate ) );
+    }
+
+    virtual ~JSInputAPI(){}
+
+    ChimeraPtr getPlugin();
+
+    double get_length();
+    double get_fps();
+    bool get_hasVout();
+    unsigned int get_state();
+
+    double get_position();
+    void set_position( double );
+
+    double get_time();
+    void set_time( double );
+
+    double get_rate();
+    void set_rate( double );
+
+private:
+    ChimeraWeakPtr m_plugin;
+    FB::BrowserHostPtr m_host;
+};
+
+////////////////////////////////////////////////////////////////////////////
+/// JSPlaylistItemsAPI
+////////////////////////////////////////////////////////////////////////////
+FB_FORWARD_PTR(JSPlaylistItemsAPI)
+class JSPlaylistItemsAPI : public FB::JSAPIAuto
+{
+public:
+    JSPlaylistItemsAPI( const ChimeraPtr& plugin, const FB::BrowserHostPtr& host )
+        :m_plugin( plugin ), m_host( host )
+    {
+        registerProperty( "count",
+                          make_property( this, &JSPlaylistItemsAPI::get_count ) );
+
+        registerMethod( "clear",
+                        make_method( this, &JSPlaylistItemsAPI::clear ) );
+        registerMethod( "remove",
+                        make_method( this, &JSPlaylistItemsAPI::remove ) );
+    }
+
+    virtual ~JSPlaylistItemsAPI(){}
+
+    ChimeraPtr getPlugin();
+
+    unsigned int get_count();
+    void clear();
+    bool remove( unsigned int idx );
+
+private:
+    ChimeraWeakPtr m_plugin;
+    FB::BrowserHostPtr m_host;
+};
+
+////////////////////////////////////////////////////////////////////////////
+/// JSPlaylistAPI
+////////////////////////////////////////////////////////////////////////////
+FB_FORWARD_PTR(JSPlaylistAPI)
+class JSPlaylistAPI : public FB::JSAPIAuto
+{
+public:
+    JSPlaylistAPI( const ChimeraPtr& plugin, const FB::BrowserHostPtr& host )
+        :m_plugin( plugin ), m_host( host )
+    {
+        registerProperty( "itemCount",
+                          make_property( this, &JSPlaylistAPI::get_itemCount ) );
+        registerProperty( "isPlaying",
+                          make_property( this, &JSPlaylistAPI::get_isPlaying ) );
+        registerProperty( "currentItem",
+                          make_property( this, &JSPlaylistAPI::get_current ) );
+
+        registerMethod( "add",
+                        make_method( this, &JSPlaylistAPI::add ) );
+        registerMethod( "addWithOptions",
+                        make_method( this, &JSPlaylistAPI::addWithOptions ) );
+        registerMethod( "play",
+                        make_method( this, &JSPlaylistAPI::play ) );
+        registerMethod( "playItem",
+                        make_method( this, &JSPlaylistAPI::playItem ) );
+        registerMethod( "setCurrentItem",
+                        make_method( this, &JSPlaylistAPI::setCurrentItem ) );
+        registerMethod( "pause",
+                        make_method( this, &JSPlaylistAPI::pause ) );
+        registerMethod( "togglePause",
+                        make_method( this, &JSPlaylistAPI::togglePause ) );
+        registerMethod( "stop",
+                        make_method( this, &JSPlaylistAPI::stop ) );
+        registerMethod( "next",
+                        make_method( this, &JSPlaylistAPI::next ) );
+        registerMethod( "prev",
+                        make_method( this, &JSPlaylistAPI::prev ) );
+        registerMethod( "clear",
+                        make_method( this, &JSPlaylistAPI::clear ) );
+        registerMethod( "removeItem",
+                       make_method( this, &JSPlaylistAPI::removeItem ) );
+
+        m_items = boost::make_shared<JSPlaylistItemsAPI>( plugin, m_host );
+        registerProperty( "items", make_property( this, &JSPlaylistAPI::get_items ) );
+    }
+
+    virtual ~JSPlaylistAPI(){}
+
+    ChimeraPtr getPlugin();
+
+    unsigned int get_itemCount();
+    bool get_isPlaying();
+    int get_current();
+
+    int add( const std::string& mrl );
+    int addWithOptions( const std::string& mrl,
+                        const std::vector<std::string>& options );
+
+    void play();
+    bool playItem( unsigned int idx );
+    void setCurrentItem( unsigned int idx );
+    void pause();
+    void togglePause();
+    void stop();
+    void next();
+    void prev();
+    void clear();
+    bool removeItem( unsigned int idx );
+
+    JSPlaylistItemsAPIPtr get_items() { return m_items; }
+
+private:
+    ChimeraWeakPtr m_plugin;
+    FB::BrowserHostPtr m_host;
+
+    JSPlaylistItemsAPIPtr m_items;
+};
+
+////////////////////////////////////////////////////////////////////////////
+/// JSSubtitleAPI
+////////////////////////////////////////////////////////////////////////////
+FB_FORWARD_PTR(JSSubtitleAPI)
+class JSSubtitleAPI : public FB::JSAPIAuto
+{
+public:
+    JSSubtitleAPI( const ChimeraPtr& plugin, const FB::BrowserHostPtr& host )
+        :m_plugin( plugin ), m_host( host )
+    {
+        registerProperty( "count",
+                          make_property( this, &JSSubtitleAPI::get_trackCount ) );
+        registerProperty( "trackCount",
+                          make_property( this, &JSSubtitleAPI::get_trackCount ) );
+
+        registerProperty( "track",
+                          make_property( this, &JSSubtitleAPI::get_track,
+                                               &JSSubtitleAPI::set_track ) );
+
+        registerMethod( "description",
+                        make_method( this, &JSSubtitleAPI::description ) );
+    }
+
+    virtual ~JSSubtitleAPI(){}
+
+    ChimeraPtr getPlugin();
+
+    unsigned get_trackCount();
+
+    int get_track();
+    void set_track( int idx );
+
+    std::string description( unsigned int i );
+
+private:
+    ChimeraWeakPtr m_plugin;
+    FB::BrowserHostPtr m_host;
+};
+
+////////////////////////////////////////////////////////////////////////////
+/// JSMarqueeAPI
+////////////////////////////////////////////////////////////////////////////
+FB_FORWARD_PTR(JSMarqueeAPI)
+class JSMarqueeAPI : public FB::JSAPIAuto
+{
+public:
+    JSMarqueeAPI( const ChimeraPtr& plugin, const FB::BrowserHostPtr& host )
+        :m_plugin( plugin ), m_host( host )
+    {
+        registerProperty( "text",
+                          make_property( this, &JSMarqueeAPI::get_text,
+                                               &JSMarqueeAPI::set_text ) );
+        registerProperty( "color",
+                          make_property( this, &JSMarqueeAPI::get_color,
+                                               &JSMarqueeAPI::set_color ) );
+        registerProperty( "opacity",
+                          make_property( this, &JSMarqueeAPI::get_opacity,
+                                               &JSMarqueeAPI::set_opacity ) );
+        registerProperty( "position",
+                          make_property( this, &JSMarqueeAPI::get_position,
+                                               &JSMarqueeAPI::set_position ) );
+        registerProperty( "refresh",
+                          make_property( this, &JSMarqueeAPI::get_refresh,
+                                               &JSMarqueeAPI::set_refresh ) );
+        registerProperty( "size",
+                          make_property( this, &JSMarqueeAPI::get_size,
+                                               &JSMarqueeAPI::set_size ) );
+        registerProperty( "timeout",
+                          make_property( this, &JSMarqueeAPI::get_timeout,
+                                               &JSMarqueeAPI::set_timeout ) );
+        registerProperty( "x",
+                          make_property( this, &JSMarqueeAPI::get_x,
+                                               &JSMarqueeAPI::set_x ) );
+        registerProperty( "y",
+                          make_property( this, &JSMarqueeAPI::get_y,
+                                               &JSMarqueeAPI::set_y ) );
+
+        registerMethod( "enable",
+                        make_method( this, &JSMarqueeAPI::enable ) );
+        registerMethod( "disable",
+                        make_method( this, &JSMarqueeAPI::disable ) );
+    }
+
+    virtual ~JSMarqueeAPI(){}
+
+    ChimeraPtr getPlugin();
+
+    std::string get_text();
+    void set_text( const std::string& t );
+
+    std::string get_position();
+    void set_position( const std::string& p );
+
+    unsigned int get_color()
+        {  return get_marquee_int( libvlc_marquee_Color ); };
+    void set_color( unsigned int c )
+        {  set_marquee_int( libvlc_marquee_Color, c ); };
+
+    unsigned int get_opacity()
+        {  return get_marquee_int( libvlc_marquee_Opacity ); };
+    void set_opacity( unsigned int o )
+        {  set_marquee_int( libvlc_marquee_Opacity, o ); };
+
+    unsigned int get_refresh()
+        {  return get_marquee_int( libvlc_marquee_Refresh ); };
+    void set_refresh( unsigned int r )
+        {  set_marquee_int( libvlc_marquee_Refresh, r ); };
+
+    unsigned int get_size()
+        {  return get_marquee_int( libvlc_marquee_Size ); };
+    void set_size( unsigned int s )
+        {  set_marquee_int( libvlc_marquee_Size, s ); };
+
+    unsigned int get_timeout()
+        {  return get_marquee_int( libvlc_marquee_Timeout ); };
+    void set_timeout( unsigned int t )
+        {  set_marquee_int( libvlc_marquee_Timeout, t ); };
+
+    unsigned int get_x()
+        {  return get_marquee_int( libvlc_marquee_X ); };
+    void set_x( unsigned int x )
+        {  set_marquee_int( libvlc_marquee_X, x ); };
+
+    unsigned int get_y()
+        {  return get_marquee_int( libvlc_marquee_Y ); };
+    void set_y( unsigned int y )
+        {  set_marquee_int( libvlc_marquee_Y, y ); };
+
+    void enable()
+        { set_marquee_int( libvlc_marquee_Enable, 1 ); };
+    void disable()
+        { set_marquee_int( libvlc_marquee_Enable, 0 ); };
+
+private:
+    int get_marquee_int( libvlc_video_marquee_option_t );
+    void set_marquee_int( libvlc_video_marquee_option_t, int i );
+
+private:
+    ChimeraWeakPtr m_plugin;
+    FB::BrowserHostPtr m_host;
+};
+
+////////////////////////////////////////////////////////////////////////////
+/// JSLogoAPI
+////////////////////////////////////////////////////////////////////////////
+FB_FORWARD_PTR(JSLogoAPI)
+class JSLogoAPI : public FB::JSAPIAuto
+{
+public:
+    JSLogoAPI( const ChimeraPtr& plugin, const FB::BrowserHostPtr& host )
+        :m_plugin( plugin ), m_host( host )
+    {
+        registerProperty( "position",
+                          make_property( this, &JSLogoAPI::get_position,
+                                               &JSLogoAPI::set_position ) );
+        registerProperty( "opacity",
+                          make_property( this, &JSLogoAPI::get_opacity,
+                                               &JSLogoAPI::set_opacity ) );
+        registerProperty( "delay",
+                          make_property( this, &JSLogoAPI::get_delay,
+                                               &JSLogoAPI::set_delay ) );
+        registerProperty( "repeat",
+                          make_property( this, &JSLogoAPI::get_repeat,
+                                               &JSLogoAPI::set_repeat ) );
+        registerProperty( "x",
+                          make_property( this, &JSLogoAPI::get_x,
+                                               &JSLogoAPI::set_x ) );
+        registerProperty( "y",
+                          make_property( this, &JSLogoAPI::get_y,
+                                             &JSLogoAPI::set_y ) );
+
+        registerMethod( "enable",
+                        make_method( this, &JSLogoAPI::enable ) );
+        registerMethod( "disable",
+                        make_method( this, &JSLogoAPI::disable ) );
+        registerMethod( "file",
+                        make_method( this, &JSLogoAPI::file ) );
+    }
+
+    virtual ~JSLogoAPI(){}
+
+    ChimeraPtr getPlugin();
+
+    std::string get_position();
+    void set_position( const std::string& );
+
+    unsigned int get_opacity()
+        { return get_logo_int( libvlc_logo_opacity ); };
+    void set_opacity( unsigned int o )
+        { set_logo_int( libvlc_logo_opacity, o ); };
+
+    unsigned int get_delay()
+        { return get_logo_int( libvlc_logo_delay ); };
+    void set_delay( unsigned int d )
+        { set_logo_int( libvlc_logo_delay, d ); };
+
+    int get_repeat()
+        { return get_logo_int( libvlc_logo_repeat ); };
+    void set_repeat( int r )
+        { set_logo_int( libvlc_logo_repeat, r ); };
+
+    unsigned int get_x()
+        { return get_logo_int( libvlc_logo_x ); };
+    void set_x( unsigned int x )
+        { set_logo_int( libvlc_logo_x, x ); };
+
+    unsigned int get_y()
+        { return get_logo_int( libvlc_logo_y ); };
+    void set_y( unsigned int y )
+        { set_logo_int( libvlc_logo_y, y ); };
+
+    void enable()
+        { return set_logo_int( libvlc_logo_enable, 1 ); }
+    void disable()
+        { return set_logo_int( libvlc_logo_enable, 0 ); }
+
+    void file( const std::string& );
+
+private:
+    int get_logo_int( libvlc_video_logo_option_t );
+    void set_logo_int( libvlc_video_logo_option_t, int i );
+
+private:
+    ChimeraWeakPtr m_plugin;
+    FB::BrowserHostPtr m_host;
+};
+
+////////////////////////////////////////////////////////////////////////////
+/// JSDeinterlaceAPI
+////////////////////////////////////////////////////////////////////////////
+FB_FORWARD_PTR(JSDeinterlaceAPI)
+class JSDeinterlaceAPI : public FB::JSAPIAuto
+{
+public:
+    JSDeinterlaceAPI( const ChimeraPtr& plugin, const FB::BrowserHostPtr& host )
+        :m_plugin( plugin ), m_host( host )
+    {
+        registerMethod( "enable",
+                        make_method( this, &JSDeinterlaceAPI::enable ) );
+        registerMethod( "disable",
+                        make_method( this, &JSDeinterlaceAPI::disable ) );
+    }
+
+    virtual ~JSDeinterlaceAPI(){}
+
+    ChimeraPtr getPlugin();
+
+    void enable( const std::string& mode );
+    void disable();
+
+private:
+    ChimeraWeakPtr m_plugin;
+    FB::BrowserHostPtr m_host;
+};
+
+////////////////////////////////////////////////////////////////////////////
+/// JSVideoAPI
+////////////////////////////////////////////////////////////////////////////
+FB_FORWARD_PTR(JSVideoAPI)
+class JSVideoAPI : public FB::JSAPIAuto
+{
+public:
+    JSVideoAPI( const ChimeraPtr& plugin, const FB::BrowserHostPtr& host )
+        :m_plugin( plugin ), m_host( host )
+    {
+        registerProperty( "width",
+                          make_property( this, &JSVideoAPI::get_width ) );
+        registerProperty( "height",
+                          make_property( this, &JSVideoAPI::get_height ) );
+        registerProperty( "trackCount",
+                          make_property( this,
+                                         &JSVideoAPI::get_trackCount ) );
+        registerProperty( "track",
+                          make_property( this, &JSVideoAPI::get_track,
+                                               &JSVideoAPI::set_track ) );
+
+        registerProperty( "aspectRatio",
+                          make_property( this, &JSVideoAPI::get_aspectRatio,
+                                               &JSVideoAPI::set_aspectRatio ) );
+        registerProperty( "subtitle",
+                          make_property( this, &JSVideoAPI::get_subtitle,
+                                               &JSVideoAPI::set_subtitle ) );
+        registerProperty( "crop",
+                          make_property( this, &JSVideoAPI::get_crop,
+                                               &JSVideoAPI::set_crop ) );
+        registerProperty( "teletext",
+                          make_property( this, &JSVideoAPI::get_teletext,
+                                              &JSVideoAPI::set_teletext ) );
+        registerProperty( "fullscreen",
+                          make_property( this, &JSVideoAPI::get_fullscreen,
+                                               &JSVideoAPI::set_fullscreen ) );
+
+        registerProperty( "contrast",
+                          make_property( this, &JSVideoAPI::get_contrast,
+                                               &JSVideoAPI::set_contrast ) );
+        registerProperty( "brightness",
+                          make_property( this, &JSVideoAPI::get_brightness,
+                                               &JSVideoAPI::set_brightness ) );
+        registerProperty( "hue",
+                          make_property( this, &JSVideoAPI::get_hue,
+                                               &JSVideoAPI::set_hue ) );
+        registerProperty( "saturation",
+                          make_property( this, &JSVideoAPI::get_saturation,
+                                               &JSVideoAPI::set_saturation ) );
+        registerProperty( "gamma",
+                          make_property( this, &JSVideoAPI::get_gamma,
+                                               &JSVideoAPI::set_gamma ) );
+
+        registerMethod( "toggleTeletext",
+                        make_method( this, &JSVideoAPI::toggleTeletext ) );
+        registerMethod( "toggleFullscreen",
+                        make_method( this, &JSVideoAPI::toggleFullscreen ) );
+
+        m_marquee = boost::make_shared<JSMarqueeAPI>( plugin, m_host );
+        registerProperty( "marquee", make_property( this, &JSVideoAPI::get_marquee ) );
+
+        m_logo = boost::make_shared<JSLogoAPI>( plugin, m_host );
+        registerProperty( "logo", make_property( this, &JSVideoAPI::get_logo ) );
+
+        m_deinterlace = boost::make_shared<JSDeinterlaceAPI>( plugin, m_host );
+        registerProperty( "deinterlace", make_property( this, &JSVideoAPI::get_deinterlace ) );
+    }
+
+    virtual ~JSVideoAPI(){}
+
+    ChimeraPtr getPlugin();
+
+    unsigned int get_width();
+    unsigned int get_height();
+
+    unsigned get_trackCount();
+
+    int get_track();
+    void set_track( int idx );
+
+    bool get_fullscreen();
+    void set_fullscreen( bool fs );
+
+    void toggleFullscreen();
+
+    std::string get_aspectRatio();
+    void set_aspectRatio( const std::string& );
+
+    int get_subtitle();
+    void set_subtitle( unsigned int );
+
+    std::string get_crop();
+    void set_crop( const std::string& );
+
+    int get_teletext();
+    void set_teletext( unsigned int );
+
+    void toggleTeletext();
+
+    float get_contrast();
+    void set_contrast( float v );
+
+    float get_brightness();
+    void set_brightness( float v );
+
+    float get_hue();
+    void set_hue( float v );
+
+    float get_saturation();
+    void set_saturation( float v );
+
+    float get_gamma();
+    void set_gamma( float v );
+
+    JSMarqueeAPIWeakPtr     get_marquee()     {return m_marquee;};
+    JSLogoAPIWeakPtr        get_logo()        {return m_logo;}
+    JSDeinterlaceAPIWeakPtr get_deinterlace() {return m_deinterlace;}
+
+private:
+    void getVideoSize( unsigned* width, unsigned* height );
+
+private:
+    ChimeraWeakPtr m_plugin;
+    FB::BrowserHostPtr m_host;
+
+    JSMarqueeAPIPtr     m_marquee;
+    JSLogoAPIPtr        m_logo;
+    JSDeinterlaceAPIPtr m_deinterlace;
+};
+
+////////////////////////////////////////////////////////////////////////////
+/// JSMediaDescAPI
+////////////////////////////////////////////////////////////////////////////
+FB_FORWARD_PTR(JSMediaDescAPI)
+class JSMediaDescAPI : public FB::JSAPIAuto
+{
+public:
+    JSMediaDescAPI( const ChimeraPtr& plugin, const FB::BrowserHostPtr& host )
+        :m_plugin( plugin ), m_host( host )
+    {
+
+        registerProperty( "title",
+                          make_property( this, &JSMediaDescAPI::get_title ) );
+        registerProperty( "artist",
+                          make_property( this, &JSMediaDescAPI::get_artist ) );
+        registerProperty( "genre",
+                          make_property( this, &JSMediaDescAPI::get_genre ) );
+        registerProperty( "copyright",
+                          make_property( this, &JSMediaDescAPI::get_copyright ) );
+        registerProperty( "album",
+                          make_property( this, &JSMediaDescAPI::get_album ) );
+        registerProperty( "trackNumber",
+                          make_property( this, &JSMediaDescAPI::get_trackNumber ) );
+        registerProperty( "description",
+                          make_property( this, &JSMediaDescAPI::get_description ) );
+        registerProperty( "rating",
+                         make_property( this, &JSMediaDescAPI::get_rating ) );
+        registerProperty( "date",
+                         make_property( this, &JSMediaDescAPI::get_date ) );
+        registerProperty( "setting",
+                         make_property( this, &JSMediaDescAPI::get_setting ) );
+        registerProperty( "URL",
+                         make_property( this, &JSMediaDescAPI::get_URL ) );
+        registerProperty( "language",
+                         make_property( this, &JSMediaDescAPI::get_language ) );
+        registerProperty( "nowPlaying",
+                         make_property( this, &JSMediaDescAPI::get_nowPlaying ) );
+        registerProperty( "publisher",
+                         make_property( this, &JSMediaDescAPI::get_publisher ) );
+        registerProperty( "encodedBy",
+                         make_property( this, &JSMediaDescAPI::get_encodedBy ) );
+        registerProperty( "artworkURL",
+                         make_property( this, &JSMediaDescAPI::get_artworkURL ) );
+        registerProperty( "trackID",
+                         make_property( this, &JSMediaDescAPI::get_trackID ) );
+    }
+
+    virtual ~JSMediaDescAPI(){}
+
+    ChimeraPtr getPlugin();
+
+    std::string get_title();
+    std::string get_artist();
+    std::string get_genre();
+    std::string get_copyright();
+    std::string get_album();
+    std::string get_trackNumber();
+    std::string get_description();
+    std::string get_rating();
+    std::string get_date();
+    std::string get_setting();
+    std::string get_URL();
+    std::string get_language();
+    std::string get_nowPlaying();
+    std::string get_publisher();
+    std::string get_encodedBy();
+    std::string get_artworkURL();
+    std::string get_trackID();
+
+private:
+    std::string get_meta( libvlc_meta_t e_meta );
+
+private:
+    ChimeraWeakPtr m_plugin;
+    FB::BrowserHostPtr m_host;
+};
+
+////////////////////////////////////////////////////////////////////////////
+/// JSRootAPI
+////////////////////////////////////////////////////////////////////////////
+FB_FORWARD_PTR(JSRootAPI)
+class JSRootAPI : public FB::JSAPIAuto
 {
 public:
     ////////////////////////////////////////////////////////////////////////////
-    /// @fn ChimeraAPI::ChimeraAPI(const ChimeraPtr& plugin, const FB::BrowserHostPtr host)
+    /// @fn JSRootAPI::JSRootAPI(const ChimeraPtr& plugin, const FB::BrowserHostPtr host)
     ///
     /// @brief  Constructor for your JSAPI object.
     ///         You should register your methods, properties, and events
@@ -28,58 +728,156 @@ public:
     /// @see FB::JSAPIAuto::registerProperty
     /// @see FB::JSAPIAuto::registerEvent
     ////////////////////////////////////////////////////////////////////////////
-    ChimeraAPI(const ChimeraPtr& plugin, const FB::BrowserHostPtr& host) :
-        m_plugin(plugin), m_host(host)
+    JSRootAPI( const ChimeraPtr& plugin, const FB::BrowserHostPtr& host ) :
+        m_plugin( plugin ), m_host( host )
     {
-        registerMethod("echo",      make_method(this, &ChimeraAPI::echo));
-        registerMethod("testEvent", make_method(this, &ChimeraAPI::testEvent));
-        
-        // Read-write property
-        registerProperty("testString",
-                         make_property(this,
-                                       &ChimeraAPI::get_testString,
-                                       &ChimeraAPI::set_testString));
-        
         // Read-only property
-        registerProperty("version",
-                         make_property(this,
-                                       &ChimeraAPI::get_version));
+        registerProperty( "version",
+                          make_property( this,
+                                        &JSRootAPI::get_version ) );
+        registerProperty( "vlcVersion",
+                          make_property( this,
+                                         &JSRootAPI::get_vlcVersion ) );
+        registerProperty( "playing",
+                          make_property( this,
+                                         &JSRootAPI::get_playing ) );
+        registerProperty( "length",
+                          make_property( this,
+                                         &JSRootAPI::get_length ) );
+
+        registerProperty( "position",
+                          make_property( this, &JSRootAPI::get_position,
+                                               &JSRootAPI::set_position ) );
+        registerProperty( "time",
+                          make_property( this, &JSRootAPI::get_time,
+                                               &JSRootAPI::set_time ) );
+        registerProperty( "volume",
+                          make_property( this, &JSRootAPI::get_volume,
+                                               &JSRootAPI::set_volume ) );
+        registerProperty( "bgcolor",
+                          make_property( this, &JSRootAPI::get_bgcolor,
+                                               &JSRootAPI::set_bgcolor ) );
+        registerProperty( "fullscreen",
+                          make_property( this, &JSRootAPI::get_fullscreen,
+                                               &JSRootAPI::set_fullscreen ) );
+
+        registerMethod( "play",             make_method( this, &JSRootAPI::play ) );
+        registerMethod( "pause",            make_method( this, &JSRootAPI::pause ) );
+        registerMethod( "togglePause",      make_method( this, &JSRootAPI::togglePause ) );
+        registerMethod( "stop",             make_method( this, &JSRootAPI::stop ) );
+        registerMethod( "toggleMute",       make_method( this, &JSRootAPI::toggleMute ) );
+        registerMethod( "toggleFullscreen", make_method( this, &JSRootAPI::toggleFullscreen ) );
+
+        registerAttribute( "libvlc_NothingSpecial", libvlc_NothingSpecial, true );
+        registerAttribute( "libvlc_Opening",        libvlc_Opening,        true );
+        registerAttribute( "libvlc_Buffering",      libvlc_Buffering,      true );
+        registerAttribute( "libvlc_Playing",        libvlc_Playing,        true );
+        registerAttribute( "libvlc_Paused",         libvlc_Paused,         true );
+        registerAttribute( "libvlc_Stopped",        libvlc_Stopped,        true );
+        registerAttribute( "libvlc_Ended",          libvlc_Ended,          true );
+        registerAttribute( "libvlc_Error",          libvlc_Error,          true );
+        registerProperty( "state",    make_property( this, &JSRootAPI::get_state ) );
+
+        m_audio = boost::make_shared<JSAudioAPI>( plugin, m_host );
+        registerProperty( "audio", make_property( this, &JSRootAPI::get_audio ) );
+
+        m_input = boost::make_shared<JSInputAPI>( plugin, m_host );
+        registerProperty( "input", make_property( this, &JSRootAPI::get_input ) );
+
+        m_playlist = boost::make_shared<JSPlaylistAPI>( plugin, m_host );
+        registerProperty( "playlist", make_property( this, &JSRootAPI::get_playlist ) );
+
+        m_subtitle = boost::make_shared<JSSubtitleAPI>( plugin, m_host );
+        registerProperty( "subtitle", make_property( this, &JSRootAPI::get_subtitle ) );
+
+        m_video = boost::make_shared<JSVideoAPI>( plugin, m_host );
+        registerProperty( "video", make_property( this, &JSRootAPI::get_video ) );
+
+        m_mediaDesc = boost::make_shared<JSMediaDescAPI>( plugin, m_host );
+        registerProperty( "mediaDescription", make_property( this, &JSRootAPI::get_mediaDesc ) );
     }
 
     ///////////////////////////////////////////////////////////////////////////////
-    /// @fn ChimeraAPI::~ChimeraAPI()
+    /// @fn JSRootAPI::~JSRootAPI()
     ///
     /// @brief  Destructor.  Remember that this object will not be released until
     ///         the browser is done with it; this will almost definitely be after
     ///         the plugin is released.
     ///////////////////////////////////////////////////////////////////////////////
-    virtual ~ChimeraAPI() {};
+    virtual ~JSRootAPI() {};
 
     ChimeraPtr getPlugin();
 
-    // Read/Write property ${PROPERTY.ident}
-    std::string get_testString();
-    void set_testString(const std::string& val);
-
     // Read-only property ${PROPERTY.ident}
     std::string get_version();
+    std::string get_vlcVersion();
 
-    // Method echo
-    FB::variant echo(const FB::variant& msg);
-    
-    // Event helpers
-    FB_JSAPI_EVENT(test, 0, ());
-    FB_JSAPI_EVENT(echo, 2, (const FB::variant&, const int));
+    void play( const std::string& mrl );
+    void pause();
+    void togglePause();
+    void stop();
 
-    // Method test-event
-    void testEvent();
+    bool get_playing();
+
+    double get_length();
+
+    double get_position();
+    void set_position( double );
+
+    double get_time();
+    void set_time( double );
+
+    unsigned int get_volume();
+    void set_volume( unsigned int );
+
+    void toggleMute();
+
+    std::string get_bgcolor();
+    void set_bgcolor( const std::string& bg );
+
+    bool get_fullscreen();
+    void set_fullscreen( bool fs );
+
+    int get_state();
+
+    void toggleFullscreen();
+
+    JSAudioAPIWeakPtr     get_audio()     { return m_audio; }
+    JSInputAPIWeakPtr     get_input()     { return m_input; }
+    JSPlaylistAPIWeakPtr  get_playlist()  { return m_playlist; }
+    JSSubtitleAPIWeakPtr  get_subtitle()  { return m_subtitle; }
+    JSVideoAPIWeakPtr     get_video()     { return m_video; }
+    JSMediaDescAPIWeakPtr get_mediaDesc() { return m_mediaDesc; }
+
+    /* async events from libvlc */
+    FB_JSAPI_EVENT( MediaPlayerMediaChanged, 0, () );
+    FB_JSAPI_EVENT( MediaPlayerNothingSpecial, 0, () );
+    FB_JSAPI_EVENT( MediaPlayerOpening, 0, () );
+    FB_JSAPI_EVENT( MediaPlayerBuffering, 0, () );
+    FB_JSAPI_EVENT( MediaPlayerPlaying, 0, () );
+    FB_JSAPI_EVENT( MediaPlayerPaused, 0, () );
+    FB_JSAPI_EVENT( MediaPlayerForward, 0, () );
+    FB_JSAPI_EVENT( MediaPlayerBackward, 0, () );
+    FB_JSAPI_EVENT( MediaPlayerEncounteredError, 0, () );
+    FB_JSAPI_EVENT( MediaPlayerEndReached, 0, () );
+    FB_JSAPI_EVENT( MediaPlayerStopped, 0, () );
+
+    FB_JSAPI_EVENT( MediaPlayerTimeChanged, 0, () );
+    FB_JSAPI_EVENT( MediaPlayerPositionChanged, 0, () );
+    FB_JSAPI_EVENT( MediaPlayerSeekableChanged, 0, () );
+    FB_JSAPI_EVENT( MediaPlayerPausableChanged, 0, () );
 
 private:
     ChimeraWeakPtr m_plugin;
     FB::BrowserHostPtr m_host;
 
-    std::string m_testString;
+    JSAudioAPIPtr     m_audio;
+    JSInputAPIPtr     m_input;
+    JSPlaylistAPIPtr  m_playlist;
+    JSSubtitleAPIPtr  m_subtitle;
+    JSVideoAPIPtr     m_video;
+    JSMediaDescAPIPtr m_mediaDesc;
 };
 
-#endif // H_ChimeraAPI
+#endif // H_CHIMERA_API
 
