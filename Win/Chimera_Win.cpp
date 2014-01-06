@@ -5,6 +5,7 @@
 #include "QmlVlc/QmlVlcPlayer.h"
 
 #include <QtPlugin>
+#include <QtQml/QQml.h>
 
 Q_IMPORT_PLUGIN(QWindowsIntegrationPlugin);
 Q_IMPORT_PLUGIN(QtQuick2Plugin);
@@ -15,6 +16,8 @@ Q_IMPORT_PLUGIN(QMultimediaDeclarativeModule);
 ////////////////////////////////////////////////////////////////////////////////
 Chimera_Win::Chimera_Win()
 {
+    qmlProtectModule( "QtQuick", 2 );
+    qmlProtectModule( "QtMultimedia", 5);
 }
 
 Chimera_Win::~Chimera_Win()
