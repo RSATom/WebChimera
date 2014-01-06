@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8"/>
+<title>Test page for Chimera Web Plugin</title>
+
+<script type="text/javascript">
+    function getByID(id)
+    {
+        return document.getElementById(id)
+    }
+    function plugin1()
+    {
+        return getByID('plugin_inst_1');
+    }
+</script>
+
+</head>
+
+<body>
+
+<h1>Chimera Web Plugin.</h1>
+
+<object id="plugin_inst_1" type="application/x-chimera-plugin" width="320" height="240">
+<param name="autoplay" value="true" />
+<param name="src" value="http://download.blender.org/peach/bigbuckbunny_movies/big_buck_bunny_480p_surround-fix.avi" />
+<!--param name="qml" value="http://example.com/my_cool_ui.qml" /--><!--you can use extern qml file for custom ui-->
+</object><br>
+
+MRL:<INPUT size="90" id="MRL" value="file:///" onkeypress="if (event.keyCode == 13) document.getElementById('play_button').click()">
+<button id="play_button" onclick="plugin1().play(getByID('MRL').value)">play</button> <br />
+
+</body>
+
+</html>
