@@ -1,4 +1,6 @@
-WebChimera
+Chimera Web Plugin
 ==========
 
-Web Plugin powered by Firebreath/Qt Qml/Vlc
+Vlc Web Plugin with possibility of UI customization via Qt Qml.
+
+This project is the next generation of [FBVLC](https://github.com/RSATom/fbvlc), and uses almost the same [API](http://code.google.com/p/fbvlc/wiki/FBVLC_API) for JS and Qml.
