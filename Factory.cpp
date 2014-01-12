@@ -38,7 +38,11 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     void globalPluginInitialize()
     {
-        Chimera::StaticInitialize();
+#ifdef FB_WIN
+        return Chimera_Win::StaticInitialize();
+#else
+        return Chimera::StaticInitialize();
+#endif
     }
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -46,7 +50,11 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     void globalPluginDeinitialize()
     {
-        Chimera::StaticDeinitialize();
+#ifdef FB_WIN
+        return Chimera_Win::StaticDeinitialize();
+#else
+        return Chimera::StaticDeinitialize();
+#endif
     }
 };
 

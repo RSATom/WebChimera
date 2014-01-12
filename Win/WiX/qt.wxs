@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+		<DirectoryRef Id="INSTALLDIR">
+			<Component Guid="{CD86A8CC-8ECC-467A-B1BA-2ECCDC1301AA}" Id="c_QT">
+				<RegistryValue Root="HKCU" Key="SOFTWARE\${COMPANY_NAME}\${PLUGIN_NAME}\${FBSTRING_PLUGIN_VERSION}" Name="QtUninstall" Type="string" Value="${Qt5Core_VERSION_STRING}" KeyPath="yes" />
+			</Component>
+			<Directory Id="qml" Name="qml">
+				<Component Guid="{062CC037-EA3F-459C-9417-44875EEAF269}" Id="c_QT_qml">
+					<RegistryValue Root="HKCU" Key="SOFTWARE\${COMPANY_NAME}\${PLUGIN_NAME}\${FBSTRING_PLUGIN_VERSION}\qml"
+					               Name="QtUninstall" Type="string" Value="${Qt5Core_VERSION_STRING}" KeyPath="yes" />
+					<RemoveFolder On="uninstall" Id="u_QT_qml" />
+				</Component>
+				<Directory Id="qml_QtMultimedia" Name="QtMultimedia">
+					<Component Guid="{4E83286A-6FD0-4B55-9872-01C004671B2D}" Id="c_QT_qml_QtMultimedia">
+						<RegistryValue Root="HKCU" Key="SOFTWARE\${COMPANY_NAME}\${PLUGIN_NAME}\${FBSTRING_PLUGIN_VERSION}\qml\QtMultimedia"
+						               Name="QtUninstall" Type="string" Value="${Qt5Core_VERSION_STRING}" KeyPath="yes" />
+						<RemoveFolder On="uninstall" Id="u_QT_qml_QtMultimedia" />
+						<File Id="QtMultimedia_qmldir" Source="$(var.QTDIR)\qml\QtMultimedia\qmldir" />
+						<File Id="QtMultimedia_plugins.qmltypes" Source="$(var.QTDIR)\qml\QtMultimedia\plugins.qmltypes" />
+						<File Id="Video.qml" Source="$(var.QTDIR)\qml\QtMultimedia\Video.qml" />
+					</Component>
+				</Directory>
+				<Directory Id="qml_QtQuick.2" Name="QtQuick.2">
+					<Component Guid="{06F01314-3CC7-4DAB-8CFC-F865054C7988}" Id="c_QT_qml_QtQuick.2">
+						<RegistryValue Root="HKCU" Key="SOFTWARE\${COMPANY_NAME}\${PLUGIN_NAME}\${FBSTRING_PLUGIN_VERSION}\qml\QtQuick.2"
+						               Name="QtUninstall" Type="string" Value="${Qt5Core_VERSION_STRING}" KeyPath="yes" />
+						<RemoveFolder On="uninstall" Id="u_QT_qml_QtQuick.2" />
+						<File Id="QtQuick.2_qmldir" Source="$(var.QTDIR)\qml\QtQuick.2\qmldir" />
+						<File Id="QtQuick.2_plugins.qmltypes" Source="$(var.QTDIR)\qml\QtQuick.2\plugins.qmltypes" />
+					</Component>
+				</Directory>
+			</Directory>
+		</DirectoryRef>
+	</Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="QT">
+			<ComponentRef Id="c_QT" />
+			<ComponentRef Id="c_QT_qml" />
+			<ComponentRef Id="c_QT_qml_QtMultimedia" />
+			<ComponentRef Id="c_QT_qml_QtQuick.2" />
+		</ComponentGroup>
+	</Fragment>
+</Wix>

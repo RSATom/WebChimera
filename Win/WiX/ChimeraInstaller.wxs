@@ -78,6 +78,7 @@
             <ComponentGroupRef Id="PluginDLLGroup"/>
             <ComponentRef Id="c_DirectX"/>
             <ComponentGroupRef Id="VLC"/>
+            <ComponentGroupRef Id="QT"/>
         </Feature>
     </Product>
 </Wix>

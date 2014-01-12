@@ -12,6 +12,10 @@ FB_FORWARD_PTR(Chimera_Win)
 class Chimera_Win: public Chimera
 {
 public:
+    static void StaticInitialize();
+    static void StaticDeinitialize();
+
+public:
     Chimera_Win();
     virtual ~Chimera_Win();
 
