@@ -1,0 +1,5 @@
+v.0.1.1
+- fixed empty output window
+
+v.0.1.0
+- initial alpha public version

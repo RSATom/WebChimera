@@ -8,7 +8,7 @@
 set(PLUGIN_NAME "Chimera")
 set(PLUGIN_PREFIX "Chimera")
 set(COMPANY_NAME "RSATom")
-set(PLUGIN_VERSION "0.1.0")
+set(PLUGIN_VERSION "0.1.1")
 
 #if you want embed vlc into FBVLC distribution:
 # 1) place vlc into FBVLC\Win\WiX\vlc-${VLC_VERSION}
