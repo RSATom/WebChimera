@@ -48,7 +48,10 @@ protected:
 private:
     vlc::player *const m_player;
     QAbstractVideoSurface* m_videoSurface;
+
     QMutex m_frameGuard;
+    unsigned m_UPlaneOffset;
+    unsigned m_VPlaneOffset;
     QVideoSurfaceFormat m_surfaceFormat;
     QVideoFrame m_videoFrame;
 };
