@@ -1,3 +1,10 @@
+v.0.1.2
+- QtQuick.Layouts embedded
+- using local qml files blocked
+- relative path to qml file can be used from now
+- added notify signals for some vlcPlayer's properties
+- use I420 as internal pixel format
+
 v.0.1.1
 - fixed empty output window
 

@@ -5,10 +5,15 @@
 #
 #\**********************************************************/
 
-set(PLUGIN_NAME "Chimera")
-set(PLUGIN_PREFIX "Chimera")
+set(PLUGIN_VERSION "0.1.2")
+set(PLUGIN_NAME "WebChimera")
+set(PLUGIN_PREFIX "WebChimera")
+set(PLUGIN_DESCRIPTION "Web Plugin powered by Firebreath/Qt Qml/Vlc")
+set(PRODUCT_NAME "Chimera Web Plugin")
 set(COMPANY_NAME "RSATom")
-set(PLUGIN_VERSION "0.1.1")
+set(COMPANY_DOMAIN "RSATom.name")
+set(COPYRIGHT_YEARS "2014")
+set(PLUGIN_MIMETYPE "application/x-chimera-plugin")
 
 #if you want embed vlc into FBVLC distribution:
 # 1) place vlc into FBVLC\Win\WiX\vlc-${VLC_VERSION}
@@ -17,13 +22,13 @@ set(VLC_VERSION "2.1.2")
 # 3) run prepXXXX.cmd from FireBreath
 
 # ActiveX constants:
-set(FBTYPELIB_NAME ChimeraLib)
-set(FBTYPELIB_DESC "Chimera ${PLUGIN_VERSION} Type Library")
-set(IFBControl_DESC "Chimera Control Interface")
-set(FBControl_DESC "Chimera Control Class")
-set(IFBComJavascriptObject_DESC "Chimera IComJavascriptObject Interface")
-set(FBComJavascriptObject_DESC "Chimera ComJavascriptObject Class")
-set(IFBComEventSource_DESC "Chimera IFBComEventSource Interface")
+set(FBTYPELIB_NAME ${PLUGIN_NAME}Lib)
+set(FBTYPELIB_DESC "${PLUGIN_NAME} ${PLUGIN_VERSION} Type Library")
+set(IFBControl_DESC "${PLUGIN_NAME} Control Interface")
+set(FBControl_DESC "${PLUGIN_NAME} Control Class")
+set(IFBComJavascriptObject_DESC "${PLUGIN_NAME} IComJavascriptObject Interface")
+set(FBComJavascriptObject_DESC "${PLUGIN_NAME} ComJavascriptObject Class")
+set(IFBComEventSource_DESC "${PLUGIN_NAME} IFBComEventSource Interface")
 set(AXVERSION_NUM "${PLUGIN_VERSION}")
 
 # NOTE: THESE GUIDS *MUST* BE UNIQUE TO YOUR PLUGIN/ACTIVEX CONTROL!  YES, ALL OF THEM!
@@ -33,34 +38,40 @@ set(FBControl_GUID df4501d0-6a9f-5d59-a08d-7be21a13c847)
 set(IFBComJavascriptObject_GUID 3321ffa1-0fcd-5c02-bf77-a966735a2296)
 set(FBComJavascriptObject_GUID d873591c-3064-53b2-afe9-e67d54974423)
 set(IFBComEventSource_GUID 90a5b047-5212-5080-b565-1a0d7bdc5946)
-if ( FB_PLATFORM_ARCH_32 )
+if( FB_PLATFORM_ARCH_32 )
     set(FBControl_WixUpgradeCode_GUID 42cda03d-d9b1-57ce-a9d0-63417b421eb2)
-else ( FB_PLATFORM_ARCH_32 )
+else( FB_PLATFORM_ARCH_32 )
     set(FBControl_WixUpgradeCode_GUID 48998e50-3e9b-5e09-b690-ef815564dfb0)
-endif ( FB_PLATFORM_ARCH_32 )
+endif( FB_PLATFORM_ARCH_32 )
 
 # these are the pieces that are relevant to using it from Javascript
-set(ACTIVEX_PROGID "RSATom.Chimera")
-if ( FB_PLATFORM_ARCH_32 )
-    set(MOZILLA_PLUGINID "RSATom.name/Chimera")  # No 32bit postfix to maintain backward compatability.
-else ( FB_PLATFORM_ARCH_32 )
-    set(MOZILLA_PLUGINID "RSATom.name/Chimera_${FB_PLATFORM_ARCH_NAME}")
-endif ( FB_PLATFORM_ARCH_32 )
+set(ACTIVEX_PROGID "${COMPANY_NAME}.${PLUGIN_NAME}")
+if( FB_PLATFORM_ARCH_32 )
+    set(MOZILLA_PLUGINID "${COMPANY_DOMAIN}/${PLUGIN_NAME}")  # No 32bit postfix to maintain backward compatability.
+else( FB_PLATFORM_ARCH_32 )
+    set(MOZILLA_PLUGINID "${COMPANY_DOMAIN}/${PLUGIN_NAME}_${FB_PLATFORM_ARCH_NAME}")
+endif( FB_PLATFORM_ARCH_32 )
 
 # strings
-set(FBSTRING_CompanyName "RSATom")
-set(FBSTRING_PluginDescription "Web Plugin powered by Firebreath/Qt Qml/Vlc")
+set(FBSTRING_CompanyName "${COMPANY_NAME}")
+set(FBSTRING_PluginDescription "${PLUGIN_DESCRIPTION}")
 set(FBSTRING_PLUGIN_VERSION "${PLUGIN_VERSION}")
-set(FBSTRING_LegalCopyright "Copyright 2014 RSATom")
-set(FBSTRING_PluginFileName "np${PLUGIN_NAME}.dll")
-set(FBSTRING_ProductName "Chimera Web Plugin")
+set(FBSTRING_LegalCopyright "Copyright ${COPYRIGHT_YEARS} ${COMPANY_NAME}")
+if( WIN32 )
+    set(FBSTRING_PluginFileName "np${PLUGIN_NAME}.dll")
+elseif( APPLE )
+    set(FBSTRING_PluginFileName "${PLUGIN_NAME}")
+else()
+    set(FBSTRING_PluginFileName "np${PLUGIN_NAME}")
+endif()
+set(FBSTRING_ProductName "${PRODUCT_NAME}")
 set(FBSTRING_FileExtents "")
-if ( FB_PLATFORM_ARCH_32 )
-    set(FBSTRING_PluginName "Chimera Web Plugin")  # No 32bit postfix to maintain backward compatability.
-else ( FB_PLATFORM_ARCH_32 )
-    set(FBSTRING_PluginName "Chimera Web Plugin_${FB_PLATFORM_ARCH_NAME}")
-endif ( FB_PLATFORM_ARCH_32 )
-set(FBSTRING_MIMEType "application/x-chimera-plugin")
+if( FB_PLATFORM_ARCH_32 )
+    set(FBSTRING_PluginName "${PRODUCT_NAME}")  # No 32bit postfix to maintain backward compatability.
+else( FB_PLATFORM_ARCH_32 )
+    set(FBSTRING_PluginName "${PRODUCT_NAME} ${FB_PLATFORM_ARCH_NAME}")
+endif( FB_PLATFORM_ARCH_32 )
+set(FBSTRING_MIMEType "${PLUGIN_MIMETYPE}")
 
 # Uncomment this next line if you're not planning on your plugin doing
 # any drawing:
