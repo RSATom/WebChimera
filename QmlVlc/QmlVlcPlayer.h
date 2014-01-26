@@ -17,13 +17,13 @@ public:
 
     Q_PROPERTY( QString version READ get_version )
     Q_PROPERTY( QString vlcVersion READ get_vlcVersion )
-    Q_PROPERTY( bool playing READ get_playing )
-    Q_PROPERTY( double length READ get_length );
-    Q_PROPERTY( double position READ get_position WRITE set_position );
-    Q_PROPERTY( double time READ get_time WRITE set_time );
+    Q_PROPERTY( bool playing READ get_playing NOTIFY playingChanged )
+    Q_PROPERTY( double length READ get_length NOTIFY MediaPlayerMediaChanged);
+    Q_PROPERTY( double position READ get_position WRITE set_position NOTIFY MediaPlayerPositionChanged );
+    Q_PROPERTY( double time READ get_time WRITE set_time NOTIFY MediaPlayerTimeChanged );
     Q_PROPERTY( unsigned volume READ get_volume WRITE set_volume );
     Q_PROPERTY( bool fullscreen READ get_fullscreen WRITE set_fullscreen );
-    Q_PROPERTY( int state READ get_state );
+    Q_PROPERTY( int state READ get_state NOTIFY stateChanged );
 
     Q_PROPERTY( int libvlc_NothingSpecial MEMBER libvlc_NothingSpecial CONSTANT );
     Q_PROPERTY( int libvlc_Opening MEMBER libvlc_Opening CONSTANT );
@@ -40,6 +40,10 @@ public:
     Q_PROPERTY( QmlVlcSubtitle* subtitle READ get_subtitle CONSTANT );
     Q_PROPERTY( QmlVlcVideo* video READ get_video CONSTANT );
     Q_PROPERTY( QmlVlcMediaDesc* mediaDesc READ get_mediaDesc CONSTANT );
+
+Q_SIGNALS:
+    void playingChanged();
+    void stateChanged();
 
 public:
     void OnLibVlcEvent( const libvlc_event_t* e );

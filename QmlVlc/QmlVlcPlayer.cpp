@@ -8,6 +8,20 @@ QmlVlcPlayer::QmlVlcPlayer( vlc::player* player, QObject* parent /*= 0*/ )
       m_playlist( *player ),  m_subtitle( *player ),
       m_video( *player ), m_mediaDesc( *player )
 {
+    connect( this, SIGNAL( MediaPlayerPlaying() ), this, SIGNAL( playingChanged() ) );
+    connect( this, SIGNAL( MediaPlayerPaused() ), this, SIGNAL( playingChanged() ) );
+    connect( this, SIGNAL( MediaPlayerEncounteredError() ), this, SIGNAL( playingChanged() ) );
+    connect( this, SIGNAL( MediaPlayerEndReached() ), this, SIGNAL( playingChanged() ) );
+    connect( this, SIGNAL( MediaPlayerStopped() ), this, SIGNAL( playingChanged() ) );
+
+    connect( this, SIGNAL( MediaPlayerNothingSpecial() ), this, SIGNAL( stateChanged() ) );
+    connect( this, SIGNAL( MediaPlayerOpening() ), this, SIGNAL( stateChanged() ) );
+    connect( this, SIGNAL( MediaPlayerBuffering() ), this, SIGNAL( stateChanged() ) );
+    connect( this, SIGNAL( MediaPlayerPlaying() ), this, SIGNAL( stateChanged() ) );
+    connect( this, SIGNAL( MediaPlayerPaused() ), this, SIGNAL( stateChanged() ) );
+    connect( this, SIGNAL( MediaPlayerEncounteredError() ), this, SIGNAL( stateChanged() ) );
+    connect( this, SIGNAL( MediaPlayerEndReached() ), this, SIGNAL( stateChanged() ) );
+    connect( this, SIGNAL( MediaPlayerStopped() ), this, SIGNAL( stateChanged() ) );
 }
 
 //libvlc events arrives from separate thread
