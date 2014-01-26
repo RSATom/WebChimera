@@ -265,6 +265,8 @@ void Chimera::vlc_open()
     if( get_player().is_open() )
         return ;
 
+    init_player_options();
+
     if( !m_libvlc ) {
         /* prepare VLC command line */
         std::vector<std::string> libvlc_options;

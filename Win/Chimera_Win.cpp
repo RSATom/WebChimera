@@ -105,7 +105,6 @@ bool Chimera_Win::onWindowAttached( FB::AttachedEvent *evt, FB::PluginWindowWin*
     QString qml = QStringLiteral( "qrc:/default.qml" );
 
     vlc_open();
-    init_player_options();
 
     vlc_player_options& opts = get_options();
     const std::string& qml_source = opts.get_qml_source();

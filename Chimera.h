@@ -86,7 +86,6 @@ private:
 
 protected:
     void vlc_open();
-    void init_player_options();
     void process_startup_options();
     void vlc_close();
 
@@ -96,6 +95,8 @@ protected:
     virtual void on_option_change( vlc_player_option_e );
 
 private:
+    void init_player_options();
+
     static void OnLibVlcEvent_proxy( const libvlc_event_t* e, void *param );
     void OnLibVlcEvent( const libvlc_event_t* e );
     void VlcEvents( bool Attach );
