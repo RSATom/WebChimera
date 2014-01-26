@@ -107,6 +107,7 @@ target_link_libraries( ${PROJECT_NAME} debug "$ENV{QTDIR}/lib/Qt5PlatformSupport
 target_link_libraries( ${PROJECT_NAME} debug "$ENV{QTDIR}/qml/QtQuick.2/qtquick2plugind.lib" )
 target_link_libraries( ${PROJECT_NAME} debug "$ENV{QTDIR}/qml/QtMultimedia/declarative_multimediad.lib" )
 target_link_libraries( ${PROJECT_NAME} debug "$ENV{QTDIR}/lib/Qt5MultimediaQuick_pd.lib" )
+target_link_libraries( ${PROJECT_NAME} debug "$ENV{QTDIR}/qml/QtQuick/Layouts/qquicklayoutsplugind.lib" )
 
 target_link_libraries( ${PROJECT_NAME} optimized "$ENV{QTDIR}/lib/translator_common.lib" )
 target_link_libraries( ${PROJECT_NAME} optimized "$ENV{QTDIR}/lib/translator_hlsl.lib" )
@@ -115,6 +116,7 @@ target_link_libraries( ${PROJECT_NAME} optimized "$ENV{QTDIR}/lib/Qt5PlatformSup
 target_link_libraries( ${PROJECT_NAME} optimized "$ENV{QTDIR}/qml/QtQuick.2/qtquick2plugin.lib" )
 target_link_libraries( ${PROJECT_NAME} optimized "$ENV{QTDIR}/qml/QtMultimedia/declarative_multimedia.lib" )
 target_link_libraries( ${PROJECT_NAME} optimized "$ENV{QTDIR}/lib/Qt5MultimediaQuick_p.lib" )
+target_link_libraries( ${PROJECT_NAME} optimized "$ENV{QTDIR}/qml/QtQuick/Layouts/qquicklayoutsplugin.lib" )
 
 set(WIX_HEAT_FLAGS
     -gg                 # Generate GUIDs

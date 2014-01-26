@@ -12,6 +12,7 @@
 
 Q_IMPORT_PLUGIN(QWindowsIntegrationPlugin);
 Q_IMPORT_PLUGIN(QtQuick2Plugin);
+Q_IMPORT_PLUGIN(QtQuickLayoutsPlugin);
 Q_IMPORT_PLUGIN(QMultimediaDeclarativeModule);
 
 static std::string qtConf_resource_data;
@@ -94,6 +95,7 @@ Chimera_Win::Chimera_Win()
 {
     qmlProtectModule( "QtQuick", 2 );
     qmlProtectModule( "QtMultimedia", 5);
+    qmlProtectModule( "QtQuick.Layouts", 1);
 }
 
 Chimera_Win::~Chimera_Win()
