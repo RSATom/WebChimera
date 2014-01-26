@@ -102,19 +102,12 @@ Chimera_Win::~Chimera_Win()
 
 bool Chimera_Win::onWindowAttached( FB::AttachedEvent *evt, FB::PluginWindowWin* w )
 {
-    QString qml = QStringLiteral( "qrc:/default.qml" );
-
     vlc_open();
-
-    vlc_player_options& opts = get_options();
-    const std::string& qml_source = opts.get_qml_source();
-    if( !qml_source.empty() )
-        qml = QString::fromUtf8( qml_source.data(), qml_source.size() );
 
     m_quickViewPtr.reset( new QQuickView );
     m_quickViewPtr->setResizeMode( QQuickView::SizeRootObjectToView );
     m_quickViewPtr->setProperty( "_q_embedded_native_parent_handle", WId( w->getHWND() ) );
-    m_quickViewPtr->setFlags( m_quickViewPtr->flags()| Qt::FramelessWindowHint );
+    m_quickViewPtr->setFlags( m_quickViewPtr->flags() | Qt::FramelessWindowHint );
 
     QQmlContext* context = m_quickViewPtr->rootContext();
     m_qmlVlcPlayer = new QmlVlcPlayer( (vlc::player*)this, m_quickViewPtr.data() );
@@ -122,7 +115,7 @@ bool Chimera_Win::onWindowAttached( FB::AttachedEvent *evt, FB::PluginWindowWin*
 
     process_startup_options();
 
-    m_quickViewPtr->setSource( qml );
+    m_quickViewPtr->setSource( getQmlSource() );
 
     MoveWindow( (HWND)m_quickViewPtr->winId(), 0, 0, w->getWindowWidth(), w->getWindowHeight(), FALSE );
     m_quickViewPtr->show();

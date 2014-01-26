@@ -11,6 +11,8 @@
 
 #include "Chimera.h"
 
+#include "DOM/Window.h"
+
 #include <QGuiApplication>
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -520,4 +522,27 @@ void Chimera::setBgColorQmlProperty()
     QQmlContext* context = m_quickViewPtr->rootContext();
 
     context->setContextProperty( "bgcolor", QString::fromStdString( get_bg_color() ) );
+}
+
+QUrl Chimera::getQmlSource()
+{
+    QUrl qml = QStringLiteral( "qrc:/default.qml" );
+
+    std::string url = m_host->getDOMWindow()->getLocation();
+    QUrl baseUrl = QString::fromUtf8( url.data(), url.size() );
+
+    vlc_player_options& opts = get_options();
+    const std::string& qml_source = opts.get_qml_source();
+    if( !qml_source.empty() ) {
+        QUrl qmlTmp = QString::fromUtf8( qml_source.data(), qml_source.size() );
+        if( qmlTmp.isRelative() ) {
+            qmlTmp = baseUrl.resolved( qmlTmp );
+        }
+
+        if( !qmlTmp.isLocalFile() ) {
+            qml = qmlTmp;
+        }
+    }
+
+    return qml;
 }

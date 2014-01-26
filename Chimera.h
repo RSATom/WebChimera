@@ -90,6 +90,7 @@ protected:
     void vlc_close();
 
     void setBgColorQmlProperty();
+    QUrl getQmlSource();
 
 protected:
     virtual void on_option_change( vlc_player_option_e );
