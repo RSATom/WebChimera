@@ -21,6 +21,7 @@ file(GLOB GENERAL RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
     [^.]*.h
     [^.]*.cmake
     [^.]*.htm
+    [^.]*.txt
     )
 
 file(GLOB LIBVLC_WRAPPER RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
