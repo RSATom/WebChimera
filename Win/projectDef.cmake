@@ -98,6 +98,9 @@ target_link_libraries(${PROJECT_NAME}
     D3d9.lib
     dxguid.lib
     strmiids.lib
+    libeay32.lib
+    ssleay32.lib
+    Crypt32.lib
     )
 
 target_link_libraries( ${PROJECT_NAME} debug "$ENV{QTDIR}/lib/translator_commond.lib" )
