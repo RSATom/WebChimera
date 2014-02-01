@@ -1,3 +1,6 @@
 [submodule "libvlc_wrapper"]
 	path = libvlc_wrapper
 	url = https://github.com/RSATom/ya-libvlc-wrapper.git
+[submodule "QmlVlc"]
+	path = QmlVlc
+	url = https://github.com/RSATom/QmlVlc.git

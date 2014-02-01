@@ -22,6 +22,11 @@ file(GLOB GENERAL RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
     [^.]*.cmake
     [^.]*.htm
     [^.]*.txt
+    [^.]*.qml
+    )
+
+file(GLOB QT_RESOURCES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
+    [^.]*.qrc
     )
 
 file(GLOB LIBVLC_WRAPPER RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
@@ -33,10 +38,6 @@ source_group(libvlc_wrapper FILES ${LIBVLC_WRAPPER})
 file(GLOB QML_VLC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
     QmlVlc/[^.]*.cpp
     QmlVlc/[^.]*.h
-    QmlVlc/[^.]*.qml
-    )
-file(GLOB QT_RESOURCES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
-    QmlVlc/[^.]*.qrc
     )
 qt5_add_resources(QML_VLC ${QT_RESOURCES})
 source_group(QmlVlc FILES ${QML_VLC} ${QT_RESOURCES})
