@@ -27,5 +27,4 @@
 #include <QGuiApplication>
 #include <QQuickView>
 #include <QQmlParserStatus>
-#include <QAbstractVideoSurface>
 #include <QQmlContext.h>

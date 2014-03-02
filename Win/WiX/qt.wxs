@@ -11,16 +11,6 @@
 					               Name="QtUninstall" Type="string" Value="${Qt5Core_VERSION_STRING}" KeyPath="yes" />
 					<RemoveFolder On="uninstall" Id="u_QT_qml" />
 				</Component>
-				<Directory Id="qml_QtMultimedia" Name="QtMultimedia">
-					<Component Guid="{4E83286A-6FD0-4B55-9872-01C004671B2D}" Id="c_QT_qml_QtMultimedia">
-						<RegistryValue Root="HKCU" Key="SOFTWARE\${COMPANY_NAME}\${PLUGIN_NAME}\${FBSTRING_PLUGIN_VERSION}\qml\QtMultimedia"
-						               Name="QtUninstall" Type="string" Value="${Qt5Core_VERSION_STRING}" KeyPath="yes" />
-						<RemoveFolder On="uninstall" Id="u_QT_qml_QtMultimedia" />
-						<File Id="QtMultimedia_qmldir" Source="$(var.QTDIR)\qml\QtMultimedia\qmldir" />
-						<File Id="QtMultimedia_plugins.qmltypes" Source="$(var.QTDIR)\qml\QtMultimedia\plugins.qmltypes" />
-						<File Id="Video.qml" Source="$(var.QTDIR)\qml\QtMultimedia\Video.qml" />
-					</Component>
-				</Directory>
 				<Directory Id="qml_QtQuick" Name="QtQuick">
 					<Component Guid="{AB970230-A990-4514-863A-BF8052EBB2CA}" Id="c_QT_qml_QtQuick">
 						<RegistryValue Root="HKCU" Key="SOFTWARE\${COMPANY_NAME}\${PLUGIN_NAME}\${FBSTRING_PLUGIN_VERSION}\qml\QtQuick"
@@ -54,7 +44,6 @@
 		<ComponentGroup Id="QT">
 			<ComponentRef Id="c_QT" />
 			<ComponentRef Id="c_QT_qml" />
-			<ComponentRef Id="c_QT_qml_QtMultimedia" />
 			<ComponentRef Id="c_QT_qml_QtQuick" />
 			<ComponentRef Id="c_QT_qml_QtQuick_Layouts" />
 			<ComponentRef Id="c_QT_qml_QtQuick.2" />

@@ -12,7 +12,6 @@ Project(${PLUGIN_NAME})
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
-find_package(Qt5Multimedia)
 find_package(Qt5Qml)
 find_package(Qt5Quick)
 
@@ -66,7 +65,7 @@ SET(SOURCES
 # depending on the platform
 include_platform()
 
-qt5_use_modules(${PLUGIN_NAME} Multimedia Qml Quick Gui)
+qt5_use_modules(${PLUGIN_NAME} Qml Quick Gui)
 
 #this will build a Chrome package
 #add_chrome_package(${PLUGIN_NAME}

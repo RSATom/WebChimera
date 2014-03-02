@@ -1,15 +1,15 @@
 import QtQuick 2.1
-import QtMultimedia 5.0
+import QmlVlc 0.1
 
 Rectangle {
     color: bgcolor
-    VideoOutput {
-        id: videoOutput
-        source: vlcPlayer
-        anchors.fill: parent
+    VlcVideoSurface {
+        id: videoOutput;
+        source: vlcPlayer;
+        anchors.fill: parent;
     }
     MouseArea {
-        anchors.fill: videoOutput
+        anchors.fill: videoOutput;
         onClicked: vlcPlayer.togglePause();
     }
 }

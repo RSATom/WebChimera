@@ -13,7 +13,6 @@
 Q_IMPORT_PLUGIN(QWindowsIntegrationPlugin);
 Q_IMPORT_PLUGIN(QtQuick2Plugin);
 Q_IMPORT_PLUGIN(QtQuickLayoutsPlugin);
-Q_IMPORT_PLUGIN(QMultimediaDeclarativeModule);
 
 static std::string qtConf_resource_data;
 
@@ -94,7 +93,6 @@ void Chimera_Win::StaticDeinitialize()
 Chimera_Win::Chimera_Win()
 {
     qmlProtectModule( "QtQuick", 2 );
-    qmlProtectModule( "QtMultimedia", 5);
     qmlProtectModule( "QtQuick.Layouts", 1);
 }
 
@@ -112,7 +110,8 @@ bool Chimera_Win::onWindowAttached( FB::AttachedEvent *evt, FB::PluginWindowWin*
     m_quickViewPtr->setFlags( m_quickViewPtr->flags() | Qt::FramelessWindowHint );
 
     QQmlContext* context = m_quickViewPtr->rootContext();
-    m_qmlVlcPlayer = new QmlVlcPlayer( (vlc::player*)this, m_quickViewPtr.data() );
+    m_qmlVlcPlayer = new QmlVlcPlayerProxy( (vlc::player*)this, m_quickViewPtr.data() );
+    m_qmlVlcPlayer->classBegin();
     context->setContextProperty( "vlcPlayer", QVariant::fromValue( m_qmlVlcPlayer ) );
 
     process_startup_options();

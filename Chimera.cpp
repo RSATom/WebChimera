@@ -15,6 +15,7 @@
 
 #include <QGuiApplication>
 
+#include"QmlVlc/QmlVlc.h"
 ///////////////////////////////////////////////////////////////////////////////
 /// @fn Chimera::StaticInitialize()
 ///
@@ -24,6 +25,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 void Chimera::StaticInitialize()
 {
+    RegisterQmlVlcVideoSurface();
+
     // Place one-time initialization stuff here; As of FireBreath 1.4 this should only
     // be called once per process
     if( !qApp ) {

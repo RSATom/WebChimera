@@ -18,11 +18,11 @@
 
 import QtQuick 2.1
 import QtQuick.Layouts 1.0
-import QtMultimedia 5.0
+import QmlVlc 0.1
 
 Rectangle {
     color: bgcolor
-    VideoOutput {
+    VlcVideoSurface {
         source: vlcPlayer
         anchors.fill: parent
         MouseArea {
