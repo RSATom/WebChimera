@@ -17,12 +17,12 @@
 *****************************************************************************/
 
 import QtQuick 2.1
-import QtMultimedia 5.0
+import QmlVlc 0.1
 
 Rectangle {
     id: bg
     color: bgcolor
-    VideoOutput {
+    VlcVideoSurface {
         id: videoOutput
         source: vlcPlayer
         anchors.fill: parent
