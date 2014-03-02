@@ -18,7 +18,7 @@ set(PLUGIN_MIMETYPE "application/x-chimera-plugin")
 #if you want embed vlc into FBVLC distribution:
 # 1) place vlc into FBVLC\Win\WiX\vlc-${VLC_VERSION}
 # 2) uncomment following line
-set(VLC_VERSION "2.1.2")
+set(VLC_VERSION "2.1.3")
 # 3) run prepXXXX.cmd from FireBreath
 
 # ActiveX constants:
