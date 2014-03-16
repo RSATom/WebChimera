@@ -25,7 +25,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 void Chimera::StaticInitialize()
 {
-    RegisterQmlVlcVideoSurface();
+    RegisterQmlVlc();
 
     // Place one-time initialization stuff here; As of FireBreath 1.4 this should only
     // be called once per process

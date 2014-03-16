@@ -5,43 +5,52 @@
 #\**********************************************************/
 
 # Written to work with cmake 2.6
-cmake_minimum_required (VERSION 2.6)
-set(CMAKE_BACKWARDS_COMPATIBILITY 2.6)
+cmake_minimum_required ( VERSION 2.6 )
+set( CMAKE_BACKWARDS_COMPATIBILITY 2.6 )
 
-Project(${PLUGIN_NAME})
+Project( ${PLUGIN_NAME} )
 
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-set(CMAKE_AUTOMOC ON)
-find_package(Qt5Qml)
-find_package(Qt5Quick)
+set( CMAKE_INCLUDE_CURRENT_DIR ON )
+set( CMAKE_AUTOMOC ON )
+find_package( Qt5Qml )
+find_package( Qt5Quick )
 
-file(GLOB GENERAL RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
+file( GLOB GENERAL RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
     [^.]*.cpp
     [^.]*.h
     [^.]*.cmake
     [^.]*.htm
     [^.]*.txt
-    [^.]*.qml
     )
 
-file(GLOB QT_RESOURCES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
+file( GLOB QT_RESOURCES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
     [^.]*.qrc
     )
+qt5_add_resources( GENERATED ${QT_RESOURCES} )
+file( GLOB QT_QML_RESOURCES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
+    [^.]*.qml
+    )
+set( QT_RESOURCES ${QT_RESOURCES} ${QT_QML_RESOURCES} )
+source_group( QtResources FILES ${QT_RESOURCES} )
 
-file(GLOB LIBVLC_WRAPPER RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
+file( GLOB LIBVLC_WRAPPER RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
     libvlc_wrapper/[^.]*.cpp
     libvlc_wrapper/[^.]*.h
     )
-source_group(libvlc_wrapper FILES ${LIBVLC_WRAPPER})
+source_group( libvlc_wrapper FILES ${LIBVLC_WRAPPER} )
 
-file(GLOB QML_VLC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
+file( GLOB QML_VLC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
     QmlVlc/[^.]*.cpp
     QmlVlc/[^.]*.h
     )
-qt5_add_resources(QML_VLC ${QT_RESOURCES})
-source_group(QmlVlc FILES ${QML_VLC} ${QT_RESOURCES})
+file( GLOB QML_VLC_MM RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
+    QmlVlc/QmlVlcMm*.cpp
+    QmlVlc/QmlVlcMm*.h
+    )
+list( REMOVE_ITEM QML_VLC ${QML_VLC_MM} )
+source_group( QmlVlc FILES ${QML_VLC} )
 
-include_directories(${PLUGIN_INCLUDE_DIRS})
+include_directories( ${PLUGIN_INCLUDE_DIRS} )
 
 # Generated files are stored in ${GENERATED} by the project configuration
 SET_SOURCE_FILES_PROPERTIES(
@@ -50,13 +59,14 @@ SET_SOURCE_FILES_PROPERTIES(
     GENERATED 1
     )
 
-SOURCE_GROUP(Generated FILES
+SOURCE_GROUP( Generated FILES
     ${GENERATED}
     )
 
-SET(SOURCES
+SET( SOURCES
     ${GENERAL}
     ${LIBVLC_WRAPPER}
+    ${QT_RESOURCES}
     ${QML_VLC}
     ${GENERATED}
     )
@@ -65,7 +75,7 @@ SET(SOURCES
 # depending on the platform
 include_platform()
 
-qt5_use_modules(${PLUGIN_NAME} Qml Quick Gui)
+qt5_use_modules( ${PLUGIN_NAME} Qml Quick Gui )
 
 #this will build a Chrome package
 #add_chrome_package(${PLUGIN_NAME}

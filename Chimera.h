@@ -104,7 +104,7 @@ private:
 
 protected:
     QScopedPointer<QQuickView> m_quickViewPtr;
-    QmlVlcPlayerProxy* m_qmlVlcPlayer;
+    QmlVlcSurfacePlayerProxy* m_qmlVlcPlayer;
 
 private:
     libvlc_instance_t* m_libvlc;

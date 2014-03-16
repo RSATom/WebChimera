@@ -8,7 +8,7 @@
 #include <QtQml/QQml.h>
 #include <QtEndian>
 
-#include "QmlVlc/QmlVlcPlayer.h"
+#include "QmlVlc/QmlVlcSurfacePlayerProxy.h"
 
 Q_IMPORT_PLUGIN(QWindowsIntegrationPlugin);
 Q_IMPORT_PLUGIN(QtQuick2Plugin);
@@ -110,7 +110,7 @@ bool Chimera_Win::onWindowAttached( FB::AttachedEvent *evt, FB::PluginWindowWin*
     m_quickViewPtr->setFlags( m_quickViewPtr->flags() | Qt::FramelessWindowHint );
 
     QQmlContext* context = m_quickViewPtr->rootContext();
-    m_qmlVlcPlayer = new QmlVlcPlayerProxy( (vlc::player*)this, m_quickViewPtr.data() );
+    m_qmlVlcPlayer = new QmlVlcSurfacePlayerProxy( (vlc::player*)this, m_quickViewPtr.data() );
     m_qmlVlcPlayer->classBegin();
     context->setContextProperty( "vlcPlayer", QVariant::fromValue( m_qmlVlcPlayer ) );
 
