@@ -339,6 +339,10 @@ void Chimera::init_player_options()
     param_type qml_source = getParam( "qmlsrc" );
     if ( qml_source )
         opts.set_qml_source( *qml_source );
+
+    param_type qml = getParam( "qml" );
+    if ( qml )
+        opts.set_qml( *qml );
 }
 
 void Chimera::process_startup_options()

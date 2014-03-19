@@ -33,6 +33,7 @@ enum vlc_player_option_e
     po_bg_color,
     po_use_proxy,
     po_qml_source,
+    po_qml,
 };
 
 class vlc_player_options
@@ -87,6 +88,13 @@ public:
     const std::string& get_qml_source() const
         { return _qml_source; }
 
+    void set_qml( const std::string& qml ) {
+        _qml = qml;
+        on_option_change( po_qml );
+    }
+    const std::string& get_qml() const
+        { return _qml; }
+
 protected:
     virtual void on_option_change( vlc_player_option_e ){};
 
@@ -99,6 +107,7 @@ private:
     // http://www.w3.org/TR/SVG/types.html#DataTypeColor
     std::string _bg_color;
     std::string _qml_source;
+    std::string _qml;
 };
 
 #endif //_VLC_PLAYER_OPTIONS_H_
