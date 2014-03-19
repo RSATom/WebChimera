@@ -336,7 +336,7 @@ void Chimera::init_player_options()
     if ( !use_proxy.empty() && use_proxy.can_be_type<bool>() )
         opts.set_use_proxy( use_proxy.convert_cast<bool>() );
 
-    param_type qml_source = getParam( "qml" );
+    param_type qml_source = getParam( "qmlsrc" );
     if ( qml_source )
         opts.set_qml_source( *qml_source );
 }
