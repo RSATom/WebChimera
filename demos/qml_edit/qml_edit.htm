@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8"/>
+<title>Test page for Chimera Web Plugin</title>
+
+<script type="text/javascript">
+    function getByID(id)
+    {
+        return document.getElementById(id)
+    }
+    function plugin1()
+    {
+        return getByID('plugin_inst_1');
+    }
+</script>
+
+</head>
+
+<body>
+
+<h1>Chimera Web Plugin.</h1>
+<div style="display: inline-block; width: 450px">
+<object id="plugin_inst_1" type="application/x-chimera-plugin" width="400" height="300">
+<param name="autoplay" value="true" />
+<param name="src" value="http://download.blender.org/peach/bigbuckbunny_movies/big_buck_bunny_480p_stereo.avi" />
+</object><br>
+
+MRL:<INPUT size="49" id="MRL" value="file:///" onkeypress="if (event.keyCode == 13) document.getElementById('play_button').click()">
+<button id="play_button" onclick="plugin1().play(getByID('MRL').value)">play</button> <br/>
+</div>
+
+<div style="display: inline-block;">
+<textarea id="qml_edit" cols="70" rows="19">
+import QtQuick 2.1
+import QmlVlc 0.1
+
+Rectangle {
+	color: bgcolor
+	VlcVideoSurface {
+		source: vlcPlayer;
+		anchors.top: parent.top;
+		anchors.left: parent.left;
+		width: parent.width / 2;
+		height: parent.height / 2;
+		anchors.leftMargin: 10;
+		MouseArea {
+			anchors.fill: parent;
+			onClicked: vlcPlayer.togglePause();
+		}
+	}
+	VlcPlayer {
+		id: vlcPlayer2;
+		mrl: "https://www.youtube.com/watch?v=9bZkp7q19f0";
+	}
+	VlcVideoSurface {
+		source: vlcPlayer2;
+		anchors.bottom: parent.bottom;
+		anchors.right: parent.right;
+		width: parent.width / 2;
+		height: parent.height / 2;
+		anchors.rightMargin: 10;
+		MouseArea {
+			anchors.fill: parent;
+			onClicked: vlcPlayer2.togglePause();
+		}
+	}
+}
+</textarea>
+<br/>
+<button onclick="plugin1().qml = getByID('qml_edit').value; getByID('qml_error').innerHTML = plugin1().qmlError;" style = "display: inline-block;">load qml</button>
+<span id="qml_error" style="color: red;"/>
+</div>
+<br/>
+<br/>
+<b>Note: Requires at least <a href="http://sourceforge.net/projects/webchimera/files">WebChimera v0.1.4</a></b> 
+</body>
+
+</html>

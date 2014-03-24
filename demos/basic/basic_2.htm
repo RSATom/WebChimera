@@ -34,14 +34,14 @@
 <object id="plugin_inst_1" type="application/x-chimera-plugin" width="640" height="480">
 <param name="autoplay" value="true" />
 <param name="src" value="http://download.blender.org/peach/bigbuckbunny_movies/big_buck_bunny_480p_stereo.avi" />
-<param name="qml" value="basic_2.qml" />
+<param name="qmlsrc" value="basic_2.qml" />
 </object><br>
 
 MRL:<INPUT size="50" id="MRL" value="file:///" onkeypress="if (event.keyCode == 13) document.getElementById('play_button').click()">
 <button id="play_button" onclick="plugin1().play(getByID('MRL').value)">play</button> <br />
 
 <br>
-<b>Note: Requires <a href="http://sourceforge.net/projects/webchimera/files/WebChimera%200.1.3/WebChimera_0.1.3_vlc_2.1.3.msi/download">WebChimera v0.1.3</a></b>
+<b>Note: Requires at least<a href="http://sourceforge.net/projects/webchimera/files">WebChimera v0.1.3</a></b>
 </body>
 
 </html>
