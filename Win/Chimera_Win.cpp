@@ -116,7 +116,7 @@ bool Chimera_Win::onWindowAttached( FB::AttachedEvent *evt, FB::PluginWindowWin*
 
     process_startup_options();
 
-    m_quickViewPtr->setSource( getQmlSource() );
+    setQml();
 
     MoveWindow( (HWND)m_quickViewPtr->winId(), 0, 0, w->getWindowWidth(), w->getWindowHeight(), FALSE );
     m_quickViewPtr->show();

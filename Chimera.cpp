@@ -14,6 +14,7 @@
 #include "DOM/Window.h"
 
 #include <QGuiApplication>
+#include <QQmlComponent>
 
 #include"QmlVlc/QmlVlc.h"
 ///////////////////////////////////////////////////////////////////////////////
@@ -518,6 +519,9 @@ void Chimera::on_option_change( vlc_player_option_e o )
     case po_bg_color:
         setBgColorQmlProperty();
         break;
+    case po_qml:
+        setQml();
+        break;
     }
 }
 
@@ -529,6 +533,41 @@ void Chimera::setBgColorQmlProperty()
     QQmlContext* context = m_quickViewPtr->rootContext();
 
     context->setContextProperty( "bgcolor", QString::fromStdString( get_bg_color() ) );
+}
+
+void Chimera::setQml()
+{
+    if( !m_quickViewPtr )
+        return;
+
+    const std::string& qml = get_options().get_qml();
+    QList<QQmlError> errors;
+    if( qml.empty() ) {
+        m_quickViewPtr->setSource( getQmlSource() );
+        if( QQmlComponent::Error == m_quickViewPtr->status() )
+            errors = m_quickViewPtr->errors();
+    } else {
+        QUrl qmlUrl = QStringLiteral( "qml" );
+        QQmlComponent* component = new QQmlComponent( m_quickViewPtr->engine(), m_quickViewPtr.data() );
+
+        component->setData( QByteArray( qml.data(), qml.size() ), qmlUrl );
+        QObject* rootObject = component->create();
+        if( QQmlComponent::Error == component->status() )
+            errors = component->errors();
+
+        if( rootObject )
+            m_quickViewPtr->setContent( qmlUrl, component, rootObject );
+        else
+            delete component;
+    }
+
+    if( !errors.empty() ) {
+        QString errStr;
+        for( int i = 0; i < errors.count(); ++i )
+            errStr += errors[i].toString();
+        m_qmlError = errStr.toStdString();
+    } else
+        m_qmlError.clear();
 }
 
 QUrl Chimera::getQmlSource()
@@ -552,4 +591,9 @@ QUrl Chimera::getQmlSource()
     }
 
     return qml;
+}
+
+std::string Chimera::getQmlError()
+{
+    return m_qmlError;
 }

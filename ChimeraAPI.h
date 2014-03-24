@@ -734,7 +734,7 @@ public:
         // Read-only property
         registerProperty( "version",
                           make_property( this,
-                                        &JSRootAPI::get_version ) );
+                                         &JSRootAPI::get_version ) );
         registerProperty( "vlcVersion",
                           make_property( this,
                                          &JSRootAPI::get_vlcVersion ) );
@@ -744,7 +744,13 @@ public:
         registerProperty( "length",
                           make_property( this,
                                          &JSRootAPI::get_length ) );
+        registerProperty( "qmlError",
+                          make_property( this,
+                                         &JSRootAPI::get_qmlError ) );
 
+        registerProperty( "qml",
+                          make_property( this, &JSRootAPI::get_qml,
+                                               &JSRootAPI::set_qml ) );
         registerProperty( "position",
                           make_property( this, &JSRootAPI::get_position,
                                                &JSRootAPI::set_position ) );
@@ -820,6 +826,11 @@ public:
     bool get_playing();
 
     double get_length();
+
+    std::string get_qmlError();
+
+    std::string get_qml();
+    void set_qml( const std::string& qml );
 
     double get_position();
     void set_position( double );

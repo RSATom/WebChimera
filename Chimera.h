@@ -75,6 +75,7 @@ public:
     virtual bool is_fullscreen() = 0;
     virtual void set_fullscreen( bool fs ) = 0;
     virtual void toggle_fullscreen() = 0;
+    std::string getQmlError();
 
 private:
     const FB::variant& getParamVariant( const std::string& key ) const;
@@ -90,6 +91,8 @@ protected:
     void vlc_close();
 
     void setBgColorQmlProperty();
+    void setQml();
+
     QUrl getQmlSource();
 
 protected:
@@ -108,6 +111,7 @@ protected:
 
 private:
     libvlc_instance_t* m_libvlc;
+    std::string m_qmlError;
 };
 
 #endif

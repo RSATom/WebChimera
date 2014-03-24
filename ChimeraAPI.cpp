@@ -1105,6 +1105,29 @@ double JSRootAPI::get_length()
     return static_cast<double>( p.current_media().get_length() );
 }
 
+std::string JSRootAPI::get_qmlError()
+{
+    ChimeraPtr plg = getPlugin();
+
+    return plg->getQmlError();
+}
+
+std::string JSRootAPI::get_qml()
+{
+    ChimeraPtr plg = getPlugin();
+    const vlc_player_options& o = plg->get_options();
+
+    return o.get_qml();
+}
+
+void JSRootAPI::set_qml( const std::string& qml )
+{
+    ChimeraPtr plg = getPlugin();
+    vlc_player_options& o = plg->get_options();
+
+    o.set_qml( qml );
+}
+
 double JSRootAPI::get_position()
 {
     ChimeraPtr plg = getPlugin();

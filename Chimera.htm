@@ -29,8 +29,27 @@
 </object><br>
 
 MRL:<INPUT size="50" id="MRL" value="file:///" onkeypress="if (event.keyCode == 13) document.getElementById('play_button').click()">
-<button id="play_button" onclick="plugin1().play(getByID('MRL').value)">play</button> <br />
+<button id="play_button" onclick="plugin1().play(getByID('MRL').value)">play</button> <br/>
+<br/>
+<textarea id="qml_edit" cols="80" rows="20">
+import QtQuick 2.1
+import QmlVlc 0.1
 
+Rectangle {
+	color: bgcolor
+	VlcVideoSurface {
+		id: videoOutput;
+		source: vlcPlayer;
+		anchors.fill: parent;
+	}
+	MouseArea {
+		anchors.fill: videoOutput;
+		onClicked: vlcPlayer.togglePause();
+	}
+}
+</textarea>
+<button onclick="plugin1().qml = getByID('qml_edit').value; getByID('qml_error').innerHTML = plugin1().qmlError;">load qml</button> <br/>
+<span id="qml_error" style="color: red;"/>
 </body>
 
 </html>
