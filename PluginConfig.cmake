@@ -5,7 +5,7 @@
 #
 #\**********************************************************/
 
-set(PLUGIN_VERSION "0.1.4")
+set(PLUGIN_VERSION "0.1.5")
 set(PLUGIN_NAME "WebChimera")
 set(PLUGIN_PREFIX "WebChimera")
 set(PLUGIN_DESCRIPTION "Web Plugin powered by Firebreath/Qt Qml/Vlc")

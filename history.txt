@@ -1,3 +1,6 @@
+v.0.1.5
+- fixed qml items leak on setting qml from string
+
 v.0.1.4
 - multiple optimizations in QmlVlc lib
 - minor fixes in libvlc wrapper lib
