@@ -548,17 +548,17 @@ void Chimera::setQml()
             errors = m_quickViewPtr->errors();
     } else {
         QUrl qmlUrl = QStringLiteral( "qml" );
-        QQmlComponent* component = new QQmlComponent( m_quickViewPtr->engine(), m_quickViewPtr.data() );
+        QScopedPointer<QQmlComponent> component( new QQmlComponent( m_quickViewPtr->engine(), m_quickViewPtr.data() ) );
 
         component->setData( QByteArray( qml.data(), qml.size() ), qmlUrl );
         QObject* rootObject = component->create();
         if( QQmlComponent::Error == component->status() )
             errors = component->errors();
 
-        if( rootObject )
-            m_quickViewPtr->setContent( qmlUrl, component, rootObject );
-        else
-            delete component;
+        if( rootObject ) {
+            cleanQuickView();
+            m_quickViewPtr->setContent( qmlUrl, component.take(), rootObject );
+        }
     }
 
     if( !errors.empty() ) {
@@ -596,4 +596,22 @@ QUrl Chimera::getQmlSource()
 std::string Chimera::getQmlError()
 {
     return m_qmlError;
+}
+
+bool Chimera::onWindowDetached( FB::DetachedEvent *evt, FB::PluginWindow* )
+{
+    cleanQuickView();
+    m_quickViewPtr.reset();
+
+    return false;
+}
+
+void Chimera::cleanQuickView()
+{
+    if( !m_quickViewPtr )
+        return;
+
+    //little hack to cleanup QQuickView content on Qt 5.2.
+    //FIXME! check for compatibility with future Qt versions.
+    m_quickViewPtr->setSource( QUrl() );
 }

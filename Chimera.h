@@ -52,10 +52,12 @@ public:
     virtual bool isWindowless() { return false; }
 
     BEGIN_PLUGIN_EVENT_MAP()
+        EVENTTYPE_CASE( FB::DetachedEvent, onWindowDetached, FB::PluginWindow )
     END_PLUGIN_EVENT_MAP()
 
 private:
     /** BEGIN EVENTDEF -- DON'T CHANGE THIS LINE **/
+    bool onWindowDetached( FB::DetachedEvent *evt, FB::PluginWindow* );
     /** END EVENTDEF -- DON'T CHANGE THIS LINE **/
 
 public:
@@ -104,6 +106,8 @@ private:
     static void OnLibVlcEvent_proxy( const libvlc_event_t* e, void *param );
     void OnLibVlcEvent( const libvlc_event_t* e );
     void VlcEvents( bool Attach );
+
+    void cleanQuickView();
 
 protected:
     QScopedPointer<QQuickView> m_quickViewPtr;

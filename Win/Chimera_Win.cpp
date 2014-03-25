@@ -124,11 +124,6 @@ bool Chimera_Win::onWindowAttached( FB::AttachedEvent *evt, FB::PluginWindowWin*
     return false;
 }
 
-bool Chimera_Win::onWindowDetached( FB::DetachedEvent *evt, FB::PluginWindowWin* w )
-{
-    return false;
-}
-
 bool Chimera_Win::onWindowResized( FB::ResizedEvent *evt, FB::PluginWindowWin* w )
 {
     if( m_quickViewPtr ) {
