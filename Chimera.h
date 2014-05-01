@@ -22,7 +22,7 @@
 #include <QWeakPointer>
 #include <QQuickView>
 
-#include "libvlc_wrapper/vlc_player.h"
+#include "QmlVlc/libvlc_wrapper/vlc_player.h"
 #include "vlc_player_options.h"
 
 #include "QmlVlc/QmlVlcPlayer.h"

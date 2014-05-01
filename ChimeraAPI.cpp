@@ -145,7 +145,7 @@ double JSInputAPI::get_length()
     ChimeraPtr plg = getPlugin();
     vlc_player& p = plg->get_player();
 
-    return static_cast<double>( p.current_media().get_length() );
+    return static_cast<double>( p.get_length() );
 }
 
 double JSInputAPI::get_fps()
@@ -153,7 +153,7 @@ double JSInputAPI::get_fps()
     ChimeraPtr plg = getPlugin();
     vlc_player& p = plg->get_player();
 
-    return p.current_media().get_fps();
+    return p.get_fps();
 }
 
 bool JSInputAPI::get_hasVout()
@@ -1102,7 +1102,7 @@ double JSRootAPI::get_length()
     ChimeraPtr plg = getPlugin();
     vlc_player& p = plg->get_player();
 
-    return static_cast<double>( p.current_media().get_length() );
+    return static_cast<double>( p.get_length() );
 }
 
 std::string JSRootAPI::get_qmlError()

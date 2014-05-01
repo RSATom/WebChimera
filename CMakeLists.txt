@@ -33,12 +33,6 @@ file( GLOB QT_QML_RESOURCES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
 set( QT_RESOURCES ${QT_RESOURCES} ${QT_QML_RESOURCES} )
 source_group( QtResources FILES ${QT_RESOURCES} )
 
-file( GLOB LIBVLC_WRAPPER RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
-    libvlc_wrapper/[^.]*.cpp
-    libvlc_wrapper/[^.]*.h
-    )
-source_group( libvlc_wrapper FILES ${LIBVLC_WRAPPER} )
-
 file( GLOB QML_VLC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
     QmlVlc/[^.]*.cpp
     QmlVlc/[^.]*.h
@@ -49,6 +43,12 @@ file( GLOB QML_VLC_MM RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
     )
 list( REMOVE_ITEM QML_VLC ${QML_VLC_MM} )
 source_group( QmlVlc FILES ${QML_VLC} )
+
+file( GLOB LIBVLC_WRAPPER RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
+    QmlVlc/libvlc_wrapper/[^.]*.cpp
+    QmlVlc/libvlc_wrapper/[^.]*.h
+    )
+source_group( libvlc_wrapper FILES ${LIBVLC_WRAPPER} )
 
 include_directories( ${PLUGIN_INCLUDE_DIRS} )
 
