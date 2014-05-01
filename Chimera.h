@@ -82,7 +82,7 @@ public:
 private:
     const FB::variant& getParamVariant( const std::string& key ) const;
 
-    void init_libvlc_options( std::vector<std::string>* );
+    void init_libvlc_options();
 
     std::string detectHttpProxy( const std::string& mrl ) const;
     bool isTrustedOption( const std::string& option );

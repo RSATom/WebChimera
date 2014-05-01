@@ -213,57 +213,42 @@ const FB::variant& Chimera::getParamVariant( const std::string& key ) const
     return empty;
 }
 
-void Chimera::init_libvlc_options( std::vector<std::string>* opts )
+void Chimera::init_libvlc_options()
 {
-    if( !opts )
-        return;
-
     typedef boost::optional<std::string> param_type;
     typedef const FB::variant&           param_vtype;
 
-    param_type network_caching = getParam( "network-caching" );
-    if ( network_caching )
-    {
-        opts->push_back( "--network-caching" );
-        opts->push_back( *network_caching );
+    param_vtype network_caching = getParamVariant( "network-caching" );
+    if ( !network_caching.empty() && network_caching.can_be_type<int>() ) {
+        QmlVlcConfig::setNetworkCacheTime( network_caching.convert_cast<int>() );
     };
 
     param_vtype adjust         = getParamVariant( "adjust-filter" );
     if ( !adjust.empty() && adjust.can_be_type<bool>() && adjust.convert_cast<bool>() ) {
-        opts->push_back( "--video-filter=adjust" );
+        QmlVlcConfig::enableAdjustFilter( true );
     }
 
-    std::string sub_filters;
     param_vtype marq           = getParamVariant( "marquee-filter" );
     if ( !marq.empty() && marq.can_be_type<bool>() && marq.convert_cast<bool>() ) {
-        sub_filters = "marq";
+        QmlVlcConfig::enableMarqueeFilter( true );
     }
 
     param_vtype logo           = getParamVariant( "logo-filter" );
     if ( !logo.empty() && logo.can_be_type<bool>() && logo.convert_cast<bool>() ) {
-        if( !sub_filters.empty() )
-            sub_filters += ':';
-        sub_filters += "logo";
-    }
-
-    if( !sub_filters.empty() ) {
-        opts->push_back( "--sub-filter=" + sub_filters );
+        QmlVlcConfig::enableLogoFilter( true );
     }
 
     param_vtype debug          = getParamVariant( "debug" );
     if ( !debug.empty() && debug.can_be_type<bool>() && debug.convert_cast<bool>() ) {
-        opts->push_back( "-vvv" );
+        QmlVlcConfig::enableDebug( true );
     }
 
     param_vtype hw_accel         = getParamVariant( "hw-accel" );
     if ( !hw_accel.empty() && hw_accel.can_be_type<bool>() && hw_accel.convert_cast<bool>() ) {
-        const char* version = libvlc_get_version();
-        if( 0 == strncmp( version, "2.0.", 4 ) )
-            opts->push_back( "--ffmpeg-hw" ); //for vlc 2.0
+        QmlVlcConfig::enableHardwareAcceleration( true );
     }
 
-    /*** add new libvlc options here ***/
-
+    QmlVlcConfig::enableNoVideoTitleShow( true );
 }
 
 void Chimera::vlc_open()
@@ -274,22 +259,8 @@ void Chimera::vlc_open()
     init_player_options();
 
     if( !m_libvlc ) {
-        /* prepare VLC command line */
-        std::vector<std::string> libvlc_options;
-        init_libvlc_options( &libvlc_options );
-
-        std::vector<const char*> libvlc_c_opts;
-        libvlc_c_opts.push_back( "--no-video-title-show" );
-        /*** add static libvlc options here ***/
-
-        std::vector<std::string>::const_iterator i     = libvlc_options.begin();
-        std::vector<std::string>::const_iterator end_i = libvlc_options.end();
-        for( ; i != end_i; ++i ) {
-            libvlc_c_opts.push_back( i->c_str() );
-        }
-
-        m_libvlc = libvlc_new( libvlc_c_opts.size(),
-                               libvlc_c_opts.empty() ? 0 : &libvlc_c_opts[0] );
+        init_libvlc_options();
+        m_libvlc = QmlVlcConfig::createLibvlcInstance();
     }
 
     if( m_libvlc && !get_player().is_open() ) {
