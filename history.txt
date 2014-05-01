@@ -1,3 +1,36 @@
+v.0.1.6
+- multiple memory leaks fixed
+- libvlc_AudioChannel_Error,
+  libvlc_AudioChannel_Stereo,
+  libvlc_AudioChannel_RStereo,
+  libvlc_AudioChannel_Left,
+  libvlc_AudioChannel_Right,
+  libvlc_AudioChannel_Dolbys,
+  stereo,
+  reverseStereoeo,
+  left,
+  right,
+  dolby
+  VlcAudio's members removed
+- added VlcAudio.Output enum containing { Stereo, ReverseStereo, Left, Right, Dolby } items,
+  which could be used with VlcAudio.channel property.
+- libvlc_NothingSpecial,
+  libvlc_Opening,
+  libvlc_Buffering,
+  libvlc_Playing,
+  libvlc_Paused,
+  libvlc_Stopped,
+  libvlc_Ended,
+  libvlc_Error,
+  VlcPlayer's and VlcMmPlayer's members removed
+- added VlcPlayer.State and VlcMmPlayer.State enums containing
+  { NothingSpecial, Opening, Buffering,
+  Playing, Paused, Stopped, Ended,Error} items,
+  which could be used with VlcPlayer.state and VlcMmPlayer.state properties.
+- VlcPlaylist.add(mrl) member added
+- fixed access to QmlVlc objects
+- use all libvlc related plugin startup options by all VlcPlayer and VlcMmPlayer instances
+
 v.0.1.5
 - fixed qml items leak on setting qml from string
 
