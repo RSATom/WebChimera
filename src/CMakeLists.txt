@@ -34,23 +34,23 @@ set( QT_RESOURCES ${QT_RESOURCES} ${QT_QML_RESOURCES} )
 source_group( QtResources FILES ${QT_RESOURCES} )
 
 file( GLOB QML_VLC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
-    QmlVlc/[^.]*.cpp
-    QmlVlc/[^.]*.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../deps/QmlVlc/[^.]*.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../deps/QmlVlc/[^.]*.h
     )
 file( GLOB QML_VLC_MM RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
-    QmlVlc/QmlVlcMm*.cpp
-    QmlVlc/QmlVlcMm*.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../deps/QmlVlc/QmlVlcMm*.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../deps/QmlVlc/QmlVlcMm*.h
     )
 list( REMOVE_ITEM QML_VLC ${QML_VLC_MM} )
 source_group( QmlVlc FILES ${QML_VLC} )
 
 file( GLOB LIBVLC_WRAPPER RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
-    QmlVlc/libvlc_wrapper/[^.]*.cpp
-    QmlVlc/libvlc_wrapper/[^.]*.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../deps/QmlVlc/libvlc_wrapper/[^.]*.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../deps/QmlVlc/libvlc_wrapper/[^.]*.h
     )
 source_group( libvlc_wrapper FILES ${LIBVLC_WRAPPER} )
 
-include_directories( ${PLUGIN_INCLUDE_DIRS} )
+include_directories( ${PLUGIN_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR}/../deps )
 
 # Generated files are stored in ${GENERATED} by the project configuration
 SET_SOURCE_FILES_PROPERTIES(
