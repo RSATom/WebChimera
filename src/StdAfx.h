@@ -27,4 +27,4 @@
 #include <QGuiApplication>
 #include <QQuickView>
 #include <QQmlParserStatus>
-#include <QQmlContext.h>
+#include <QQmlContext>
