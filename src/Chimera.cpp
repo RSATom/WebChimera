@@ -515,7 +515,7 @@ void Chimera::setQml()
     QList<QQmlError> errors;
     if( qml.empty() ) {
         m_quickViewPtr->setSource( getQmlSource() );
-        if( QQmlComponent::Error == m_quickViewPtr->status() )
+        if( QQuickView::Error == m_quickViewPtr->status() )
             errors = m_quickViewPtr->errors();
     } else {
         QUrl qmlUrl = QStringLiteral( "qml" );
