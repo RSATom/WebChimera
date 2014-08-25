@@ -13,7 +13,11 @@
 #include "BrowserHost.h"
 
 #include "PluginWindow.h"
+
+#ifdef FB_WIN
 #include "PluginWindowWin.h"
+#endif
+
 #include "PluginEvents/MouseEvents.h"
 #include "PluginEvents/AttachedEvent.h"
 #include "PluginEvents/DrawingEvents.h"

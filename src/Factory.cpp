@@ -8,8 +8,10 @@
 \**********************************************************/
 
 #include "FactoryBase.h"
-#ifdef FB_WIN
+#if defined( FB_WIN )
 #include "Win/Chimera_Win.h"
+#elif defined( FB_X11 )
+#include "X11/Chimera_X11.h"
 #else
 #include "Chimera.h"
 #endif
@@ -26,8 +28,10 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     FB::PluginCorePtr createPlugin( const std::string& mimetype )
     {
-#ifdef FB_WIN
+#if defined( FB_WIN )
         return boost::make_shared<Chimera_Win>();
+#elif defined( FB_X11 )
+        return boost::make_shared<Chimera_X11>();
 #else
         return boost::make_shared<Chimera>();
 #endif

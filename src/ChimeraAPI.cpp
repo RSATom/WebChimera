@@ -3,7 +3,7 @@
 #include "DOM/Document.h"
 #include "global/config.h"
 
-#include "ChimeraApi.h"
+#include "ChimeraAPI.h"
 
 ////////////////////////////////////////////////////////////////////////////
 /// JSAudioAPI

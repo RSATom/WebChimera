@@ -15,6 +15,7 @@
 
 #include <QGuiApplication>
 #include <QQmlComponent>
+#include <QQmlContext>
 
 #include"QmlVlc/QmlVlc.h"
 ///////////////////////////////////////////////////////////////////////////////
