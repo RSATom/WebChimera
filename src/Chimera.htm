@@ -10,15 +10,47 @@
     {
         return document.getElementById(id)
     }
+
     function plugin1()
     {
         return getByID('plugin_inst_1');
+    }
+
+    function addEvent(obj, name, func)
+    {
+        if (obj.attachEvent) {
+            obj.attachEvent("on"+name, func);
+        } else {
+            obj.addEventListener(name, func, false);
+        }
+    }
+
+    function onBuffering()
+    {
+        console.log( "onBuffering" );
+    }
+
+    function onTimeChanged()
+    {
+        console.log( "onTimeChanged" );
+    }
+
+    function onPositionChanged()
+    {
+        console.log( "onPositionChanged" );
+    }
+
+    function onLoad()
+    {
+        addEvent( plugin1(), 'MediaPlayerBuffering',       onBuffering );
+        addEvent( plugin1(), 'MediaPlayerTimeChanged',     onTimeChanged );
+        addEvent( plugin1(), 'MediaPlayerPositionChanged', onPositionChanged );
     }
 </script>
 
 </head>
 
-<body>
+<body onload="onLoad();">
 
 <h1>Chimera Web Plugin.</h1>
 
