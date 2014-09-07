@@ -573,10 +573,11 @@ QUrl Chimera::getQmlSource()
         if( qmlTmp.isRelative() ) {
             qmlTmp = baseUrl.resolved( qmlTmp );
         }
-
+#ifdef NDEBUG
         if( !qmlTmp.isLocalFile() ) {
             qml = qmlTmp;
         }
+#endif
     }
 
     return qml;
