@@ -25,19 +25,19 @@
         }
     }
 
-    function onBuffering()
+    function onBuffering( v )
     {
-        console.log( "onBuffering" );
+        console.log( "onBuffering: " + v );
     }
 
-    function onTimeChanged()
+    function onTimeChanged( t )
     {
-        console.log( "onTimeChanged" );
+        console.log( "onTimeChanged: " + t );
     }
 
-    function onPositionChanged()
+    function onPositionChanged( p )
     {
-        console.log( "onPositionChanged" );
+        console.log( "onPositionChanged: " + p );
     }
 
     function onLoad()
