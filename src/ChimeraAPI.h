@@ -864,7 +864,7 @@ public:
     FB_JSAPI_EVENT( MediaPlayerMediaChanged, 0, () );
     FB_JSAPI_EVENT( MediaPlayerNothingSpecial, 0, () );
     FB_JSAPI_EVENT( MediaPlayerOpening, 0, () );
-    FB_JSAPI_EVENT( MediaPlayerBuffering, 0, () );
+    FB_JSAPI_EVENT( MediaPlayerBuffering, 1, ( float ) );
     FB_JSAPI_EVENT( MediaPlayerPlaying, 0, () );
     FB_JSAPI_EVENT( MediaPlayerPaused, 0, () );
     FB_JSAPI_EVENT( MediaPlayerForward, 0, () );
@@ -873,10 +873,10 @@ public:
     FB_JSAPI_EVENT( MediaPlayerEndReached, 0, () );
     FB_JSAPI_EVENT( MediaPlayerStopped, 0, () );
 
-    FB_JSAPI_EVENT( MediaPlayerTimeChanged, 0, () );
-    FB_JSAPI_EVENT( MediaPlayerPositionChanged, 0, () );
-    FB_JSAPI_EVENT( MediaPlayerSeekableChanged, 0, () );
-    FB_JSAPI_EVENT( MediaPlayerPausableChanged, 0, () );
+    FB_JSAPI_EVENT( MediaPlayerTimeChanged, 1, ( double ) );
+    FB_JSAPI_EVENT( MediaPlayerPositionChanged, 1, ( float ) );
+    FB_JSAPI_EVENT( MediaPlayerSeekableChanged, 1, ( bool ) );
+    FB_JSAPI_EVENT( MediaPlayerPausableChanged, 1, ( bool ) );
 
 private:
     ChimeraWeakPtr m_plugin;

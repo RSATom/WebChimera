@@ -107,7 +107,10 @@ void Chimera::OnLibVlcEvent( const libvlc_event_t* e )
         event_to_fire = &JSRootAPI::fire_MediaPlayerOpening;
         break;
     case libvlc_MediaPlayerBuffering:
-        event_to_fire = &JSRootAPI::fire_MediaPlayerBuffering;
+        h->ScheduleOnMainThread( api,
+                                 boost::bind( &JSRootAPI::fire_MediaPlayerBuffering,
+                                              api.get(),
+                                              e->u.media_player_buffering.new_cache ) );
         break;
     case libvlc_MediaPlayerPlaying:
         event_to_fire = &JSRootAPI::fire_MediaPlayerPlaying;
@@ -130,17 +133,31 @@ void Chimera::OnLibVlcEvent( const libvlc_event_t* e )
     case libvlc_MediaPlayerEncounteredError:
         event_to_fire = &JSRootAPI::fire_MediaPlayerEncounteredError;
         break;
-    case libvlc_MediaPlayerTimeChanged:
-        event_to_fire = &JSRootAPI::fire_MediaPlayerTimeChanged;
+    case libvlc_MediaPlayerTimeChanged: {
+        double new_time = static_cast<double>( e->u.media_player_time_changed.new_time );
+        h->ScheduleOnMainThread( api,
+                                 boost::bind( &JSRootAPI::fire_MediaPlayerTimeChanged,
+                                              api.get(),
+                                              new_time ) );
         break;
+    }
     case libvlc_MediaPlayerPositionChanged:
-        event_to_fire = &JSRootAPI::fire_MediaPlayerPositionChanged;
+        h->ScheduleOnMainThread( api,
+                                 boost::bind( &JSRootAPI::fire_MediaPlayerPositionChanged,
+                                              api.get(),
+                                              e->u.media_player_position_changed.new_position ) );
         break;
     case libvlc_MediaPlayerSeekableChanged:
-        event_to_fire = &JSRootAPI::fire_MediaPlayerSeekableChanged;
+        h->ScheduleOnMainThread( api,
+                                 boost::bind( &JSRootAPI::fire_MediaPlayerSeekableChanged,
+                                              api.get(),
+                                              e->u.media_player_seekable_changed.new_seekable != 0 ) );
         break;
     case libvlc_MediaPlayerPausableChanged:
-        event_to_fire = &JSRootAPI::fire_MediaPlayerPausableChanged;
+        h->ScheduleOnMainThread( api,
+                                 boost::bind( &JSRootAPI::fire_MediaPlayerPausableChanged,
+                                              api.get(),
+                                              e->u.media_player_pausable_changed.new_pausable != 0 ) );
         break;
     //case libvlc_MediaPlayerTitleChanged:
     //    event_to_fire = &JSRootAPI::fire_MediaPlayerTitleChanged;
