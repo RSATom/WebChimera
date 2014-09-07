@@ -68,16 +68,29 @@ import QtQuick 2.1
 import QmlVlc 0.1
 
 Rectangle {
-	color: bgcolor
-	VlcVideoSurface {
-		id: videoOutput;
-		source: vlcPlayer;
-		anchors.fill: parent;
-	}
-	MouseArea {
-		anchors.fill: videoOutput;
-		onClicked: vlcPlayer.togglePause();
-	}
+    color: bgcolor
+    VlcVideoSurface {
+        id: videoOutput;
+        source: vlcPlayer;
+        anchors.fill: parent;
+    }
+    MouseArea {
+        anchors.fill: videoOutput;
+        onClicked: vlcPlayer.togglePause();
+    }
+    Text {
+        id: text;
+        color: "white";
+    }
+    Component.onCompleted: {
+        vlcPlayer.onMediaPlayerBuffering.connect( onBuffering )
+    }
+    function onBuffering( percents ) {
+        if( percents < 100 )
+            text.text = "Buffering: " + percents +"%";
+        else
+            text.text = "";
+    }
 }
 </textarea>
 <button onclick="plugin1().qml = getByID('qml_edit').value; getByID('qml_error').innerHTML = plugin1().qmlError;">load qml</button> <br/>
