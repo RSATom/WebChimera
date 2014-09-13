@@ -65,6 +65,7 @@ extern std::string g_dllPath;
 ////////////////////////////////////////////////////////////////////////////////
 void Chimera_Win::StaticInitialize()
 {
+#ifndef _DEBUG
     if( !qApp ) {
         std::string qtPrefix = g_dllPath + "/../";
         boost::algorithm::replace_all( qtPrefix, "\\", "/" );
@@ -79,7 +80,7 @@ void Chimera_Win::StaticInitialize()
                                qtConf_resource_name,
                                (const unsigned char*)qtConf_resource_data.data() );
     }
-
+#endif
     Chimera::StaticInitialize();
 }
 
@@ -87,9 +88,11 @@ void Chimera_Win::StaticDeinitialize()
 {
     Chimera::StaticDeinitialize();
 
-    qUnregisterResourceData( 0x01, qtConf_resource_struct,
+#ifndef _DEBUG
+    qUnregisterResourceData(0x01, qtConf_resource_struct,
                              qtConf_resource_name,
                              (const unsigned char*)qtConf_resource_data.data() );
+#endif
 }
 
 Chimera_Win::Chimera_Win()
