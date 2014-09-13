@@ -81,41 +81,48 @@ add_windows_plugin(${PROJECT_NAME} SOURCES)
 #    "${CMAKE_CURRENT_SOURCE_DIR}/sign/passphrase.txt"
 #    "http://timestamp.verisign.com/scripts/timestamp.dll")
 
-get_property(LINK_FLAGS TARGET ${PROJECT_NAME} PROPERTY LINK_FLAGS)
-set(LINK_FLAGS "${LINK_FLAGS} /INCLUDE:__imp__D3DCompile@44")
-set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS ${LINK_FLAGS})
+if( QT_STATIC )
+    get_property(LINK_FLAGS TARGET ${PROJECT_NAME} PROPERTY LINK_FLAGS)
+    set(LINK_FLAGS "${LINK_FLAGS} /INCLUDE:__imp__D3DCompile@44")
+    set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS ${LINK_FLAGS})
+endif( QT_STATIC)
 
 # add library dependencies here; leave ${PLUGIN_INTERNAL_DEPS} there unless you know what you're doing!
-target_link_libraries(${PROJECT_NAME}
+target_link_libraries( ${PROJECT_NAME}
     ${PLUGIN_INTERNAL_DEPS}
     libvlc.lib
     ${Qt5Gui_EGL_LIBRARIES}
     ${Qt5Gui_OPENGL_LIBRARIES}
-    ${Qt5Gui_PLUGINS}
-    d3dcompiler.lib
-    Winmm.lib
-    Imm32.lib
-    D3d9.lib
-    dxguid.lib
-    strmiids.lib
-    libeay32.lib
-    ssleay32.lib
-    Crypt32.lib
     )
 
-target_link_libraries( ${PROJECT_NAME} debug "$ENV{QTDIR}/lib/translator_commond.lib" )
-target_link_libraries( ${PROJECT_NAME} debug "$ENV{QTDIR}/lib/translator_hlsld.lib" )
-target_link_libraries( ${PROJECT_NAME} debug "$ENV{QTDIR}/lib/preprocessord.lib" )
-target_link_libraries( ${PROJECT_NAME} debug "$ENV{QTDIR}/lib/Qt5PlatformSupportd.lib" )
-target_link_libraries( ${PROJECT_NAME} debug "$ENV{QTDIR}/qml/QtQuick.2/qtquick2plugind.lib" )
-target_link_libraries( ${PROJECT_NAME} debug "$ENV{QTDIR}/qml/QtQuick/Layouts/qquicklayoutsplugind.lib" )
+if( QT_STATIC )
+    target_link_libraries( ${PROJECT_NAME}
+        ${Qt5Gui_PLUGINS}
+        d3dcompiler.lib
+        Winmm.lib
+        Imm32.lib
+        D3d9.lib
+        dxguid.lib
+        strmiids.lib
+        libeay32.lib
+        ssleay32.lib
+        Crypt32.lib
+    )
 
-target_link_libraries( ${PROJECT_NAME} optimized "$ENV{QTDIR}/lib/translator_common.lib" )
-target_link_libraries( ${PROJECT_NAME} optimized "$ENV{QTDIR}/lib/translator_hlsl.lib" )
-target_link_libraries( ${PROJECT_NAME} optimized "$ENV{QTDIR}/lib/preprocessor.lib" )
-target_link_libraries( ${PROJECT_NAME} optimized "$ENV{QTDIR}/lib/Qt5PlatformSupport.lib" )
-target_link_libraries( ${PROJECT_NAME} optimized "$ENV{QTDIR}/qml/QtQuick.2/qtquick2plugin.lib" )
-target_link_libraries( ${PROJECT_NAME} optimized "$ENV{QTDIR}/qml/QtQuick/Layouts/qquicklayoutsplugin.lib" )
+    target_link_libraries( ${PROJECT_NAME} debug "$ENV{QTDIR}/lib/translator_commond.lib" )
+    target_link_libraries( ${PROJECT_NAME} debug "$ENV{QTDIR}/lib/translator_hlsld.lib" )
+    target_link_libraries( ${PROJECT_NAME} debug "$ENV{QTDIR}/lib/preprocessord.lib" )
+    target_link_libraries( ${PROJECT_NAME} debug "$ENV{QTDIR}/lib/Qt5PlatformSupportd.lib" )
+    target_link_libraries( ${PROJECT_NAME} debug "$ENV{QTDIR}/qml/QtQuick.2/qtquick2plugind.lib" )
+    target_link_libraries( ${PROJECT_NAME} debug "$ENV{QTDIR}/qml/QtQuick/Layouts/qquicklayoutsplugind.lib" )
+
+    target_link_libraries( ${PROJECT_NAME} optimized "$ENV{QTDIR}/lib/translator_common.lib" )
+    target_link_libraries( ${PROJECT_NAME} optimized "$ENV{QTDIR}/lib/translator_hlsl.lib" )
+    target_link_libraries( ${PROJECT_NAME} optimized "$ENV{QTDIR}/lib/preprocessor.lib" )
+    target_link_libraries( ${PROJECT_NAME} optimized "$ENV{QTDIR}/lib/Qt5PlatformSupport.lib" )
+    target_link_libraries( ${PROJECT_NAME} optimized "$ENV{QTDIR}/qml/QtQuick.2/qtquick2plugin.lib" )
+    target_link_libraries( ${PROJECT_NAME} optimized "$ENV{QTDIR}/qml/QtQuick/Layouts/qquicklayoutsplugin.lib" )
+endif( QT_STATIC )
 
 set(WIX_HEAT_FLAGS
     -gg                 # Generate GUIDs

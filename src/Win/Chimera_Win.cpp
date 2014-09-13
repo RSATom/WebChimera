@@ -10,9 +10,11 @@
 
 #include "QmlVlc/QmlVlcSurfacePlayerProxy.h"
 
-Q_IMPORT_PLUGIN(QWindowsIntegrationPlugin);
-Q_IMPORT_PLUGIN(QtQuick2Plugin);
-Q_IMPORT_PLUGIN(QtQuickLayoutsPlugin);
+#ifdef QT_STATIC
+    Q_IMPORT_PLUGIN( QWindowsIntegrationPlugin );
+    Q_IMPORT_PLUGIN( QtQuick2Plugin );
+    Q_IMPORT_PLUGIN( QtQuickLayoutsPlugin );
+#endif
 
 static std::string qtConf_resource_data;
 
@@ -92,8 +94,10 @@ void Chimera_Win::StaticDeinitialize()
 
 Chimera_Win::Chimera_Win()
 {
+#ifdef QT_STATIC
     qmlProtectModule( "QtQuick", 2 );
-    qmlProtectModule( "QtQuick.Layouts", 1);
+    qmlProtectModule( "QtQuick.Layouts", 1 );
+#endif
 }
 
 Chimera_Win::~Chimera_Win()
