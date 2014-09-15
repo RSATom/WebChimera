@@ -4,3 +4,6 @@
 [submodule "deps/deps/firebreath"]
 	path = deps/firebreath
 	url = git://github.com/firebreath/FireBreath.git
+[submodule "deps/vc-libvlc-sdk"]
+	path = deps/vc-libvlc-sdk
+	url = https://github.com/RSATom/vc-libvlc-sdk.git

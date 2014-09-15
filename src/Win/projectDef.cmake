@@ -81,6 +81,8 @@ add_windows_plugin(${PROJECT_NAME} SOURCES)
 #    "${CMAKE_CURRENT_SOURCE_DIR}/sign/passphrase.txt"
 #    "http://timestamp.verisign.com/scripts/timestamp.dll")
 
+include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/../deps/vc-libvlc-sdk/include )
+
 if( QT_STATIC )
     get_property(LINK_FLAGS TARGET ${PROJECT_NAME} PROPERTY LINK_FLAGS)
     set(LINK_FLAGS "${LINK_FLAGS} /INCLUDE:__imp__D3DCompile@44")
@@ -90,7 +92,7 @@ endif( QT_STATIC)
 # add library dependencies here; leave ${PLUGIN_INTERNAL_DEPS} there unless you know what you're doing!
 target_link_libraries( ${PROJECT_NAME}
     ${PLUGIN_INTERNAL_DEPS}
-    libvlc.lib
+    ${CMAKE_CURRENT_SOURCE_DIR}/../deps/vc-libvlc-sdk/lib/libvlc.lib
     ${Qt5Gui_EGL_LIBRARIES}
     ${Qt5Gui_OPENGL_LIBRARIES}
     )
