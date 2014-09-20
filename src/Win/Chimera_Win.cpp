@@ -125,16 +125,23 @@ bool Chimera_Win::onWindowAttached( FB::AttachedEvent *evt, FB::PluginWindowWin*
 
     setQml();
 
-    MoveWindow( (HWND)m_quickViewPtr->winId(), 0, 0, w->getWindowWidth(), w->getWindowHeight(), FALSE );
-    m_quickViewPtr->show();
+    //simulate resize
+    onWindowResized( 0, w );
 
     return false;
 }
 
-bool Chimera_Win::onWindowResized( FB::ResizedEvent *evt, FB::PluginWindowWin* w )
+bool Chimera_Win::onWindowResized( FB::ResizedEvent*, FB::PluginWindowWin* w )
 {
+    const int newWidth = w->getWindowWidth();
+    const int newHeight = w->getWindowHeight();
     if( m_quickViewPtr ) {
-        MoveWindow( (HWND)m_quickViewPtr->winId(), 0, 0, w->getWindowWidth(), w->getWindowHeight(), TRUE );
+        if( newWidth > 0 && newHeight > 0 ) {
+            if( !m_quickViewPtr->isVisible() )
+                m_quickViewPtr->show();
+            MoveWindow( (HWND)m_quickViewPtr->winId(), 0, 0, newWidth, newHeight, TRUE );
+        } else
+            m_quickViewPtr->hide();
     }
 
     return false;
