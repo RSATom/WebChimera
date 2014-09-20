@@ -111,15 +111,13 @@ if( QT_STATIC )
         Crypt32.lib
     )
 
-    target_link_libraries( ${PROJECT_NAME} debug "$ENV{QTDIR}/lib/translator_commond.lib" )
-    target_link_libraries( ${PROJECT_NAME} debug "$ENV{QTDIR}/lib/translator_hlsld.lib" )
+    target_link_libraries( ${PROJECT_NAME} debug "$ENV{QTDIR}/lib/translatord.lib" )
     target_link_libraries( ${PROJECT_NAME} debug "$ENV{QTDIR}/lib/preprocessord.lib" )
     target_link_libraries( ${PROJECT_NAME} debug "$ENV{QTDIR}/lib/Qt5PlatformSupportd.lib" )
     target_link_libraries( ${PROJECT_NAME} debug "$ENV{QTDIR}/qml/QtQuick.2/qtquick2plugind.lib" )
     target_link_libraries( ${PROJECT_NAME} debug "$ENV{QTDIR}/qml/QtQuick/Layouts/qquicklayoutsplugind.lib" )
 
-    target_link_libraries( ${PROJECT_NAME} optimized "$ENV{QTDIR}/lib/translator_common.lib" )
-    target_link_libraries( ${PROJECT_NAME} optimized "$ENV{QTDIR}/lib/translator_hlsl.lib" )
+    target_link_libraries( ${PROJECT_NAME} optimized "$ENV{QTDIR}/lib/translator.lib" )
     target_link_libraries( ${PROJECT_NAME} optimized "$ENV{QTDIR}/lib/preprocessor.lib" )
     target_link_libraries( ${PROJECT_NAME} optimized "$ENV{QTDIR}/lib/Qt5PlatformSupport.lib" )
     target_link_libraries( ${PROJECT_NAME} optimized "$ENV{QTDIR}/qml/QtQuick.2/qtquick2plugin.lib" )
