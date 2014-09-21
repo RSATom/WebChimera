@@ -5,7 +5,7 @@
 #
 #\**********************************************************/
 
-set(PLUGIN_VERSION "0.1.6")
+set(PLUGIN_VERSION "0.1.7")
 set(PLUGIN_NAME "WebChimera")
 set(PLUGIN_PREFIX "WebChimera")
 set(PLUGIN_DESCRIPTION "Web Plugin powered by Firebreath/Qt Qml/Vlc")
@@ -18,7 +18,7 @@ set(PLUGIN_MIMETYPE "application/x-chimera-plugin")
 #if you want embed vlc into FBVLC distribution:
 # 1) place vlc into FBVLC\Win\WiX\vlc-${VLC_VERSION}
 # 2) uncomment following line
-set(VLC_VERSION "2.1.3")
+set(VLC_VERSION "2.1.5")
 # 3) run prepXXXX.cmd from FireBreath
 
 # ActiveX constants:
