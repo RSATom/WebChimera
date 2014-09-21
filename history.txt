@@ -1,3 +1,16 @@
+v.0.1.7
+- libvlc v2.1.5 used
+- Qt 5.3.2 used (vanilla build from qt-project.org, instead of custom static build)
+- requare "Visual C++ Redistributable Packages" ( http://www.microsoft.com/en-us/download/details.aspx?id=40784 )
+- added argument to events (js and qml):
+    MediaPlayerBuffering,
+    MediaPlayerTimeChanged,
+    MediaPlayerPositionChanged,
+    MediaPlayerSeekableChanged,
+    MediaPlayerPausableChanged,
+    MediaPlayerBuffering
+- Visual Studio Express 2013 used for build
+
 v.0.1.6
 - multiple memory leaks fixed
 - libvlc_AudioChannel_Error,
