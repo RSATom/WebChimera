@@ -83,11 +83,9 @@ add_windows_plugin(${PROJECT_NAME} SOURCES)
 
 include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/../deps/vc-libvlc-sdk/include )
 
-if( QT_STATIC )
-    get_property(LINK_FLAGS TARGET ${PROJECT_NAME} PROPERTY LINK_FLAGS)
-    set(LINK_FLAGS "${LINK_FLAGS} /INCLUDE:__imp__D3DCompile@44")
-    set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS ${LINK_FLAGS})
-endif( QT_STATIC)
+get_property(LINK_FLAGS TARGET ${PROJECT_NAME} PROPERTY LINK_FLAGS)
+set(LINK_FLAGS "${LINK_FLAGS} /INCLUDE:__imp__D3DCompile@44")
+set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS ${LINK_FLAGS})
 
 # add library dependencies here; leave ${PLUGIN_INTERNAL_DEPS} there unless you know what you're doing!
 target_link_libraries( ${PROJECT_NAME}
@@ -95,12 +93,12 @@ target_link_libraries( ${PROJECT_NAME}
     ${CMAKE_CURRENT_SOURCE_DIR}/../deps/vc-libvlc-sdk/lib/libvlc.lib
     ${Qt5Gui_EGL_LIBRARIES}
     ${Qt5Gui_OPENGL_LIBRARIES}
+    d3dcompiler.lib
     )
 
 if( QT_STATIC )
     target_link_libraries( ${PROJECT_NAME}
         ${Qt5Gui_PLUGINS}
-        d3dcompiler.lib
         Winmm.lib
         Imm32.lib
         D3d9.lib

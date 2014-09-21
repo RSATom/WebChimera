@@ -3,8 +3,28 @@
 	<Fragment>
 		<DirectoryRef Id="INSTALLDIR">
 			<Component Guid="{CD86A8CC-8ECC-467A-B1BA-2ECCDC1301AA}" Id="c_QT">
-				<RegistryValue Root="HKCU" Key="SOFTWARE\${COMPANY_NAME}\${PLUGIN_NAME}\${FBSTRING_PLUGIN_VERSION}" Name="QtUninstall" Type="string" Value="${Qt5Core_VERSION_STRING}" KeyPath="yes" />
+				<RegistryValue Root="HKCU" Key="SOFTWARE\${COMPANY_NAME}\${PLUGIN_NAME}\${FBSTRING_PLUGIN_VERSION}"
+				               Name="QtUninstall" Type="string" Value="${Qt5Core_VERSION_STRING}" KeyPath="yes" />
+				<File Id="Qt5Core.dll" Source="$(var.QTDIR)\bin\Qt5Core.dll" />
+				<File Id="Qt5Gui.dll" Source="$(var.QTDIR)\bin\Qt5Gui.dll" />
+				<File Id="Qt5Qml.dll" Source="$(var.QTDIR)\bin\Qt5Qml.dll" />
+				<File Id="Qt5Quick.dll" Source="$(var.QTDIR)\bin\Qt5Quick.dll" />
+				<File Id="libEGL.dll" Source="$(var.QTDIR)\bin\libEGL.dll" />
+				<File Id="libGLESv2.dll" Source="$(var.QTDIR)\bin\libGLESv2.dll" />
+				<File Id="Qt5Network.dll" Source="$(var.QTDIR)\bin\Qt5Network.dll" />
+				<File Id="icudt52.dll" Source="$(var.QTDIR)\bin\icudt52.dll" />
+				<File Id="icuin52.dll" Source="$(var.QTDIR)\bin\icuin52.dll" />
+				<File Id="icuuc52.dll" Source="$(var.QTDIR)\bin\icuuc52.dll" />
+				<File Id="d3dcompiler_47.dll" Source="$(var.QTDIR)\bin\d3dcompiler_47.dll" />
 			</Component>
+			<Directory Id="platforms" Name="platforms">
+				<Component Guid="{3651B8CC-3A34-4177-ACD1-B8BDFE5D102D}" Id="c_QT_platforms">
+					<RegistryValue Root="HKCU" Key="SOFTWARE\${COMPANY_NAME}\${PLUGIN_NAME}\${FBSTRING_PLUGIN_VERSION}\platforms"
+					               Name="QtUninstall" Type="string" Value="${Qt5Core_VERSION_STRING}" KeyPath="yes" />
+					<RemoveFolder On="uninstall" Id="u_QT_platforms" />
+					<File Id="qwindows.dll" Source="$(var.QTDIR)\plugins\platforms\qwindows.dll" />
+				</Component>
+			</Directory>
 			<Directory Id="qml" Name="qml">
 				<Component Guid="{062CC037-EA3F-459C-9417-44875EEAF269}" Id="c_QT_qml">
 					<RegistryValue Root="HKCU" Key="SOFTWARE\${COMPANY_NAME}\${PLUGIN_NAME}\${FBSTRING_PLUGIN_VERSION}\qml"
@@ -24,6 +44,7 @@
 							<RemoveFolder On="uninstall" Id="u_QT_qml_QtQuick_Layouts" />
 							<File Id="QtQuick_Layouts_qmldir" Source="$(var.QTDIR)\qml\QtQuick\Layouts\qmldir" />
 							<File Id="QtQuick_Layouts_plugins.qmltypes" Source="$(var.QTDIR)\qml\QtQuick\Layouts\plugins.qmltypes" />
+							<File Id="QtQuick_Layouts_qquicklayoutsplugin.dll" Source="$(var.QTDIR)\qml\QtQuick\Layouts\qquicklayoutsplugin.dll" />
 						</Component>
 					</Directory>
 				</Directory>
@@ -34,6 +55,7 @@
 						<RemoveFolder On="uninstall" Id="u_QT_qml_QtQuick.2" />
 						<File Id="QtQuick.2_qmldir" Source="$(var.QTDIR)\qml\QtQuick.2\qmldir" />
 						<File Id="QtQuick.2_plugins.qmltypes" Source="$(var.QTDIR)\qml\QtQuick.2\plugins.qmltypes" />
+						<File Id="QtQuick.2_qtquick2plugin.dll" Source="$(var.QTDIR)\qml\QtQuick.2\qtquick2plugin.dll" />
 					</Component>
 				</Directory>
 			</Directory>
@@ -43,6 +65,7 @@
 	<Fragment>
 		<ComponentGroup Id="QT">
 			<ComponentRef Id="c_QT" />
+			<ComponentRef Id="c_QT_platforms" />
 			<ComponentRef Id="c_QT_qml" />
 			<ComponentRef Id="c_QT_qml_QtQuick" />
 			<ComponentRef Id="c_QT_qml_QtQuick_Layouts" />
