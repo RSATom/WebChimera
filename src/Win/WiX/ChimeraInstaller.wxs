@@ -15,7 +15,7 @@
             <RemoveExistingProducts After="InstallInitialize" />
             <InstallExecute After="RemoveExistingProducts" />
         </InstallExecuteSequence>
-        <Media Id="1" Cabinet="${PLUGIN_NAME}.cab" EmbedCab="yes" />
+        <Media Id="1" CompressionLevel="high" Cabinet="${PLUGIN_NAME}.cab" EmbedCab="yes" />
 
         <Directory Id="TARGETDIR" Name="SourceDir">
             <Directory Id="${FB_WIX_INSTALL_LOCATION}">
