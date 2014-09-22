@@ -96,6 +96,8 @@ target_link_libraries( ${PROJECT_NAME}
     d3dcompiler.lib
     )
 
+set( QT_STATIC 1 )
+
 if( QT_STATIC )
     target_link_libraries( ${PROJECT_NAME}
         ${Qt5Gui_PLUGINS}

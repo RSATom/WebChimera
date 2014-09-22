@@ -72,8 +72,7 @@ void Chimera_Win::StaticInitialize()
 
         qtConf_resource_data = "4321[Paths]\n";
         qtConf_resource_data += "Prefix = " + qtPrefix + "\n";
-        qtConf_resource_data += "Plugins = .\n";
-        uint32_t qtConfSize = qtConf_resource_data.size() - sizeof(qtConfSize);
+        uint32_t qtConfSize = qtConf_resource_data.size() - sizeof( qtConfSize );
         uint32_t qtConfSwappedSize = qToBigEndian( qtConfSize );
         memcpy( &qtConf_resource_data[0], &qtConfSwappedSize, sizeof( qtConfSwappedSize ) );
 

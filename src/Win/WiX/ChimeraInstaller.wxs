@@ -53,6 +53,11 @@
                                     KeyPath="yes" />
                             </Component>
 
+                            <Component Guid="{3234FE47-D5EF-4A92-A431-19C40AD671CD}" Id="c_DirectX">
+                                <RegistryValue Root="HKCU" Key="SOFTWARE\${COMPANY_NAME}\${PLUGIN_NAME}\${FBSTRING_PLUGIN_VERSION}" Name="DirectXUninstall" Type="string" Value="9" KeyPath="yes" />
+                                <File Id="D3DCompiler.dll" Source="${CMAKE_CURRENT_SOURCE_DIR}\Win\WiX\DirectX\x86\d3dcompiler_46.dll" />
+                            </Component>
+
                             <!-- Put Additional files here: -->
                             <!-- example:
                             <Component Id="UniqueComponentId" Guid="*">
@@ -71,6 +76,7 @@
             <ComponentRef Id="PluginNameDirComp"/>
             <ComponentRef Id="CompanyDirComp"/>
             <ComponentGroupRef Id="PluginDLLGroup"/>
+            <ComponentRef Id="c_DirectX"/>
             <ComponentGroupRef Id="VLC"/>
             <ComponentGroupRef Id="QT"/>
         </Feature>
