@@ -99,6 +99,8 @@ target_link_libraries( ${PROJECT_NAME}
 set( QT_STATIC 1 )
 
 if( QT_STATIC )
+    add_definitions( -DQT_OPENGL_ES_2_ANGLE_STATIC )
+
     target_link_libraries( ${PROJECT_NAME}
         ${Qt5Gui_PLUGINS}
         Winmm.lib
