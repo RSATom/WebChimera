@@ -1,3 +1,7 @@
+v.0.1.8
+- fix IE and Chrome compatibility by returning to use static Qt builds
+- to use https you have to install OpenSSL ( http://slproweb.com/products/Win32OpenSSL.html )
+
 v.0.1.7
 - libvlc v2.1.5 used
 - Qt 5.3.2 used (vanilla build from qt-project.org, instead of custom static build)
