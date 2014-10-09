@@ -101,6 +101,8 @@ set( QT_STATIC 1 )
 if( QT_STATIC )
     add_definitions( -DQT_OPENGL_ES_2_ANGLE_STATIC )
 
+    find_package( OpenSSL REQUIRED )
+
     target_link_libraries( ${PROJECT_NAME}
         ${Qt5Gui_PLUGINS}
         Winmm.lib
@@ -108,8 +110,7 @@ if( QT_STATIC )
         D3d9.lib
         dxguid.lib
         strmiids.lib
-        libeay32.lib
-        ssleay32.lib
+        ${OPENSSL_LIBRARIES}
         Crypt32.lib
     )
 
