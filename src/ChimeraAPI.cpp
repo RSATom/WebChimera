@@ -356,8 +356,7 @@ void JSPlaylistAPI::stop()
     ChimeraPtr plg = getPlugin();
     vlc_player& p = plg->get_player();
 
-    //use async stop to avoid freeze (on network timeout for example).
-    p.stop( true );
+    p.stop();
 }
 
 void JSPlaylistAPI::next()
@@ -1076,8 +1075,7 @@ void JSRootAPI::stop()
     ChimeraPtr plg = getPlugin();
     vlc_player& p = plg->get_player();
 
-    //use async stop to avoid freeze ( on network timeout for example ).
-    p.stop( true );
+    p.stop();
     p.clear_items();
 }
 
