@@ -170,9 +170,16 @@ void Chimera::OnLibVlcEvent( const libvlc_event_t* e )
     //case libvlc_MediaPlayerSnapshotTaken:
     //    event_to_fire = &JSRootAPI::fire_MediaPlayerSnapshotTaken;
     //    break;
-    //case libvlc_MediaPlayerLengthChanged:
-    //    event_to_fire = &JSRootAPI::fire_MediaPlayerLengthChanged;
-    //    break;
+    case libvlc_MediaPlayerLengthChanged: {
+       double new_length =
+           static_cast<double>( e->u.media_player_length_changed.new_length );
+        h->ScheduleOnMainThread( api,
+                                 boost::bind( &JSRootAPI::fire_MediaPlayerLengthChanged,
+                                              api.get(),
+                                              new_length ) );
+
+        break;
+    }
     //case libvlc_MediaPlayerVout:
     //    event_to_fire = &JSRootAPI::fire_MediaPlayerVout;
     //    break;
@@ -215,7 +222,7 @@ void Chimera::VlcEvents( bool Attach )
         case libvlc_MediaPlayerPausableChanged:
         //case libvlc_MediaPlayerTitleChanged:
         //case libvlc_MediaPlayerSnapshotTaken:
-        //case libvlc_MediaPlayerLengthChanged:
+        case libvlc_MediaPlayerLengthChanged:
         //case libvlc_MediaPlayerVout:
             if( Attach )
                 libvlc_event_attach( em, e, OnLibVlcEvent_proxy, this );
