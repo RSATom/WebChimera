@@ -89,8 +89,8 @@ QString Chimera::get_bgColor() const
 //libvlc events arrives from separate thread
 void Chimera::OnLibVlcEvent_proxy( const libvlc_event_t* e, void *param )
 {
-    Chimera* fbvlc = static_cast<Chimera*>( param );
-    fbvlc->OnLibVlcEvent( e );
+    Chimera* plugin = static_cast<Chimera*>( param );
+    plugin->OnLibVlcEvent( e );
 }
 
 //libvlc events arrives from separate thread
