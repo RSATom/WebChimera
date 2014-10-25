@@ -577,6 +577,8 @@ QUrl Chimera::getQmlSource()
         if( !qmlTmp.isLocalFile() ) {
             qml = qmlTmp;
         }
+#else
+        qml = qmlTmp;
 #endif
     }
 
