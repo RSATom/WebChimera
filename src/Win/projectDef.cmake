@@ -17,6 +17,7 @@ file (GLOB PLATFORM RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
 # use this to add preprocessor definitions
 add_definitions(
     /D "_ATL_STATIC_REGISTRY"
+    /D "_WIN32_WINNT=0x0501"
 )
 
 # get PCH related files
