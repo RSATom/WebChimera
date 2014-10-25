@@ -155,7 +155,3 @@ bool Chimera_Win::is_fullscreen()
 void Chimera_Win::set_fullscreen( bool fs )
 {
 }
-
-void Chimera_Win::toggle_fullscreen()
-{
-}

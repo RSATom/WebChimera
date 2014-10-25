@@ -34,7 +34,6 @@ private:
 public:
     bool is_fullscreen();
     void set_fullscreen(bool fs);
-    void toggle_fullscreen();
 };
 
 #endif //H_CHIMERA_WIN

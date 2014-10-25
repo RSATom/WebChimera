@@ -76,7 +76,9 @@ public:
 public:
     virtual bool is_fullscreen() { return false; };
     virtual void set_fullscreen( bool fs ) {};
-    virtual void toggle_fullscreen() {};
+    virtual void toggle_fullscreen()
+        { set_fullscreen( !is_fullscreen() ); };
+
     std::string getQmlError();
 
 private:
