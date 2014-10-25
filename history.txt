@@ -1,3 +1,12 @@
+v.0.1.9
+- fullscreen support added
+- added to Qml API:
+    fullscreen gloal property with fullscreenChanged global signal
+    toggleFullscreen() global function
+    bgcolorChanged global signal
+    VlcPlayer.mediaPlayerLengthChanged( length ) signal
+- added .mediaPlayerLengthChanged( length ) event to JS API
+
 v.0.1.8
 - fix IE and Chrome compatibility by returning to use static Qt builds
 - to use https you have to install OpenSSL ( http://slproweb.com/products/Win32OpenSSL.html )
