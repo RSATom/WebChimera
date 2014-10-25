@@ -119,7 +119,6 @@ bool Chimera_Win::onWindowAttached( FB::AttachedEvent *evt, FB::PluginWindowWin*
     QQmlContext* context = m_quickViewPtr->rootContext();
     m_qmlVlcPlayer = new QmlVlcSurfacePlayerProxy( (vlc::player*)this, m_quickViewPtr.data() );
     m_qmlVlcPlayer->classBegin();
-    context->setContextProperty( "vlcPlayer", QVariant::fromValue( m_qmlVlcPlayer ) );
 
     process_startup_options();
 
@@ -135,7 +134,7 @@ bool Chimera_Win::onWindowResized( FB::ResizedEvent*, FB::PluginWindowWin* w )
 {
     const int newWidth = w->getWindowWidth();
     const int newHeight = w->getWindowHeight();
-    if( m_quickViewPtr ) {
+    if( m_quickViewPtr && !is_fullscreen() ) {
         if( newWidth > 0 && newHeight > 0 ) {
             if( !m_quickViewPtr->isVisible() )
                 m_quickViewPtr->show();
@@ -149,9 +148,24 @@ bool Chimera_Win::onWindowResized( FB::ResizedEvent*, FB::PluginWindowWin* w )
 
 bool Chimera_Win::is_fullscreen()
 {
+    if( m_quickViewPtr )
+        return 0 != ( m_quickViewPtr->visibility() & QWindow::FullScreen );
+
     return false;
 }
 
 void Chimera_Win::set_fullscreen( bool fs )
 {
+    if( m_quickViewPtr ) {
+        if( fs && !is_fullscreen() ) {
+            ::SetParent( (HWND) m_quickViewPtr->winId(), NULL );
+            m_quickViewPtr->showFullScreen();
+            Q_EMIT fullscreenChanged( true );
+        } else if( !fs && is_fullscreen() ) {
+            FB::PluginWindowWin* w = static_cast<FB::PluginWindowWin*>( GetWindow() );
+            ::SetParent( (HWND) m_quickViewPtr->winId(), w->getHWND() );
+            m_quickViewPtr->showNormal();
+            Q_EMIT fullscreenChanged( false );
+        }
+    }
 }

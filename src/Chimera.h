@@ -23,16 +23,20 @@
 #include <QQuickView>
 
 #include "QmlVlc/libvlc_wrapper/vlc_player.h"
+
 #include "vlc_player_options.h"
 
 #include "QmlVlc/QmlVlcPlayer.h"
 
+#include "PluginQmlProxy.h"
+
 FB_FORWARD_PTR(Chimera)
 class Chimera 
-    : public FB::PluginCore,
+    : public QObject, public FB::PluginCore,
       protected vlc_player,
       protected vlc_player_options
 {
+    Q_OBJECT
 public:
     static void StaticInitialize();
     static void StaticDeinitialize();
@@ -42,6 +46,20 @@ public:
     virtual ~Chimera();
 
 public:
+    Q_PROPERTY( QString bgcolor READ get_bgColor NOTIFY bgcolorChanged )
+    Q_PROPERTY( QmlVlcSurfacePlayerProxy* vlcPlayer MEMBER m_qmlVlcPlayer CONSTANT )
+    Q_PROPERTY( bool fullscreen READ is_fullscreen WRITE set_fullscreen NOTIFY fullscreenChanged )
+
+    QString get_bgColor() const;
+
+    Q_INVOKABLE virtual void toggleFullscreen()
+        { set_fullscreen( !is_fullscreen() ); };
+
+Q_SIGNALS:
+    void bgcolorChanged( const QString& bgcolor );
+    void fullscreenChanged( bool fullscreen );
+
+protected:
     void onPluginReady();
     void shutdown();
     virtual FB::JSAPIPtr createJSAPI();
@@ -70,14 +88,15 @@ public:
     const vlc_player_options& get_options() const
         { return *static_cast<const vlc_player_options*>( this ); }
 
+    QmlVlcSurfacePlayerProxy* getQmlVlcPlayer() const
+        { return m_qmlVlcPlayer; }
+
     int add_playlist_item( const std::string& mrl );
     int add_playlist_item( const std::string& mrl, const std::vector<std::string>& options );
 
 public:
     virtual bool is_fullscreen() { return false; };
     virtual void set_fullscreen( bool fs ) {};
-    virtual void toggle_fullscreen()
-        { set_fullscreen( !is_fullscreen() ); };
 
     std::string getQmlError();
 
@@ -94,7 +113,6 @@ protected:
     void process_startup_options();
     void vlc_close();
 
-    void setBgColorQmlProperty();
     void setQml();
 
     QUrl getQmlSource();
@@ -105,7 +123,7 @@ protected:
 private:
     void init_player_options();
 
-    static void OnLibVlcEvent_proxy( const libvlc_event_t* e, void *param );
+    static void OnLibVlcEvent_proxy( const libvlc_event_t* e, void* param );
     void OnLibVlcEvent( const libvlc_event_t* e );
     void VlcEvents( bool Attach );
 

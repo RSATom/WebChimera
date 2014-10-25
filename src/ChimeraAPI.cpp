@@ -738,7 +738,7 @@ void JSVideoAPI::toggleFullscreen()
 {
     ChimeraPtr plg = getPlugin();
 
-    plg->toggle_fullscreen();
+    plg->toggleFullscreen();
 }
 
 std::string JSVideoAPI::get_aspectRatio()
@@ -1216,5 +1216,5 @@ void JSRootAPI::toggleFullscreen()
 {
     ChimeraPtr plg = getPlugin();
 
-    plg->toggle_fullscreen();
+    plg->toggleFullscreen();
 }

@@ -81,6 +81,11 @@ Chimera::~Chimera()
     m_host->freeRetainedObjects();
 }
 
+QString Chimera::get_bgColor() const
+{
+    return QString::fromStdString( get_bg_color() );
+}
+
 //libvlc events arrives from separate thread
 void Chimera::OnLibVlcEvent_proxy( const libvlc_event_t* e, void *param )
 {
@@ -337,12 +342,16 @@ void Chimera::init_player_options()
 
 void Chimera::process_startup_options()
 {
+    assert( m_quickViewPtr );
+    if( m_quickViewPtr ) {
+        QQmlContext* context = m_quickViewPtr->rootContext();
+        context->setContextObject( this );
+    }
+
     typedef boost::optional<std::string> param_type;
     typedef const FB::variant&           param_vtype;
 
     vlc_player_options& opts = get_options();
-
-    setBgColorQmlProperty();
 
     param_vtype mute            = getParamVariant( "mute" );
     if ( !mute.empty() && mute.can_be_type<bool>() )
@@ -506,22 +515,12 @@ void Chimera::on_option_change( vlc_player_option_e o )
 {
     switch( o ) {
     case po_bg_color:
-        setBgColorQmlProperty();
+        Q_EMIT bgcolorChanged( get_bgColor() );
         break;
     case po_qml:
         setQml();
         break;
     }
-}
-
-void Chimera::setBgColorQmlProperty()
-{
-    if( !m_quickViewPtr )
-        return;
-
-    QQmlContext* context = m_quickViewPtr->rootContext();
-
-    context->setContextProperty( "bgcolor", QString::fromStdString( get_bg_color() ) );
 }
 
 void Chimera::setQml()
