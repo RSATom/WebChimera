@@ -165,6 +165,8 @@ public:
     void clear();
     bool remove( unsigned int idx );
 
+    virtual FB::variant GetProperty( int idx );
+
 private:
     ChimeraWeakPtr m_plugin;
     FB::BrowserHostPtr m_host;
@@ -640,8 +642,8 @@ FB_FORWARD_PTR(JSMediaDescAPI)
 class JSMediaDescAPI : public FB::JSAPIAuto
 {
 public:
-    JSMediaDescAPI( const ChimeraPtr& plugin, const FB::BrowserHostPtr& host )
-        :m_plugin( plugin ), m_host( host )
+    JSMediaDescAPI( const ChimeraPtr& plugin )
+        :m_plugin( plugin )
     {
 
         registerProperty( "title",
@@ -705,9 +707,42 @@ public:
 private:
     std::string get_meta( libvlc_meta_t e_meta );
 
+protected:
+    virtual vlc::media get_media() = 0;
+
 private:
     ChimeraWeakPtr m_plugin;
-    FB::BrowserHostPtr m_host;
+};
+
+////////////////////////////////////////////////////////////////////////////
+/// JSCurrentMediaDescAPI
+////////////////////////////////////////////////////////////////////////////
+FB_FORWARD_PTR( JSCurrentMediaDescAPI )
+class JSCurrentMediaDescAPI : public JSMediaDescAPI
+{
+public:
+    JSCurrentMediaDescAPI( const ChimeraPtr& plugin )
+        : JSMediaDescAPI( plugin ) {}
+
+protected:
+    virtual vlc::media get_media();
+};
+
+////////////////////////////////////////////////////////////////////////////
+/// JSMediaMediaDescAPI
+////////////////////////////////////////////////////////////////////////////
+FB_FORWARD_PTR( JSMediaMediaDescAPI )
+class JSMediaMediaDescAPI : public JSMediaDescAPI
+{
+public:
+    JSMediaMediaDescAPI( const ChimeraPtr& plugin, const vlc::media& );
+    ~JSMediaMediaDescAPI();
+
+protected:
+    virtual vlc::media get_media();
+
+private:
+    vlc::media m_media;
 };
 
 ////////////////////////////////////////////////////////////////////////////
@@ -799,7 +834,7 @@ public:
         m_video = boost::make_shared<JSVideoAPI>( plugin, m_host );
         registerProperty( "video", make_property( this, &JSRootAPI::get_video ) );
 
-        m_mediaDesc = boost::make_shared<JSMediaDescAPI>( plugin, m_host );
+        m_mediaDesc = boost::make_shared<JSCurrentMediaDescAPI>( plugin );
         registerProperty( "mediaDescription", make_property( this, &JSRootAPI::get_mediaDesc ) );
     }
 
@@ -883,13 +918,12 @@ private:
     ChimeraWeakPtr m_plugin;
     FB::BrowserHostPtr m_host;
 
-    JSAudioAPIPtr     m_audio;
-    JSInputAPIPtr     m_input;
-    JSPlaylistAPIPtr  m_playlist;
-    JSSubtitleAPIPtr  m_subtitle;
-    JSVideoAPIPtr     m_video;
-    JSMediaDescAPIPtr m_mediaDesc;
+    JSAudioAPIPtr            m_audio;
+    JSInputAPIPtr            m_input;
+    JSPlaylistAPIPtr         m_playlist;
+    JSSubtitleAPIPtr         m_subtitle;
+    JSVideoAPIPtr            m_video;
+    JSCurrentMediaDescAPIPtr m_mediaDesc;
 };
 
 #endif // H_CHIMERA_API
-

@@ -256,6 +256,21 @@ bool JSPlaylistItemsAPI::remove( unsigned int idx )
    return p.delete_item( idx );
 }
 
+FB::variant JSPlaylistItemsAPI::GetProperty( int idx )
+{
+    ChimeraPtr plg = getPlugin();
+    vlc_player& p = plg->get_player();
+
+    if( idx < 0 || idx >= p.item_count() )
+        return FB::variant();
+
+    vlc::media media = p.get_media( idx );
+    if( !media )
+        return FB::variant();
+
+    return boost::make_shared<JSMediaMediaDescAPI>( plg, media );
+}
+
 ////////////////////////////////////////////////////////////////////////////
 /// JSPlaylistAPI
 ////////////////////////////////////////////////////////////////////////////
@@ -922,9 +937,7 @@ std::string JSMediaDescAPI::get_meta( libvlc_meta_t e_meta )
     ChimeraPtr plg = getPlugin();
     vlc_player& p = plg->get_player();
 
-    libvlc_media_t * p_media = libvlc_media_player_get_media( p.get_mp() );
-    const char* info = p_media ? libvlc_media_get_meta( p_media, e_meta ) : 0;
-    return info ? std::string( info ) : std::string();
+    return get_media().meta( e_meta );
 }
 
 std::string JSMediaDescAPI::get_title()
@@ -1010,6 +1023,38 @@ std::string JSMediaDescAPI::get_artworkURL()
 std::string JSMediaDescAPI::get_trackID()
 {
     return get_meta( libvlc_meta_TrackID );
+}
+
+////////////////////////////////////////////////////////////////////////////
+/// JSCurrentMediaDescAPI
+////////////////////////////////////////////////////////////////////////////
+vlc::media JSCurrentMediaDescAPI::get_media()
+{
+    ChimeraPtr plg = getPlugin();
+    vlc_player& p = plg->get_player();
+
+    return p.current_media();
+}
+
+////////////////////////////////////////////////////////////////////////////
+/// JSMediaMediaDescAPI
+////////////////////////////////////////////////////////////////////////////
+JSMediaMediaDescAPI::JSMediaMediaDescAPI( const ChimeraPtr& plugin,
+                                          const vlc::media& media )
+    : JSMediaDescAPI( plugin ), m_media( media )
+{
+}
+
+JSMediaMediaDescAPI::~JSMediaMediaDescAPI()
+{
+}
+
+vlc::media JSMediaMediaDescAPI::get_media()
+{
+    //just to protect from access to closed plugin
+    ChimeraPtr plg = getPlugin();
+
+    return m_media;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
