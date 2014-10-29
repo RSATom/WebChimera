@@ -940,9 +940,21 @@ std::string JSMediaDescAPI::get_meta( libvlc_meta_t e_meta )
     return get_media().meta( e_meta );
 }
 
+void JSMediaDescAPI::set_meta( libvlc_meta_t e_meta, const std::string& meta )
+{
+    ChimeraPtr plg = getPlugin();
+
+    return get_media().set_meta( e_meta, meta );
+}
+
 std::string JSMediaDescAPI::get_title()
 {
     return get_meta( libvlc_meta_Title );
+}
+
+void JSMediaDescAPI::set_title( const std::string& title )
+{
+    set_meta( libvlc_meta_Title, title );
 }
 
 std::string JSMediaDescAPI::get_artist()
@@ -988,6 +1000,11 @@ std::string JSMediaDescAPI::get_date()
 std::string JSMediaDescAPI::get_setting()
 {
     return get_meta( libvlc_meta_Setting );
+}
+
+void JSMediaDescAPI::set_setting( const std::string& setting )
+{
+    set_meta( libvlc_meta_Setting, setting );
 }
 
 std::string JSMediaDescAPI::get_URL()

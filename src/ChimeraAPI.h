@@ -647,7 +647,9 @@ public:
     {
 
         registerProperty( "title",
-                          make_property( this, &JSMediaDescAPI::get_title ) );
+                          make_property( this, &JSMediaDescAPI::get_title,
+                                               &JSMediaDescAPI::set_title ) );
+
         registerProperty( "artist",
                           make_property( this, &JSMediaDescAPI::get_artist ) );
         registerProperty( "genre",
@@ -664,8 +666,11 @@ public:
                          make_property( this, &JSMediaDescAPI::get_rating ) );
         registerProperty( "date",
                          make_property( this, &JSMediaDescAPI::get_date ) );
+
         registerProperty( "setting",
-                         make_property( this, &JSMediaDescAPI::get_setting ) );
+                          make_property( this, &JSMediaDescAPI::get_setting,
+                                               &JSMediaDescAPI::set_setting ) );
+
         registerProperty( "URL",
                          make_property( this, &JSMediaDescAPI::get_URL ) );
         registerProperty( "language",
@@ -689,6 +694,8 @@ public:
     ChimeraPtr getPlugin();
 
     std::string get_title();
+    void set_title( const std::string& );
+
     std::string get_artist();
     std::string get_genre();
     std::string get_copyright();
@@ -697,7 +704,10 @@ public:
     std::string get_description();
     std::string get_rating();
     std::string get_date();
+
     std::string get_setting();
+    void set_setting( const std::string& );
+
     std::string get_URL();
     std::string get_language();
     std::string get_nowPlaying();
@@ -709,6 +719,7 @@ public:
 
 private:
     std::string get_meta( libvlc_meta_t e_meta );
+    void set_meta( libvlc_meta_t e_meta, const std::string& );
 
 protected:
     virtual vlc::media get_media() = 0;
