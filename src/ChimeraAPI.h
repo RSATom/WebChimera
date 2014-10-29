@@ -680,6 +680,8 @@ public:
                          make_property( this, &JSMediaDescAPI::get_artworkURL ) );
         registerProperty( "trackID",
                          make_property( this, &JSMediaDescAPI::get_trackID ) );
+        registerProperty( "mrl",
+                          make_property( this, &JSMediaDescAPI::get_mrl ) );
     }
 
     virtual ~JSMediaDescAPI(){}
@@ -703,6 +705,7 @@ public:
     std::string get_encodedBy();
     std::string get_artworkURL();
     std::string get_trackID();
+    std::string get_mrl();
 
 private:
     std::string get_meta( libvlc_meta_t e_meta );

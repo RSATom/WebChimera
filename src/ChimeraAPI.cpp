@@ -1025,6 +1025,13 @@ std::string JSMediaDescAPI::get_trackID()
     return get_meta( libvlc_meta_TrackID );
 }
 
+std::string JSMediaDescAPI::get_mrl()
+{
+    ChimeraPtr plg = getPlugin();
+
+    return get_media().mrl();
+}
+
 ////////////////////////////////////////////////////////////////////////////
 /// JSCurrentMediaDescAPI
 ////////////////////////////////////////////////////////////////////////////
