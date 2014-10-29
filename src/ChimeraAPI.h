@@ -663,26 +663,26 @@ public:
         registerProperty( "description",
                           make_property( this, &JSMediaDescAPI::get_description ) );
         registerProperty( "rating",
-                         make_property( this, &JSMediaDescAPI::get_rating ) );
+                          make_property( this, &JSMediaDescAPI::get_rating ) );
         registerProperty( "date",
-                         make_property( this, &JSMediaDescAPI::get_date ) );
+                          make_property( this, &JSMediaDescAPI::get_date ) );
 
         registerProperty( "setting",
                           make_property( this, &JSMediaDescAPI::get_setting,
                                                &JSMediaDescAPI::set_setting ) );
 
         registerProperty( "URL",
-                         make_property( this, &JSMediaDescAPI::get_URL ) );
+                          make_property( this, &JSMediaDescAPI::get_URL ) );
         registerProperty( "language",
-                         make_property( this, &JSMediaDescAPI::get_language ) );
+                          make_property( this, &JSMediaDescAPI::get_language ) );
         registerProperty( "nowPlaying",
-                         make_property( this, &JSMediaDescAPI::get_nowPlaying ) );
+                          make_property( this, &JSMediaDescAPI::get_nowPlaying ) );
         registerProperty( "publisher",
-                         make_property( this, &JSMediaDescAPI::get_publisher ) );
+                          make_property( this, &JSMediaDescAPI::get_publisher ) );
         registerProperty( "encodedBy",
-                         make_property( this, &JSMediaDescAPI::get_encodedBy ) );
+                          make_property( this, &JSMediaDescAPI::get_encodedBy ) );
         registerProperty( "artworkURL",
-                         make_property( this, &JSMediaDescAPI::get_artworkURL ) );
+                          make_property( this, &JSMediaDescAPI::get_artworkURL ) );
         registerProperty( "trackID",
                          make_property( this, &JSMediaDescAPI::get_trackID ) );
         registerProperty( "mrl",

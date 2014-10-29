@@ -935,7 +935,6 @@ ChimeraPtr JSMediaDescAPI::getPlugin()
 std::string JSMediaDescAPI::get_meta( libvlc_meta_t e_meta )
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
 
     return get_media().meta( e_meta );
 }
