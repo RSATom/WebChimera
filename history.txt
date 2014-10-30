@@ -1,3 +1,10 @@
+v.0.1.10
+- freeze on playing from youtube fixed
+- (QML) .mediaDesc renamed to .mediaDescription
+- (QML, JS) .playlist.items is collecton of mediaDescriptions now
+- (QML, JS) mrl property added to mediaDescripton
+- (QML, JS) title and setting properties of mediaDescription now are writable
+
 v.0.1.9
 - fullscreen support added
 - added to Qml API:
