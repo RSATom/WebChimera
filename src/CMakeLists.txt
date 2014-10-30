@@ -68,6 +68,7 @@ SET( SOURCES
     ${QT_RESOURCES}
     ${QML_VLC}
     ${GENERATED}
+    ${CMAKE_CURRENT_SOURCE_DIR}/../history.txt
     )
 
 # This will include Win/projectDef.cmake, X11/projectDef.cmake, Mac/projectDef 
