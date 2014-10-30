@@ -233,6 +233,12 @@ void Chimera::VlcEvents( bool Attach )
     }
 }
 
+void Chimera::fireQmlMessage( const QString& message )
+{
+    JSRootAPIPtr api  = boost::static_pointer_cast<JSRootAPI>( getRootJSAPI() );
+    api->fire_QmlMessage( message.toStdString() );
+}
+
 const FB::variant& Chimera::getParamVariant( const std::string& key ) const
 {
     FB::VariantMap::const_iterator fnd = m_params.find( key.c_str() );

@@ -1286,3 +1286,10 @@ void JSRootAPI::toggleFullscreen()
 
     plg->toggleFullscreen();
 }
+
+void JSRootAPI::emitJSMessage( const std::string& message )
+{
+    ChimeraPtr plg = getPlugin();
+
+    plg->emitJsMessage( message );
+}

@@ -54,10 +54,15 @@ public:
 
     Q_INVOKABLE virtual void toggleFullscreen()
         { set_fullscreen( !is_fullscreen() ); };
+    Q_INVOKABLE virtual void fireQmlMessage( const QString& message );
+
+    void emitJsMessage( const std::string& message )
+        { Q_EMIT jsMessage( QString::fromStdString( message ) ); }
 
 Q_SIGNALS:
     void bgcolorChanged( const QString& bgcolor );
     void fullscreenChanged( bool fullscreen );
+    void jsMessage( const QString& message );
 
 protected:
     void onPluginReady();

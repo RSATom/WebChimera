@@ -823,6 +823,8 @@ public:
         registerMethod( "toggleMute",       make_method( this, &JSRootAPI::toggleMute ) );
         registerMethod( "toggleFullscreen", make_method( this, &JSRootAPI::toggleFullscreen ) );
 
+        registerMethod( "emitJSMessage", make_method( this, &JSRootAPI::emitJSMessage ) );
+
         registerAttribute( "libvlc_NothingSpecial", libvlc_NothingSpecial, true );
         registerAttribute( "libvlc_Opening",        libvlc_Opening,        true );
         registerAttribute( "libvlc_Buffering",      libvlc_Buffering,      true );
@@ -927,6 +929,9 @@ public:
     FB_JSAPI_EVENT( MediaPlayerSeekableChanged, 1, ( bool ) );
     FB_JSAPI_EVENT( MediaPlayerPausableChanged, 1, ( bool ) );
     FB_JSAPI_EVENT( MediaPlayerLengthChanged, 1, ( double ) );
+
+    FB_JSAPI_EVENT( QmlMessage, 1, ( std::string ) );
+    void emitJSMessage( const std::string& message );
 
 private:
     ChimeraWeakPtr m_plugin;
