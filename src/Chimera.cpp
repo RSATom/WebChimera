@@ -188,9 +188,6 @@ void Chimera::OnLibVlcEvent( const libvlc_event_t* e )
     if ( event_to_fire ) {
         h->ScheduleOnMainThread( api, boost::bind( event_to_fire, api.get() ) );
     }
-
-    if( m_qmlVlcPlayer )
-        m_qmlVlcPlayer->OnLibVlcEvent( e );
 }
 
 void Chimera::VlcEvents( bool Attach )
