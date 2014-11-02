@@ -146,6 +146,14 @@ bool Chimera_Win::onWindowResized( FB::ResizedEvent*, FB::PluginWindowWin* w )
     return false;
 }
 
+bool Chimera_Win::onWindowsEvent( FB::WindowsEvent* event, FB::PluginWindowWin* w )
+{
+    if( WM_SETCURSOR == event->uMsg )
+        return true;
+
+    return false;
+}
+
 bool Chimera_Win::is_fullscreen()
 {
     if( m_quickViewPtr )
