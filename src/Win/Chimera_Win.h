@@ -20,15 +20,15 @@ public:
     virtual ~Chimera_Win();
 
     BEGIN_PLUGIN_EVENT_MAP()
-        EVENTTYPE_CASE(FB::AttachedEvent, onWindowAttached, FB::PluginWindowWin)
-        EVENTTYPE_CASE(FB::ResizedEvent, onWindowResized, FB::PluginWindowWin)
-        PLUGIN_EVENT_MAP_CASCADE(Chimera)
+        EVENTTYPE_CASE( FB::AttachedEvent, onWindowAttached, FB::PluginWindowWin )
+        EVENTTYPE_CASE( FB::ResizedEvent, onWindowResized, FB::PluginWindowWin )
+        PLUGIN_EVENT_MAP_CASCADE( Chimera )
     END_PLUGIN_EVENT_MAP()
 
 private:
     /** BEGIN EVENTDEF -- DON'T CHANGE THIS LINE **/
-    bool onWindowAttached(FB::AttachedEvent *evt, FB::PluginWindowWin *);
-    bool onWindowResized(FB::ResizedEvent *evt, FB::PluginWindowWin *);
+    bool onWindowAttached( FB::AttachedEvent*, FB::PluginWindowWin* );
+    bool onWindowResized( FB::ResizedEvent*, FB::PluginWindowWin* );
     /** END EVENTDEF -- DON'T CHANGE THIS LINE **/
 
 public:
