@@ -19,53 +19,32 @@
 
         <Directory Id="TARGETDIR" Name="SourceDir">
             <Directory Id="${FB_WIX_INSTALL_LOCATION}">
-                <Directory Id="CompanyDir" Name="${COMPANY_NAME}">
-                    <Component Id="CompanyDirComp" Guid="*">
-                        <RemoveFolder Id="RemoveCompanyDir" On="uninstall" />
+                <Directory Id="PluginNameDir" Name="${FBSTRING_PluginName}">
+                    <Component Id="PluginNameDirComp" Guid="*">
+                        <RemoveFolder Id="RemovePluginNameDir" On="uninstall" />
                         <RegistryValue
                             Root="HKCU"
-                            Key="SOFTWARE\${COMPANY_NAME}"
+                            Key="SOFTWARE\${PLUGIN_NAME}"
                             Name="Uninstall"
                             Type="string"
                             Value="${FBSTRING_PLUGIN_VERSION}"
                             KeyPath="yes" />
                     </Component>
-                    <Directory Id="PluginNameDir" Name="${FBSTRING_PluginName}">
-                        <Component Id="PluginNameDirComp" Guid="*">
-                            <RemoveFolder Id="RemovePluginNameDir" On="uninstall" />
+                    <Directory Id="INSTALLDIR" Name="${FBSTRING_PLUGIN_VERSION}">
+                        <Component Id="InstallDirComp" Guid="*">
+                            <RemoveFolder Id="RemoveInstallDir" On="uninstall" />
                             <RegistryValue
                                 Root="HKCU"
-                                Key="SOFTWARE\${COMPANY_NAME}\${PLUGIN_NAME}"
+                                Key="SOFTWARE\${PLUGIN_NAME}\${FBSTRING_PLUGIN_VERSION}"
                                 Name="Uninstall"
                                 Type="string"
                                 Value="${FBSTRING_PLUGIN_VERSION}"
                                 KeyPath="yes" />
                         </Component>
-                        <Directory Id="INSTALLDIR" Name="${FBSTRING_PLUGIN_VERSION}">
-                            <Component Id="InstallDirComp" Guid="*">
-                                <RemoveFolder Id="RemoveInstallDir" On="uninstall" />
-                                <RegistryValue
-                                    Root="HKCU"
-                                    Key="SOFTWARE\${COMPANY_NAME}\${PLUGIN_NAME}\${FBSTRING_PLUGIN_VERSION}"
-                                    Name="Uninstall"
-                                    Type="string"
-                                    Value="${FBSTRING_PLUGIN_VERSION}"
-                                    KeyPath="yes" />
-                            </Component>
-
-                            <Component Guid="{3234FE47-D5EF-4A92-A431-19C40AD671CD}" Id="c_DirectX">
-                                <RegistryValue Root="HKCU" Key="SOFTWARE\${COMPANY_NAME}\${PLUGIN_NAME}\${FBSTRING_PLUGIN_VERSION}" Name="DirectXUninstall" Type="string" Value="9" KeyPath="yes" />
-                                <File Id="D3DCompiler.dll" Source="${CMAKE_CURRENT_SOURCE_DIR}\Win\WiX\DirectX\x86\d3dcompiler_47.dll" />
-                            </Component>
-
-                            <!-- Put Additional files here: -->
-                            <!-- example:
-                            <Component Id="UniqueComponentId" Guid="*">
-                                <File Id="uniqueFileId" KeyPath="yes" Source="SourceDir\filename.ext" />
-                            </Component>
-                            /example -->
-                            <!--  -->
-                        </Directory>
+                        <Component Guid="{3234FE47-D5EF-4A92-A431-19C40AD671CD}" Id="c_DirectX">
+                            <RegistryValue Root="HKCU" Key="SOFTWARE\${PLUGIN_NAME}\${FBSTRING_PLUGIN_VERSION}" Name="DirectXUninstall" Type="string" Value="9" KeyPath="yes" />
+                            <File Id="D3DCompiler.dll" Source="${CMAKE_CURRENT_SOURCE_DIR}\Win\WiX\DirectX\x86\d3dcompiler_47.dll" />
+                        </Component>
                     </Directory>
                 </Directory>
             </Directory>
@@ -74,7 +53,6 @@
         <Feature Id="MainPluginFeature" Title="${FBSTRING_ProductName}" Level="1">
             <ComponentRef Id="InstallDirComp"/>
             <ComponentRef Id="PluginNameDirComp"/>
-            <ComponentRef Id="CompanyDirComp"/>
             <ComponentGroupRef Id="PluginDLLGroup"/>
             <ComponentRef Id="c_DirectX"/>
             <ComponentGroupRef Id="VLC"/>

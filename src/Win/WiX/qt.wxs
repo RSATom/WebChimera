@@ -3,24 +3,24 @@
 	<Fragment>
 		<DirectoryRef Id="INSTALLDIR">
 			<Component Guid="{CD86A8CC-8ECC-467A-B1BA-2ECCDC1301AA}" Id="c_QT">
-				<RegistryValue Root="HKCU" Key="SOFTWARE\${COMPANY_NAME}\${PLUGIN_NAME}\${FBSTRING_PLUGIN_VERSION}"
+				<RegistryValue Root="HKCU" Key="SOFTWARE\${PLUGIN_NAME}\${FBSTRING_PLUGIN_VERSION}"
 				               Name="QtUninstall" Type="string" Value="${Qt5Core_VERSION_STRING}" KeyPath="yes" />
 			</Component>
 			<Directory Id="qml" Name="qml">
 				<Component Guid="{062CC037-EA3F-459C-9417-44875EEAF269}" Id="c_QT_qml">
-					<RegistryValue Root="HKCU" Key="SOFTWARE\${COMPANY_NAME}\${PLUGIN_NAME}\${FBSTRING_PLUGIN_VERSION}\qml"
+					<RegistryValue Root="HKCU" Key="SOFTWARE\${PLUGIN_NAME}\${FBSTRING_PLUGIN_VERSION}\qml"
 					               Name="QtUninstall" Type="string" Value="${Qt5Core_VERSION_STRING}" KeyPath="yes" />
 					<RemoveFolder On="uninstall" Id="u_QT_qml" />
 				</Component>
 				<Directory Id="qml_QtQuick" Name="QtQuick">
 					<Component Guid="{AB970230-A990-4514-863A-BF8052EBB2CA}" Id="c_QT_qml_QtQuick">
-						<RegistryValue Root="HKCU" Key="SOFTWARE\${COMPANY_NAME}\${PLUGIN_NAME}\${FBSTRING_PLUGIN_VERSION}\qml\QtQuick"
+						<RegistryValue Root="HKCU" Key="SOFTWARE\${PLUGIN_NAME}\${FBSTRING_PLUGIN_VERSION}\qml\QtQuick"
 						               Name="QtUninstall" Type="string" Value="${Qt5Core_VERSION_STRING}" KeyPath="yes" />
 						<RemoveFolder On="uninstall" Id="u_QT_qml_QtQuick" />
 					</Component>
 					<Directory Id="qml_QtQuick_Layouts" Name="Layouts">
 						<Component Guid="{42079E09-8F18-4FC9-A55C-696E811C70DE}" Id="c_QT_qml_QtQuick_Layouts">
-							<RegistryValue Root="HKCU" Key="SOFTWARE\${COMPANY_NAME}\${PLUGIN_NAME}\${FBSTRING_PLUGIN_VERSION}\qml\QtQuick\Layouts"
+							<RegistryValue Root="HKCU" Key="SOFTWARE\${PLUGIN_NAME}\${FBSTRING_PLUGIN_VERSION}\qml\QtQuick\Layouts"
 							               Name="QtUninstall" Type="string" Value="${Qt5Core_VERSION_STRING}" KeyPath="yes" />
 							<RemoveFolder On="uninstall" Id="u_QT_qml_QtQuick_Layouts" />
 							<File Id="QtQuick_Layouts_qmldir" Source="$(var.QTDIR)\qml\QtQuick\Layouts\qmldir" />
@@ -30,7 +30,7 @@
 				</Directory>
 				<Directory Id="qml_QtQuick.2" Name="QtQuick.2">
 					<Component Guid="{06F01314-3CC7-4DAB-8CFC-F865054C7988}" Id="c_QT_qml_QtQuick.2">
-						<RegistryValue Root="HKCU" Key="SOFTWARE\${COMPANY_NAME}\${PLUGIN_NAME}\${FBSTRING_PLUGIN_VERSION}\qml\QtQuick.2"
+						<RegistryValue Root="HKCU" Key="SOFTWARE\${PLUGIN_NAME}\${FBSTRING_PLUGIN_VERSION}\qml\QtQuick.2"
 						               Name="QtUninstall" Type="string" Value="${Qt5Core_VERSION_STRING}" KeyPath="yes" />
 						<RemoveFolder On="uninstall" Id="u_QT_qml_QtQuick.2" />
 						<File Id="QtQuick.2_qmldir" Source="$(var.QTDIR)\qml\QtQuick.2\qmldir" />

@@ -40,7 +40,7 @@
                     <xsl:value-of select="concat($parent_path, '\', @Name)"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="'SOFTWARE\${COMPANY_NAME}\${PLUGIN_NAME}\${FBSTRING_PLUGIN_VERSION}'"/>
+                    <xsl:value-of select="'SOFTWARE\${PLUGIN_NAME}\${FBSTRING_PLUGIN_VERSION}'"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
