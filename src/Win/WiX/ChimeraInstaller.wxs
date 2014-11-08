@@ -47,6 +47,20 @@
 							<File Id="D3DCompiler.dll" Source="${CMAKE_CURRENT_SOURCE_DIR}\Win\WiX\DirectX\x86\d3dcompiler_47.dll" />
 						</Component>
 
+						<Directory Id="lua" Name="lua">
+							<Component Guid="{D806CEE7-B8F2-4324-A4EA-E232F15C720E}" Id="c_lua">
+								<RemoveFolder On="uninstall" Id="u_lua" />
+								<RegistryValue Root="HKCU" Key="SOFTWARE\${PLUGIN_NAME}\${FBSTRING_PLUGIN_VERSION}\lua" Name="YoutubePlaylistUninstall" Type="string" Value="${FBSTRING_PLUGIN_VERSION}" KeyPath="yes" />
+							</Component>
+							<Directory Id="playlist" Name="playlist">
+								<Component Guid="{2EB56BEF-9803-426B-A086-AEA9F232762A}" Id="c_lua_playlist">
+									<RemoveFolder On="uninstall" Id="u_lua_playlist" />
+									<RegistryValue Root="HKCU" Key="SOFTWARE\${PLUGIN_NAME}\${FBSTRING_PLUGIN_VERSION}\lua\playlist" Name="YoutubePlaylistUninstall" Type="string" Value="${FBSTRING_PLUGIN_VERSION}" KeyPath="yes" />
+									<File Id="playlist_youtube.lua" Source="${CMAKE_CURRENT_SOURCE_DIR}\..\deps\playlist_youtube.lua" />
+								</Component>
+							</Directory>
+						</Directory>
+
 					</Directory>
 				</Directory>
 			</Directory>
@@ -58,6 +72,8 @@
 			<ComponentGroupRef Id="PluginDLLGroup"/>
 			<ComponentRef Id="c_DirectX"/>
 			<ComponentGroupRef Id="VLC"/>
+			<ComponentRef Id="c_lua"/>
+			<ComponentRef Id="c_lua_playlist"/>
 			<ComponentGroupRef Id="QT"/>
 		</Feature>
 	</Product>
