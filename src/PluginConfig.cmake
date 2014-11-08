@@ -11,7 +11,7 @@ set(PLUGIN_PREFIX "WebChimera")
 set(PLUGIN_DESCRIPTION "Web Plugin powered by Firebreath/Qt Qml/Vlc")
 set(PRODUCT_NAME "Chimera Web Plugin")
 set(COMPANY_NAME "RSATom")
-set(COMPANY_DOMAIN "RSATom.name")
+set(COMPANY_DOMAIN "WebChimera.org")
 set(COPYRIGHT_YEARS "2014")
 set(PLUGIN_MIMETYPE "application/x-chimera-plugin")
 
