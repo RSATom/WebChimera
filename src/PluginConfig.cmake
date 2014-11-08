@@ -67,9 +67,9 @@ endif()
 set(FBSTRING_ProductName "${PRODUCT_NAME}")
 set(FBSTRING_FileExtents "")
 if( FB_PLATFORM_ARCH_32 )
-    set(FBSTRING_PluginName "${PRODUCT_NAME}")  # No 32bit postfix to maintain backward compatability.
+    set(FBSTRING_PluginName "${PLUGIN_NAME}")  # No 32bit postfix to maintain backward compatability.
 else( FB_PLATFORM_ARCH_32 )
-    set(FBSTRING_PluginName "${PRODUCT_NAME} ${FB_PLATFORM_ARCH_NAME}")
+    set(FBSTRING_PluginName "${PLUGIN_NAME} ${FB_PLATFORM_ARCH_NAME}")
 endif( FB_PLATFORM_ARCH_32 )
 set(FBSTRING_MIMEType "${PLUGIN_MIMETYPE}")
 
