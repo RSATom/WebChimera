@@ -45,7 +45,7 @@ else( FB_PLATFORM_ARCH_32 )
 endif( FB_PLATFORM_ARCH_32 )
 
 # these are the pieces that are relevant to using it from Javascript
-set(ACTIVEX_PROGID "${COMPANY_NAME}.${PLUGIN_NAME}")
+set(ACTIVEX_PROGID "${PLUGIN_NAME}.${PLUGIN_NAME}")
 if( FB_PLATFORM_ARCH_32 )
     set(MOZILLA_PLUGINID "${COMPANY_DOMAIN}/${PLUGIN_NAME}")  # No 32bit postfix to maintain backward compatability.
 else( FB_PLATFORM_ARCH_32 )
