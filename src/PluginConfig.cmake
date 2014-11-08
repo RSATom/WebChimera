@@ -11,7 +11,7 @@ set(PLUGIN_PREFIX "WebChimera")
 set(PLUGIN_DESCRIPTION "Web Plugin powered by Firebreath/Qt Qml/Vlc")
 set(PRODUCT_NAME "Chimera Web Plugin")
 set(PROJECT_OWNER "Sergey Radionov")
-set(COMPANY_DOMAIN "WebChimera.org")
+set(PROJECT_DOMAIN "WebChimera.org")
 set(COPYRIGHT_YEARS "2014")
 set(PLUGIN_MIMETYPE "application/x-chimera-plugin")
 
@@ -47,9 +47,9 @@ endif( FB_PLATFORM_ARCH_32 )
 # these are the pieces that are relevant to using it from Javascript
 set(ACTIVEX_PROGID "${PLUGIN_NAME}.${PLUGIN_NAME}")
 if( FB_PLATFORM_ARCH_32 )
-    set(MOZILLA_PLUGINID "${COMPANY_DOMAIN}/${PLUGIN_NAME}")  # No 32bit postfix to maintain backward compatability.
+    set(MOZILLA_PLUGINID "${PROJECT_DOMAIN}/${PLUGIN_NAME}")  # No 32bit postfix to maintain backward compatability.
 else( FB_PLATFORM_ARCH_32 )
-    set(MOZILLA_PLUGINID "${COMPANY_DOMAIN}/${PLUGIN_NAME}_${FB_PLATFORM_ARCH_NAME}")
+    set(MOZILLA_PLUGINID "${PROJECT_DOMAIN}/${PLUGIN_NAME}_${FB_PLATFORM_ARCH_NAME}")
 endif( FB_PLATFORM_ARCH_32 )
 
 # strings
