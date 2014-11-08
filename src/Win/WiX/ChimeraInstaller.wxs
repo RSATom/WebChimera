@@ -43,7 +43,7 @@
 						</Component>
 
 						<Component Guid="{3234FE47-D5EF-4A92-A431-19C40AD671CD}" Id="c_DirectX">
-							<RegistryValue Root="HKCU" Key="SOFTWARE\${PLUGIN_NAME}\${FBSTRING_PLUGIN_VERSION}" Name="DirectXUninstall" Type="string" Value="9" KeyPath="yes" />
+							<RegistryValue Root="HKCU" Key="SOFTWARE\${PLUGIN_NAME}\${FBSTRING_PLUGIN_VERSION}" Name="DirectXUninstall" Type="string" Value="${FBSTRING_PLUGIN_VERSION}" KeyPath="yes" />
 							<File Id="D3DCompiler.dll" Source="${CMAKE_CURRENT_SOURCE_DIR}\Win\WiX\DirectX\x86\d3dcompiler_47.dll" />
 						</Component>
 
