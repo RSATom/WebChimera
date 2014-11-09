@@ -1,3 +1,16 @@
+v.0.1.11
+- (JS) .emitJsMessage( string message ) function added
+- (JS) .QmlMessage( string message ) event added
+- (QML) added "plugin" global property to allow attach to global signals with "Connections"
+- (QML) fireQmlMessage( string message ) global function added
+- (QML) jsMessage( string message ) global signal added
+- fixed playlist advance issue
+- (QML) mediaDescription.titleChanged notify signal added
+- (QML) vlcPlayer.mediaPlayerTitleChanged notify signal added
+- (QML) playlist.currentItemChanged notify signal added
+- (QML) allow change mouse cursor
+- added youtube playlist support by http://addons.videolan.org/content/show.php/+Youtube+playlist?content=149909
+
 v.0.1.10
 - freeze on playing from youtube fixed
 - (QML) .mediaDesc renamed to .mediaDescription
