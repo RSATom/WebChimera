@@ -356,6 +356,7 @@ void Chimera::process_startup_options()
     if( m_quickViewPtr ) {
         QQmlContext* context = m_quickViewPtr->rootContext();
         context->setContextObject( this );
+        context->setContextProperty( QStringLiteral( "plugin" ), this );
     }
 
     typedef boost::optional<std::string> param_type;
