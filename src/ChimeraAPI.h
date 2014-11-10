@@ -19,6 +19,13 @@ public:
     JSAudioAPI( const ChimeraPtr& plugin, const FB::BrowserHostPtr& host )
         : m_plugin( plugin ), m_host( host )
     {
+        registerAttribute( "Error",         libvlc_AudioChannel_Error,   true );
+        registerAttribute( "Stereo",        libvlc_AudioChannel_Stereo,  true );
+        registerAttribute( "ReverseStereo", libvlc_AudioChannel_RStereo, true );
+        registerAttribute( "Left",          libvlc_AudioChannel_Left,    true );
+        registerAttribute( "Right",         libvlc_AudioChannel_Right,   true );
+        registerAttribute( "Dolby",         libvlc_AudioChannel_Dolbys,  true );
+
         registerProperty( "trackCount",
                           make_property( this,
                                          &JSAudioAPI::get_trackCount ) );
@@ -31,13 +38,6 @@ public:
         registerProperty( "volume",
                           make_property( this, &JSAudioAPI::get_volume,
                                                &JSAudioAPI::set_volume ) );
-
-        registerAttribute( "stereo",                      libvlc_AudioChannel_Stereo,  true );
-        registerAttribute( "reverseStereoeo",             libvlc_AudioChannel_RStereo, true );
-        registerAttribute( "left",                        libvlc_AudioChannel_Left,    true );
-        registerAttribute( "right",                       libvlc_AudioChannel_Right,   true );
-        registerAttribute( "dolby",                       libvlc_AudioChannel_Dolbys,  true );
-
         registerProperty( "channel",
                           make_property( this, &JSAudioAPI::get_channel,
                                               &JSAudioAPI::set_channel ) );
