@@ -825,15 +825,15 @@ public:
 
         registerMethod( "emitJsMessage", make_method( this, &JSRootAPI::emitJsMessage ) );
 
-        registerAttribute( "libvlc_NothingSpecial", libvlc_NothingSpecial, true );
-        registerAttribute( "libvlc_Opening",        libvlc_Opening,        true );
-        registerAttribute( "libvlc_Buffering",      libvlc_Buffering,      true );
-        registerAttribute( "libvlc_Playing",        libvlc_Playing,        true );
-        registerAttribute( "libvlc_Paused",         libvlc_Paused,         true );
-        registerAttribute( "libvlc_Stopped",        libvlc_Stopped,        true );
-        registerAttribute( "libvlc_Ended",          libvlc_Ended,          true );
-        registerAttribute( "libvlc_Error",          libvlc_Error,          true );
         registerProperty( "state",    make_property( this, &JSRootAPI::get_state ) );
+        registerAttribute( "NothingSpecial", libvlc_NothingSpecial, true );
+        registerAttribute( "Opening",        libvlc_Opening,        true );
+        registerAttribute( "Buffering",      libvlc_Buffering,      true );
+        registerAttribute( "Playing",        libvlc_Playing,        true );
+        registerAttribute( "Paused",         libvlc_Paused,         true );
+        registerAttribute( "Stopped",        libvlc_Stopped,        true );
+        registerAttribute( "Ended",          libvlc_Ended,          true );
+        registerAttribute( "Error",          libvlc_Error,          true );
 
         m_audio = boost::make_shared<JSAudioAPI>( plugin, m_host );
         registerProperty( "audio", make_property( this, &JSRootAPI::get_audio ) );
