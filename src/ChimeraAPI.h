@@ -793,6 +793,9 @@ public:
         registerProperty( "length",
                           make_property( this,
                                          &JSRootAPI::get_length ) );
+        registerProperty( "state",
+                          make_property( this,
+                                          &JSRootAPI::get_state ) );
         registerProperty( "qmlError",
                           make_property( this,
                                          &JSRootAPI::get_qmlError ) );
@@ -825,7 +828,6 @@ public:
 
         registerMethod( "emitJsMessage", make_method( this, &JSRootAPI::emitJsMessage ) );
 
-        registerProperty( "state",    make_property( this, &JSRootAPI::get_state ) );
         registerAttribute( "NothingSpecial", libvlc_NothingSpecial, true );
         registerAttribute( "Opening",        libvlc_Opening,        true );
         registerAttribute( "Buffering",      libvlc_Buffering,      true );
