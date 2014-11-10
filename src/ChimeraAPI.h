@@ -32,13 +32,6 @@ public:
                           make_property( this, &JSAudioAPI::get_volume,
                                                &JSAudioAPI::set_volume ) );
 
-        registerAttribute( "libvlc_AudioChannel_Error",   libvlc_AudioChannel_Error,   true );
-        registerAttribute( "libvlc_AudioChannel_Stereo",  libvlc_AudioChannel_Stereo,  true );
-        registerAttribute( "libvlc_AudioChannel_RStereo", libvlc_AudioChannel_RStereo, true );
-        registerAttribute( "libvlc_AudioChannel_Left",    libvlc_AudioChannel_Left,    true );
-        registerAttribute( "libvlc_AudioChannel_Right",   libvlc_AudioChannel_Right,   true );
-        registerAttribute( "libvlc_AudioChannel_Dolbys",  libvlc_AudioChannel_Dolbys,  true );
-
         registerAttribute( "stereo",                      libvlc_AudioChannel_Stereo,  true );
         registerAttribute( "reverseStereoeo",             libvlc_AudioChannel_RStereo, true );
         registerAttribute( "left",                        libvlc_AudioChannel_Left,    true );
