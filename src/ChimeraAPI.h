@@ -21,10 +21,10 @@ public:
     {
         registerProperty( "trackCount",
                           make_property( this,
-                                        &JSAudioAPI::get_trackCount ) );
+                                         &JSAudioAPI::get_trackCount ) );
         registerProperty( "track",
                           make_property( this, &JSAudioAPI::get_track,
-                                              &JSAudioAPI::set_track ) );
+                                               &JSAudioAPI::set_track ) );
         registerProperty( "mute",
                           make_property( this, &JSAudioAPI::get_mute,
                                                &JSAudioAPI::set_mute ) );
