@@ -111,7 +111,7 @@ private:
     void init_libvlc_options();
 
     std::string detectHttpProxy( const std::string& mrl ) const;
-    bool isTrustedOption( const std::string& option );
+    bool isOptionTrusted( const std::string& option );
 
 protected:
     void vlc_open();

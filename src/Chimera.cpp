@@ -438,19 +438,9 @@ std::string Chimera::detectHttpProxy( const std::string& mrl ) const
     return proxy_str;
 }
 
-const std::string trustedOptions[] = {
-    ":rtsp-http-port=",
-};
-
-bool Chimera::isTrustedOption( const std::string& option )
+bool Chimera::isOptionTrusted( const std::string& option )
 {
-    const unsigned trustedCount = sizeof( trustedOptions ) / sizeof( trustedOptions[0] );
-    for( unsigned i = 0; i < trustedCount; ++i ) {
-        if( 0 == option.compare( 0, trustedOptions[i].size(), trustedOptions[i] ) )
-            return true;
-    }
-
-    return false;
+    return QmlVlcConfig::isOptionTrusted( QString::fromStdString( option ) );
 }
 
 int Chimera::add_playlist_item( const std::string& mrl )
@@ -471,7 +461,7 @@ int Chimera::add_playlist_item( const std::string& mrl, const std::vector<std::s
     //untrusted options
     std::vector<const char*> untrusted_opts;
     for( unsigned i = 0; i < options.size(); ++i ) {
-        if( isTrustedOption( options[i] ) )
+        if( isOptionTrusted( options[i] ) )
             trusted_opts.push_back( options[i].c_str() );
         else
             untrusted_opts.push_back( options[i].c_str() );
