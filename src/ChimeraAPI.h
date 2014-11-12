@@ -512,26 +512,16 @@ public:
         registerProperty( "trackCount",
                           make_property( this,
                                          &JSVideoAPI::get_trackCount ) );
+
         registerProperty( "track",
                           make_property( this, &JSVideoAPI::get_track,
                                                &JSVideoAPI::set_track ) );
-
         registerProperty( "aspectRatio",
                           make_property( this, &JSVideoAPI::get_aspectRatio,
                                                &JSVideoAPI::set_aspectRatio ) );
-        registerProperty( "subtitle",
-                          make_property( this, &JSVideoAPI::get_subtitle,
-                                               &JSVideoAPI::set_subtitle ) );
         registerProperty( "crop",
                           make_property( this, &JSVideoAPI::get_crop,
                                                &JSVideoAPI::set_crop ) );
-        registerProperty( "teletext",
-                          make_property( this, &JSVideoAPI::get_teletext,
-                                              &JSVideoAPI::set_teletext ) );
-        registerProperty( "fullscreen",
-                          make_property( this, &JSVideoAPI::get_fullscreen,
-                                               &JSVideoAPI::set_fullscreen ) );
-
         registerProperty( "contrast",
                           make_property( this, &JSVideoAPI::get_contrast,
                                                &JSVideoAPI::set_contrast ) );
@@ -547,6 +537,16 @@ public:
         registerProperty( "gamma",
                           make_property( this, &JSVideoAPI::get_gamma,
                                                &JSVideoAPI::set_gamma ) );
+        registerProperty( "subtitle",
+                          make_property( this, &JSVideoAPI::get_subtitle,
+                                               &JSVideoAPI::set_subtitle ) );
+        registerProperty( "teletext",
+                          make_property( this, &JSVideoAPI::get_teletext,
+                                              &JSVideoAPI::set_teletext ) );
+        registerProperty( "fullscreen",
+                          make_property( this, &JSVideoAPI::get_fullscreen,
+                                               &JSVideoAPI::set_fullscreen ) );
+
 
         registerMethod( "toggleTeletext",
                         make_method( this, &JSVideoAPI::toggleTeletext ) );
