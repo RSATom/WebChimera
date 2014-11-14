@@ -778,22 +778,6 @@ void JSVideoAPI::set_aspectRatio( const std::string& ar )
     libvlc_video_set_aspect_ratio( p.get_mp(), ar.c_str() );
 }
 
-int JSVideoAPI::get_subtitle()
-{
-    ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
-
-    return libvlc_video_get_spu( p.get_mp() );
-}
-
-void JSVideoAPI::set_subtitle( unsigned int t )
-{
-    ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
-
-    libvlc_video_set_spu( p.get_mp(), t );
-}
-
 std::string JSVideoAPI::get_crop()
 {
     ChimeraPtr plg = getPlugin();

@@ -537,9 +537,6 @@ public:
         registerProperty( "gamma",
                           make_property( this, &JSVideoAPI::get_gamma,
                                                &JSVideoAPI::set_gamma ) );
-        registerProperty( "subtitle",
-                          make_property( this, &JSVideoAPI::get_subtitle,
-                                               &JSVideoAPI::set_subtitle ) );
         registerProperty( "teletext",
                           make_property( this, &JSVideoAPI::get_teletext,
                                               &JSVideoAPI::set_teletext ) );
