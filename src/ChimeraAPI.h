@@ -172,12 +172,21 @@ public:
     JSPlaylistAPI( const ChimeraPtr& plugin, const FB::BrowserHostPtr& host )
         :m_plugin( plugin ), m_host( host )
     {
+        registerAttribute( "Normal", vlc::mode_normal, true );
+        registerAttribute( "Loop",   vlc::mode_loop,   true );
+        registerAttribute( "Single", vlc::mode_last,   true );
+
+
         registerProperty( "itemCount",
                           make_property( this, &JSPlaylistAPI::get_itemCount ) );
         registerProperty( "isPlaying",
                           make_property( this, &JSPlaylistAPI::get_isPlaying ) );
         registerProperty( "currentItem",
                           make_property( this, &JSPlaylistAPI::get_current ) );
+
+        registerProperty( "mode",
+                          make_property( this, &JSPlaylistAPI::get_mode,
+                                               &JSPlaylistAPI::set_mode ) );
 
         registerMethod( "add",
                         make_method( this, &JSPlaylistAPI::add ) );
@@ -215,6 +224,9 @@ public:
     unsigned int get_itemCount();
     bool get_isPlaying();
     int get_current();
+
+    unsigned get_mode();
+    void set_mode( unsigned );
 
     int add( const std::string& mrl );
     int addWithOptions( const std::string& mrl,
