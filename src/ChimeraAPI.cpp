@@ -307,6 +307,14 @@ int JSPlaylistAPI::get_current()
     return p.current_item();
 }
 
+void JSPlaylistAPI::set_current( unsigned idx )
+{
+    ChimeraPtr plg = getPlugin();
+    vlc_player& p = plg->get_player();
+
+    p.set_current( idx );
+}
+
 unsigned JSPlaylistAPI::get_mode()
 {
     ChimeraPtr plg = getPlugin();
@@ -358,14 +366,6 @@ bool JSPlaylistAPI::playItem( unsigned int idx )
     vlc_player& p = plg->get_player();
 
     return p.play( idx );
-}
-
-void JSPlaylistAPI::setCurrentItem( unsigned int idx )
-{
-    ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
-
-    p.set_current( idx );
 }
 
 void JSPlaylistAPI::pause()

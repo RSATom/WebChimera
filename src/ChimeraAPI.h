@@ -181,9 +181,10 @@ public:
                           make_property( this, &JSPlaylistAPI::get_itemCount ) );
         registerProperty( "isPlaying",
                           make_property( this, &JSPlaylistAPI::get_isPlaying ) );
-        registerProperty( "currentItem",
-                          make_property( this, &JSPlaylistAPI::get_current ) );
 
+        registerProperty( "currentItem",
+                          make_property( this, &JSPlaylistAPI::get_current,
+                                               &JSPlaylistAPI::set_current ) );
         registerProperty( "mode",
                           make_property( this, &JSPlaylistAPI::get_mode,
                                                &JSPlaylistAPI::set_mode ) );
@@ -196,8 +197,6 @@ public:
                         make_method( this, &JSPlaylistAPI::play ) );
         registerMethod( "playItem",
                         make_method( this, &JSPlaylistAPI::playItem ) );
-        registerMethod( "setCurrentItem",
-                        make_method( this, &JSPlaylistAPI::setCurrentItem ) );
         registerMethod( "pause",
                         make_method( this, &JSPlaylistAPI::pause ) );
         registerMethod( "togglePause",
@@ -223,7 +222,9 @@ public:
 
     unsigned int get_itemCount();
     bool get_isPlaying();
+
     int get_current();
+    void set_current( unsigned idx );
 
     unsigned get_mode();
     void set_mode( unsigned );
@@ -234,7 +235,6 @@ public:
 
     void play();
     bool playItem( unsigned int idx );
-    void setCurrentItem( unsigned int idx );
     void pause();
     void togglePause();
     void stop();
