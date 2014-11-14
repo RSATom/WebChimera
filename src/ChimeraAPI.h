@@ -234,7 +234,7 @@ public:
                         const std::vector<std::string>& options );
 
     void play();
-    bool playItem( unsigned int idx );
+    bool playItem( unsigned idx );
     void pause();
     void togglePause();
     void stop();
