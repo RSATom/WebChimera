@@ -26,7 +26,7 @@ public:
         registerAttribute( "Right",         libvlc_AudioChannel_Right,   true );
         registerAttribute( "Dolby",         libvlc_AudioChannel_Dolbys,  true );
 
-        registerProperty( "trackCount",
+        registerProperty( "count",
                           make_property( this,
                                          &JSAudioAPI::get_trackCount ) );
         registerProperty( "track",
@@ -251,8 +251,6 @@ public:
         :m_plugin( plugin ), m_host( host )
     {
         registerProperty( "count",
-                          make_property( this, &JSSubtitleAPI::get_trackCount ) );
-        registerProperty( "trackCount",
                           make_property( this, &JSSubtitleAPI::get_trackCount ) );
 
         registerProperty( "track",
@@ -509,7 +507,7 @@ public:
                           make_property( this, &JSVideoAPI::get_width ) );
         registerProperty( "height",
                           make_property( this, &JSVideoAPI::get_height ) );
-        registerProperty( "trackCount",
+        registerProperty( "count",
                           make_property( this,
                                          &JSVideoAPI::get_trackCount ) );
 
@@ -579,9 +577,6 @@ public:
 
     std::string get_aspectRatio();
     void set_aspectRatio( const std::string& );
-
-    int get_subtitle();
-    void set_subtitle( unsigned int );
 
     std::string get_crop();
     void set_crop( const std::string& );
