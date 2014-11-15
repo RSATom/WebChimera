@@ -28,8 +28,6 @@
 
 #include "QmlVlc/QmlVlcPlayer.h"
 
-#include "PluginQmlProxy.h"
-
 FB_FORWARD_PTR(Chimera)
 class Chimera 
     : public QObject, public FB::PluginCore,

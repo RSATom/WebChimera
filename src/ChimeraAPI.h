@@ -640,10 +640,6 @@ public:
         :m_plugin( plugin )
     {
 
-        registerProperty( "title",
-                          make_property( this, &JSMediaDescAPI::get_title,
-                                               &JSMediaDescAPI::set_title ) );
-
         registerProperty( "artist",
                           make_property( this, &JSMediaDescAPI::get_artist ) );
         registerProperty( "genre",
@@ -660,11 +656,6 @@ public:
                           make_property( this, &JSMediaDescAPI::get_rating ) );
         registerProperty( "date",
                           make_property( this, &JSMediaDescAPI::get_date ) );
-
-        registerProperty( "setting",
-                          make_property( this, &JSMediaDescAPI::get_setting,
-                                               &JSMediaDescAPI::set_setting ) );
-
         registerProperty( "URL",
                           make_property( this, &JSMediaDescAPI::get_URL ) );
         registerProperty( "language",
@@ -681,7 +672,14 @@ public:
                          make_property( this, &JSMediaDescAPI::get_trackID ) );
         registerProperty( "mrl",
                           make_property( this, &JSMediaDescAPI::get_mrl ) );
-    }
+
+        registerProperty( "title",
+                          make_property( this, &JSMediaDescAPI::get_title,
+                                               &JSMediaDescAPI::set_title ) );
+		registerProperty( "setting",
+			              make_property(this, &JSMediaDescAPI::get_setting,
+			                                  &JSMediaDescAPI::set_setting));
+	}
 
     virtual ~JSMediaDescAPI(){}
 
