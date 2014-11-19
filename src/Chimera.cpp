@@ -7,7 +7,7 @@
 
 \**********************************************************/
 
-#include "ChimeraAPI.h"
+#include "JSRootQmlAPI.h"
 
 #include "Chimera.h"
 
@@ -232,7 +232,7 @@ void Chimera::VlcEvents( bool Attach )
 
 void Chimera::fireQmlMessage( const QString& message )
 {
-    JSRootAPIPtr api  = boost::static_pointer_cast<JSRootAPI>( getRootJSAPI() );
+    JSRootQmlAPIPtr api  = boost::static_pointer_cast<JSRootQmlAPI>( getRootJSAPI() );
     api->fire_QmlMessage( message.toStdString() );
 }
 
@@ -509,7 +509,7 @@ void Chimera::shutdown()
 FB::JSAPIPtr Chimera::createJSAPI()
 {
     // m_host is the BrowserHost
-    return boost::make_shared<JSRootAPI>( FB::ptr_cast<Chimera>( shared_from_this() ), m_host );
+    return boost::make_shared<JSRootQmlAPI>( FB::ptr_cast<Chimera>( shared_from_this() ), m_host );
 }
 
 void Chimera::on_option_change( vlc_player_option_e o )

@@ -788,13 +788,7 @@ public:
         registerProperty( "state",
                           make_property( this,
                                           &JSRootAPI::get_state ) );
-        registerProperty( "qmlError",
-                          make_property( this,
-                                         &JSRootAPI::get_qmlError ) );
 
-        registerProperty( "qml",
-                          make_property( this, &JSRootAPI::get_qml,
-                                               &JSRootAPI::set_qml ) );
         registerProperty( "position",
                           make_property( this, &JSRootAPI::get_position,
                                                &JSRootAPI::set_position ) );
@@ -817,8 +811,6 @@ public:
         registerMethod( "stop",             make_method( this, &JSRootAPI::stop ) );
         registerMethod( "toggleMute",       make_method( this, &JSRootAPI::toggleMute ) );
         registerMethod( "toggleFullscreen", make_method( this, &JSRootAPI::toggleFullscreen ) );
-
-        registerMethod( "emitJsMessage", make_method( this, &JSRootAPI::emitJsMessage ) );
 
         registerAttribute( "NothingSpecial", libvlc_NothingSpecial, true );
         registerAttribute( "Opening",        libvlc_Opening,        true );
@@ -859,7 +851,6 @@ public:
 
     ChimeraPtr getPlugin();
 
-    // Read-only property ${PROPERTY.ident}
     std::string get_version();
     std::string get_vlcVersion();
 
@@ -871,11 +862,6 @@ public:
     bool get_playing();
 
     double get_length();
-
-    std::string get_qmlError();
-
-    std::string get_qml();
-    void set_qml( const std::string& qml );
 
     double get_position();
     void set_position( double );
@@ -923,9 +909,6 @@ public:
     FB_JSAPI_EVENT( MediaPlayerSeekableChanged, 1, ( bool ) );
     FB_JSAPI_EVENT( MediaPlayerPausableChanged, 1, ( bool ) );
     FB_JSAPI_EVENT( MediaPlayerLengthChanged, 1, ( double ) );
-
-    FB_JSAPI_EVENT( QmlMessage, 1, ( std::string ) );
-    void emitJsMessage( const std::string& message );
 
 private:
     ChimeraWeakPtr m_plugin;
