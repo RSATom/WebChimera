@@ -35,6 +35,17 @@ Q_SIGNALS:
     void fullscreenChanged( bool fullscreen );
     void jsMessage( const QString& message );
 
+public:
+    BEGIN_PLUGIN_EVENT_MAP()
+        EVENTTYPE_CASE( FB::DetachedEvent, onWindowDetached, FB::PluginWindow )
+        PLUGIN_EVENT_MAP_CASCADE( Chimera )
+    END_PLUGIN_EVENT_MAP()
+
+private:
+    /** BEGIN EVENTDEF -- DON'T CHANGE THIS LINE **/
+    bool onWindowDetached( FB::DetachedEvent *evt, FB::PluginWindow* );
+    /** END EVENTDEF -- DON'T CHANGE THIS LINE **/
+
 protected:
     FB::JSAPIPtr createJSAPI() override;
     void process_startup_options() override;
@@ -46,5 +57,6 @@ private:
 
 protected:
     QmlVlcSurfacePlayerProxy* m_qmlVlcPlayer;
+    QScopedPointer<QQuickView> m_quickViewPtr;
     std::string m_qmlError;
 };

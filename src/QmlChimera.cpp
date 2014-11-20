@@ -129,3 +129,10 @@ void QmlChimera::cleanQuickView()
     //FIXME! check for compatibility with future Qt versions.
     m_quickViewPtr->setSource( QUrl() );
 }
+
+bool QmlChimera::onWindowDetached( FB::DetachedEvent *evt, FB::PluginWindow* )
+{
+    m_quickViewPtr.reset();
+
+    return false;
+}

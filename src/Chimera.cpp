@@ -476,10 +476,3 @@ void Chimera::shutdown()
 void Chimera::on_option_change( vlc_player_option_e o )
 {
 }
-
-bool Chimera::onWindowDetached( FB::DetachedEvent *evt, FB::PluginWindow* )
-{
-    m_quickViewPtr.reset();
-
-    return false;
-}
