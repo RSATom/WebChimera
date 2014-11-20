@@ -28,13 +28,12 @@
 
 #include "QmlVlc/QmlVlcPlayer.h"
 
-FB_FORWARD_PTR(Chimera)
+FB_FORWARD_PTR( Chimera )
 class Chimera 
-    : public QObject, public FB::PluginCore,
+    : public FB::PluginCore,
       protected vlc_player,
       protected vlc_player_options
 {
-    Q_OBJECT
 public:
     static void StaticInitialize();
     static void StaticDeinitialize();
@@ -43,29 +42,9 @@ public:
     Chimera();
     virtual ~Chimera();
 
-public:
-    Q_PROPERTY( QString bgcolor READ get_bgColor NOTIFY bgcolorChanged )
-    Q_PROPERTY( QmlVlcSurfacePlayerProxy* vlcPlayer MEMBER m_qmlVlcPlayer CONSTANT )
-    Q_PROPERTY( bool fullscreen READ is_fullscreen WRITE set_fullscreen NOTIFY fullscreenChanged )
-
-    QString get_bgColor() const;
-
-    Q_INVOKABLE virtual void toggleFullscreen()
-        { set_fullscreen( !is_fullscreen() ); };
-    Q_INVOKABLE virtual void fireQmlMessage( const QString& message );
-
-    void emitJsMessage( const std::string& message )
-        { Q_EMIT jsMessage( QString::fromStdString( message ) ); }
-
-Q_SIGNALS:
-    void bgcolorChanged( const QString& bgcolor );
-    void fullscreenChanged( bool fullscreen );
-    void jsMessage( const QString& message );
-
 protected:
     void onPluginReady();
     void shutdown();
-    virtual FB::JSAPIPtr createJSAPI();
     // If you want your plugin to always be windowless, set this to true
     // If you want your plugin to be optionally windowless based on the
     // value of the "windowless" param tag, remove this method or return
@@ -91,15 +70,14 @@ public:
     const vlc_player_options& get_options() const
         { return *static_cast<const vlc_player_options*>( this ); }
 
-    QmlVlcSurfacePlayerProxy* getQmlVlcPlayer() const
-        { return m_qmlVlcPlayer; }
-
     int add_playlist_item( const std::string& mrl );
     int add_playlist_item( const std::string& mrl, const std::vector<std::string>& options );
 
 public:
     virtual bool is_fullscreen() { return false; };
     virtual void set_fullscreen( bool fs ) {};
+    virtual void toggle_fullscreen()
+        { set_fullscreen( !is_fullscreen() ); };
 
     std::string getQmlError();
 
@@ -113,7 +91,7 @@ private:
 
 protected:
     void vlc_open();
-    void process_startup_options();
+    virtual void process_startup_options();
     void vlc_close();
 
     void setQml();
@@ -134,7 +112,6 @@ private:
 
 protected:
     QScopedPointer<QQuickView> m_quickViewPtr;
-    QmlVlcSurfacePlayerProxy* m_qmlVlcPlayer;
 
 private:
     libvlc_instance_t* m_libvlc;

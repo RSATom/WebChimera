@@ -64,7 +64,7 @@ void Chimera::StaticDeinitialize()
 ///         the JSAPI object until the onPluginReady method is called
 ///////////////////////////////////////////////////////////////////////////////
 Chimera::Chimera()
-    : m_libvlc( 0 ), m_qmlVlcPlayer( 0 )
+    : m_libvlc( 0 )
 {
 }
 
@@ -79,11 +79,6 @@ Chimera::~Chimera()
     // they will be released here.
     releaseRootJSAPI();
     m_host->freeRetainedObjects();
-}
-
-QString Chimera::get_bgColor() const
-{
-    return QString::fromStdString( get_bg_color() );
 }
 
 //libvlc events arrives from separate thread
@@ -230,12 +225,6 @@ void Chimera::VlcEvents( bool Attach )
     }
 }
 
-void Chimera::fireQmlMessage( const QString& message )
-{
-    JSRootQmlAPIPtr api  = boost::static_pointer_cast<JSRootQmlAPI>( getRootJSAPI() );
-    api->fire_QmlMessage( message.toStdString() );
-}
-
 const FB::variant& Chimera::getParamVariant( const std::string& key ) const
 {
     FB::VariantMap::const_iterator fnd = m_params.find( key.c_str() );
@@ -352,13 +341,6 @@ void Chimera::init_player_options()
 
 void Chimera::process_startup_options()
 {
-    assert( m_quickViewPtr );
-    if( m_quickViewPtr ) {
-        QQmlContext* context = m_quickViewPtr->rootContext();
-        context->setContextObject( this );
-        context->setContextProperty( QStringLiteral( "plugin" ), this );
-    }
-
     typedef boost::optional<std::string> param_type;
     typedef const FB::variant&           param_vtype;
 
@@ -495,29 +477,9 @@ void Chimera::shutdown()
     vlc_close();
 }
 
-///////////////////////////////////////////////////////////////////////////////
-/// @brief  Creates an instance of the JSAPI object that provides your main
-///         Javascript interface.
-///
-/// Note that m_host is your BrowserHost and shared_ptr returns a
-/// FB::PluginCorePtr, which can be used to provide a
-/// boost::weak_ptr<Chimera> for your JSAPI class.
-///
-/// Be very careful where you hold a shared_ptr to your plugin class from,
-/// as it could prevent your plugin class from getting destroyed properly.
-///////////////////////////////////////////////////////////////////////////////
-FB::JSAPIPtr Chimera::createJSAPI()
-{
-    // m_host is the BrowserHost
-    return boost::make_shared<JSRootQmlAPI>( FB::ptr_cast<Chimera>( shared_from_this() ), m_host );
-}
-
 void Chimera::on_option_change( vlc_player_option_e o )
 {
     switch( o ) {
-    case po_bg_color:
-        Q_EMIT bgcolorChanged( get_bgColor() );
-        break;
     case po_qml:
         setQml();
         break;

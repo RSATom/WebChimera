@@ -25,7 +25,7 @@ void JSRootQmlAPI::set_qml( const std::string& qml )
 
 void JSRootQmlAPI::emitJsMessage( const std::string& message )
 {
-    ChimeraPtr plg = getPlugin();
+    QmlChimeraPtr plg = boost::static_pointer_cast<QmlChimera>( getPlugin() );
 
     plg->emitJsMessage( message );
 }

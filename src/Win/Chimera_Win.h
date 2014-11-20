@@ -5,13 +5,13 @@
 
 #include "PluginWindowWin.h"
 
-#include "../Chimera.h"
+#include "../QmlChimera.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //FBVLC_Win class
 ////////////////////////////////////////////////////////////////////////////////
-FB_FORWARD_PTR(Chimera_Win)
-class Chimera_Win: public Chimera
+FB_FORWARD_PTR( Chimera_Win )
+class Chimera_Win: public QmlChimera
 {
 public:
     static void StaticInitialize();

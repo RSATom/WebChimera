@@ -2,6 +2,8 @@
 
 #include "ChimeraAPI.h"
 
+#include "QmlChimera.h"
+
 ////////////////////////////////////////////////////////////////////////////
 /// JSRootQmlAPI
 ////////////////////////////////////////////////////////////////////////////
@@ -9,8 +11,8 @@ FB_FORWARD_PTR( JSRootQmlAPI)
 class JSRootQmlAPI : public JSRootAPI
 {
 public:
-    JSRootQmlAPI( const ChimeraPtr& plugin, const FB::BrowserHostPtr& host )
-        : JSRootAPI( plugin, host )
+    JSRootQmlAPI( const QmlChimeraPtr& plugin, const FB::BrowserHostPtr& host )
+        : JSRootAPI( boost::static_pointer_cast<Chimera>( plugin ), host )
     {
         registerProperty( "qmlError",
                           make_property( this,
