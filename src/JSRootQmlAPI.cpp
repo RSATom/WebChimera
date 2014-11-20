@@ -2,7 +2,7 @@
 
 std::string JSRootQmlAPI::get_qmlError()
 {
-    ChimeraPtr plg = getPlugin();
+    QmlChimeraPtr plg = boost::static_pointer_cast<QmlChimera>( getPlugin() );
 
     return plg->getQmlError();
 }

@@ -14,6 +14,9 @@ public:
     QmlVlcSurfacePlayerProxy* getQmlVlcPlayer() const
         { return m_qmlVlcPlayer; }
 
+    void setQml();
+    std::string getQmlError();
+
     Q_PROPERTY( QString bgcolor READ get_bgColor NOTIFY bgcolorChanged )
     Q_PROPERTY( QmlVlcSurfacePlayerProxy* vlcPlayer READ getQmlVlcPlayer CONSTANT )
     Q_PROPERTY( bool fullscreen READ is_fullscreen WRITE set_fullscreen NOTIFY fullscreenChanged )
@@ -37,6 +40,11 @@ protected:
     void process_startup_options() override;
     void on_option_change( vlc_player_option_e o ) override;
 
+private:
+    QUrl getQmlSource();
+    void cleanQuickView();
+
 protected:
     QmlVlcSurfacePlayerProxy* m_qmlVlcPlayer;
+    std::string m_qmlError;
 };
