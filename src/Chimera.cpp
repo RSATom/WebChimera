@@ -192,7 +192,7 @@ void Chimera::VlcEvents( bool Attach )
         return;
 
     for( int e = libvlc_MediaPlayerMediaChanged; e <= libvlc_MediaPlayerVout; ++e ) {
-        switch( e ){
+        switch( e ) {
         case libvlc_MediaPlayerMediaChanged:
         case libvlc_MediaPlayerNothingSpecial:
         case libvlc_MediaPlayerOpening:
