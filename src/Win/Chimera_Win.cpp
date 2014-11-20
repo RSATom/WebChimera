@@ -81,12 +81,12 @@ void Chimera_Win::StaticInitialize()
                                (const unsigned char*)qtConf_resource_data.data() );
     }
 #endif
-    Chimera::StaticInitialize();
+    QmlChimera::StaticInitialize();
 }
 
 void Chimera_Win::StaticDeinitialize()
 {
-    Chimera::StaticDeinitialize();
+    QmlChimera::StaticDeinitialize();
 
 #ifndef _DEBUG
     qUnregisterResourceData(0x01, qtConf_resource_struct,

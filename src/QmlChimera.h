@@ -1,5 +1,10 @@
 #pragma once
 
+#include <QScopedPointer>
+#include <QQuickView>
+
+#include <QmlVlc/QmlVlcPlayer.h>
+
 #include "Chimera.h"
 
 FB_FORWARD_PTR( QmlChimera )
@@ -7,6 +12,10 @@ class QmlChimera
     : public QObject, public Chimera
 {
     Q_OBJECT
+
+public:
+    static void StaticInitialize();
+    static void StaticDeinitialize();
 
 public:
     QmlChimera();
@@ -48,7 +57,13 @@ private:
 
 protected:
     FB::JSAPIPtr createJSAPI() override;
+
+    libvlc_instance_t* createLibvlcInstance() override;
+    void init_libvlc_options();
     void process_startup_options() override;
+
+    bool isOptionTrusted( const std::string& option ) override;
+
     void on_option_change( vlc_player_option_e o ) override;
 
 private:

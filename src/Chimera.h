@@ -1,13 +1,4 @@
-/**********************************************************\
-
-  Auto-generated Chimera.h
-
-  This file contains the auto-generated main plugin object
-  implementation for the Chimera Web Plugin project
-
-\**********************************************************/
-#ifndef H_CHIMERA_PLUGIN
-#define H_CHIMERA_PLUGIN
+#pragma once
 
 #include "PluginWindow.h"
 #include "PluginEvents/MouseEvents.h"
@@ -16,17 +7,9 @@
 
 #include "PluginCore.h"
 
-#include <vlc/vlc.h>
-
-#include <QScopedPointer>
-#include <QWeakPointer>
-#include <QQuickView>
-
-#include "QmlVlc/libvlc_wrapper/vlc_player.h"
+#include <libvlc_wrapper/vlc_player.h>
 
 #include "vlc_player_options.h"
-
-#include "QmlVlc/QmlVlcPlayer.h"
 
 FB_FORWARD_PTR( Chimera )
 class Chimera 
@@ -78,19 +61,19 @@ public:
         { set_fullscreen( !is_fullscreen() ); };
 
 private:
-    const FB::variant& getParamVariant( const std::string& key ) const;
-
-    void init_libvlc_options();
-
     std::string detectHttpProxy( const std::string& mrl ) const;
-    bool isOptionTrusted( const std::string& option );
 
 protected:
+    const FB::variant& getParamVariant( const std::string& key ) const;
+
+    virtual libvlc_instance_t* createLibvlcInstance() = 0;
     void vlc_open();
     virtual void process_startup_options();
     void vlc_close();
 
-protected:
+    virtual bool isOptionTrusted( const std::string& option )
+        { return false; };
+
     virtual void on_option_change( vlc_player_option_e );
 
 private:
@@ -105,6 +88,3 @@ private:
 private:
     libvlc_instance_t* m_libvlc;
 };
-
-#endif
-
