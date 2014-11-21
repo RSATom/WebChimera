@@ -58,7 +58,7 @@ void QmlChimera::fireQmlMessage( const QString& message )
     api->fire_QmlMessage( message.toStdString() );
 }
 
-void QmlChimera::init_libvlc_options()
+void QmlChimera::load_libvlc_options()
 {
     typedef boost::optional<std::string> param_type;
     typedef const FB::variant&           param_vtype;
@@ -96,13 +96,32 @@ void QmlChimera::init_libvlc_options()
     QmlVlcConfig::enableNoVideoTitleShow( true );
 }
 
+void QmlChimera::load_startup_options()
+{
+   typedef boost::optional<std::string> param_type;
+    typedef const FB::variant&          param_vtype;
+
+    Chimera::load_startup_options();
+
+    vlc_player_options& opts = get_options();
+
+    param_type qml_source = getParam( "qmlsrc" );
+    if ( qml_source )
+        opts.set_qml_source( *qml_source );
+
+    param_type qml = getParam( "qml" );
+    if ( qml )
+        opts.set_qml( *qml );
+
+    load_libvlc_options();
+}
+
 libvlc_instance_t* QmlChimera::createLibvlcInstance()
 {
-    init_libvlc_options();
     return QmlVlcConfig::createLibvlcInstance();
 }
 
-void QmlChimera::process_startup_options()
+void QmlChimera::apply_player_options()
 {
     assert( m_quickViewPtr );
     if( m_quickViewPtr ) {
@@ -111,7 +130,7 @@ void QmlChimera::process_startup_options()
         context->setContextProperty( QStringLiteral( "plugin" ), this );
     }
 
-    Chimera::process_startup_options();
+    Chimera::apply_player_options();
 }
 
 void QmlChimera::on_option_change( vlc_player_option_e o )

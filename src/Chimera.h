@@ -67,8 +67,10 @@ protected:
     const FB::variant& getParamVariant( const std::string& key ) const;
 
     virtual libvlc_instance_t* createLibvlcInstance() = 0;
+
+    virtual void load_startup_options();
     void vlc_open();
-    virtual void process_startup_options();
+    virtual void apply_player_options();
     void vlc_close();
 
     virtual bool isOptionTrusted( const std::string& option )
@@ -77,13 +79,9 @@ protected:
     virtual void on_option_change( vlc_player_option_e );
 
 private:
-    void init_player_options();
-
     static void OnLibVlcEvent_proxy( const libvlc_event_t* e, void* param );
     void OnLibVlcEvent( const libvlc_event_t* e );
     void VlcEvents( bool Attach );
-
-    void cleanQuickView();
 
 private:
     libvlc_instance_t* m_libvlc;

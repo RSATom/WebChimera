@@ -208,9 +208,8 @@ void Chimera::vlc_open()
     if( get_player().is_open() )
         return ;
 
-    init_player_options();
-
     if( !m_libvlc ) {
+        load_startup_options();
         m_libvlc = createLibvlcInstance();
     }
 
@@ -220,7 +219,7 @@ void Chimera::vlc_open()
     }
 }
 
-void Chimera::init_player_options()
+void Chimera::load_startup_options()
 {
     typedef boost::optional<std::string> param_type;
     typedef const FB::variant&           param_vtype;
@@ -258,17 +257,9 @@ void Chimera::init_player_options()
     param_vtype use_proxy = getParamVariant( "use-proxy" );
     if ( !use_proxy.empty() && use_proxy.can_be_type<bool>() )
         opts.set_use_proxy( use_proxy.convert_cast<bool>() );
-
-    param_type qml_source = getParam( "qmlsrc" );
-    if ( qml_source )
-        opts.set_qml_source( *qml_source );
-
-    param_type qml = getParam( "qml" );
-    if ( qml )
-        opts.set_qml( *qml );
 }
 
-void Chimera::process_startup_options()
+void Chimera::apply_player_options()
 {
     typedef boost::optional<std::string> param_type;
     typedef const FB::variant&           param_vtype;
