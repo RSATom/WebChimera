@@ -86,8 +86,6 @@ void Chimera_Win::StaticInitialize()
 
 void Chimera_Win::StaticDeinitialize()
 {
-    QmlChimera::StaticDeinitialize();
-
 #ifndef _DEBUG
     qUnregisterResourceData(0x01, qtConf_resource_struct,
                              qtConf_resource_name,
@@ -120,6 +118,9 @@ bool Chimera_Win::onWindowAttached( FB::AttachedEvent *evt, FB::PluginWindowWin*
     m_qmlVlcPlayer = new QmlVlcSurfacePlayerProxy( (vlc::player*)this, m_quickViewPtr.data() );
     m_qmlVlcPlayer->classBegin();
 
+    //have to call apply_player_options()
+    //after QmlVlcSurfacePlayerProxy::classBegin
+    //to allow attach Proxy's vmem to plugin before play
     apply_player_options();
 
     setQml();

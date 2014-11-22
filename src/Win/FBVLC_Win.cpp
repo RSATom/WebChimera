@@ -21,6 +21,10 @@
 
 #include <boost/thread/mutex.hpp>
 
+#include "HtmlColorUtils.h"
+
+#include "ChimeraAPI.h"
+
 ////////////////////////////////////////////////////////////////////////////////
 //WindowedWM class
 ////////////////////////////////////////////////////////////////////////////////
@@ -36,7 +40,7 @@ WindowedWM::WindowedWM( HMODULE hDllModule, vlc_player_options* po )
 //FBVLC_Win class
 ////////////////////////////////////////////////////////////////////////////////
 FBVLC_Win::FBVLC_Win()
-    : m_hBgBrush( NULL ), m_frame_buf( 0 )
+    : m_use_native_scaling( false ), m_hBgBrush( NULL ), m_frame_buf( 0 )
 {
     vlc_player_options& o = get_options();
 
@@ -47,6 +51,23 @@ FBVLC_Win::FBVLC_Win()
 FBVLC_Win::~FBVLC_Win()
 {
     DeleteObject( m_hBgBrush );
+}
+
+FB::JSAPIPtr FBVLC_Win::createJSAPI()
+{
+    return boost::make_shared<JSRootAPI>( FB::ptr_cast<Chimera>( shared_from_this() ), m_host );
+}
+ 
+void FBVLC_Win::load_startup_options()
+{
+   typedef boost::optional<std::string> param_type;
+    typedef const FB::variant&          param_vtype;
+
+    Chimera::load_startup_options();
+
+    param_vtype native_scaling  = getParamVariant( "native-scaling" );
+    if( !native_scaling.empty() && native_scaling.can_be_type<bool>() )
+        m_use_native_scaling = native_scaling.convert_cast<bool>();
 }
 
 bool FBVLC_Win::onRefreshEvent( FB::RefreshEvent *evt, FB::PluginWindowlessWin* w )
@@ -80,14 +101,13 @@ bool FBVLC_Win::onRefreshEvent( FB::RefreshEvent *evt, FB::PluginWindowlessWin* 
         //BmpH.biClrUsed = 0;
         //BmpH.biClrImportant = 0;
 
-
         FB::Rect wrect;
         if( getBrowser() == "IE" )
             wrect = fbRect;
         else
             wrect = w->getWindowPosition();
 
-        if( get_options().get_native_scaling() ) {
+        if( m_use_native_scaling ) {
             const float src_aspect = ( float ) media_width / media_height;
             const float dst_aspect = ( float ) w->getWindowWidth() / w->getWindowHeight();
             unsigned dst_media_width = w->getWindowWidth();
@@ -131,7 +151,7 @@ bool FBVLC_Win::onRefreshEvent( FB::RefreshEvent *evt, FB::PluginWindowlessWin* 
 
 void FBVLC_Win::on_option_change( vlc_player_option_e option )
 {
-    FBVLC::on_option_change( option );
+    Chimera::on_option_change( option );
 
     vlc_player_options& o = get_options();
 
@@ -185,6 +205,42 @@ bool FBVLC_Win::onWindowResized( FB::ResizedEvent* evt, FB::PluginWindowWin* w )
     return true;
 }
 
+bool FBVLC_Win::onWindowAttached( FB::AttachedEvent *evt, FB::PluginWindowlessWin* w )
+{
+    vlc_open();
+
+    if( get_player().is_open() ) {
+        vlc::vmem::open( &get_player().basic_player() );
+    }
+
+    onWindowResized( 0, w );
+
+    apply_player_options();
+
+    return true;
+}
+
+bool FBVLC_Win::onWindowDetached( FB::DetachedEvent* evt, FB::PluginWindowlessWin* )
+{
+    vlc::vmem::close();
+
+    vlc_close();
+
+    return true;
+}
+
+bool FBVLC_Win::onWindowResized( FB::ResizedEvent *evt, FB::PluginWindowlessWin* w )
+{
+    if( m_use_native_scaling )
+        vlc::vmem::set_desired_size( vlc::original_media_width,
+                                     vlc::original_media_height );
+    else
+        vlc::vmem::set_desired_size( w->getWindowWidth(),
+                                     w->getWindowHeight() );
+
+    return true;
+}
+
 bool FBVLC_Win::is_fullscreen()
 {
     if( isWindowless() ) {
@@ -203,13 +259,6 @@ void FBVLC_Win::set_fullscreen( bool fs )
         } else if( m_wm->IsFullScreen() && !fs ) {
             m_wm->EndFullScreen();
         }
-    }
-}
-void FBVLC_Win::toggle_fullscreen()
-{
-    //fullscreen mode not supported in windowless mode for now
-    if( !isWindowless() && m_wm.get() ) {
-        m_wm->ToggleFullScreen();
     }
 }
 

@@ -24,6 +24,8 @@
 #include <commctrl.h>
 #include <uxtheme.h>
 
+#include "HtmlColorUtils.h"
+
 #include "win32_fullscreen.h"
 
 ////////////////////////////////////////////////////////////////////////////////

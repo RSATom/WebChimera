@@ -15,7 +15,6 @@ class QmlChimera
 
 public:
     static void StaticInitialize();
-    static void StaticDeinitialize();
 
 public:
     QmlChimera();
@@ -58,10 +57,7 @@ private:
 protected:
     FB::JSAPIPtr createJSAPI() override;
 
-    libvlc_instance_t* createLibvlcInstance() override;
     void load_startup_options() override;
-    void load_libvlc_options();
-    void apply_player_options() override;
 
     bool isOptionTrusted( const std::string& option ) override;
 

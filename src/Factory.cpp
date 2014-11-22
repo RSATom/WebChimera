@@ -10,6 +10,7 @@
 #include "FactoryBase.h"
 #if defined( FB_WIN )
 #include "Win/Chimera_Win.h"
+#include "Win/FBVLC_Win.h"
 #elif defined( FB_X11 )
 #include "X11/Chimera_X11.h"
 #else
@@ -28,13 +29,19 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     FB::PluginCorePtr createPlugin( const std::string& mimetype )
     {
+        if( "application/x-fb-vlc" == mimetype ) {
 #if defined( FB_WIN )
-        return boost::make_shared<Chimera_Win>();
-#elif defined( FB_X11 )
-        return boost::make_shared<Chimera_X11>();
-#else
-        return boost::make_shared<Chimera>();
+            return boost::make_shared<FBVLC_Win>();
 #endif
+        } else {
+#if defined( FB_WIN )
+            return boost::make_shared<Chimera_Win>();
+#elif defined( FB_X11 )
+            return boost::make_shared<Chimera_X11>();
+#else
+            return boost::make_shared<Chimera>();
+#endif
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -42,8 +49,10 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     void globalPluginInitialize()
     {
-#ifdef FB_WIN
-        return Chimera_Win::StaticInitialize();
+#if defined( FB_WIN )
+        Chimera_Win::StaticInitialize();
+#elif defined( FB_X11 )
+        return Chimera_X11::StaticInitialize();
 #else
         return Chimera::StaticInitialize();
 #endif

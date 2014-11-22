@@ -16,8 +16,7 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#ifndef _WIN32_VLCWND_H_
-#define _WIN32_VLCWND_H_
+#pragma once
 
 #include <windows.h>
 
@@ -54,5 +53,3 @@ private:
     ATOM _wndclass_atom;
     HWND _hWnd;
 };
-
-#endif //_WIN32_VLCWND_H_

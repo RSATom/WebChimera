@@ -12,8 +12,6 @@
 
 void QmlChimera::StaticInitialize()
 {
-    Chimera::StaticInitialize();
-
     RegisterQmlVlc();
 
     // Place one-time initialization stuff here; As of FireBreath 1.4 this should only
@@ -32,16 +30,12 @@ void QmlChimera::StaticInitialize()
     }
 }
 
-void QmlChimera::StaticDeinitialize()
-{
-    Chimera::StaticDeinitialize();
-}
-
 QmlChimera::QmlChimera()
     : m_qmlVlcPlayer( 0 )
 {
 
 }
+
 FB::JSAPIPtr QmlChimera::createJSAPI()
 {
     return boost::make_shared<JSRootQmlAPI>( FB::ptr_cast<QmlChimera>( shared_from_this() ), m_host );
@@ -56,44 +50,6 @@ void QmlChimera::fireQmlMessage( const QString& message )
 {
     JSRootQmlAPIPtr api  = boost::static_pointer_cast<JSRootQmlAPI>( getRootJSAPI() );
     api->fire_QmlMessage( message.toStdString() );
-}
-
-void QmlChimera::load_libvlc_options()
-{
-    typedef boost::optional<std::string> param_type;
-    typedef const FB::variant&           param_vtype;
-
-    param_vtype network_caching = getParamVariant( "network-caching" );
-    if ( !network_caching.empty() && network_caching.can_be_type<int>() ) {
-        QmlVlcConfig::setNetworkCacheTime( network_caching.convert_cast<int>() );
-    };
-
-    param_vtype adjust         = getParamVariant( "adjust-filter" );
-    if ( !adjust.empty() && adjust.can_be_type<bool>() && adjust.convert_cast<bool>() ) {
-        QmlVlcConfig::enableAdjustFilter( true );
-    }
-
-    param_vtype marq           = getParamVariant( "marquee-filter" );
-    if ( !marq.empty() && marq.can_be_type<bool>() && marq.convert_cast<bool>() ) {
-        QmlVlcConfig::enableMarqueeFilter( true );
-    }
-
-    param_vtype logo           = getParamVariant( "logo-filter" );
-    if ( !logo.empty() && logo.can_be_type<bool>() && logo.convert_cast<bool>() ) {
-        QmlVlcConfig::enableLogoFilter( true );
-    }
-
-    param_vtype debug          = getParamVariant( "debug" );
-    if ( !debug.empty() && debug.can_be_type<bool>() && debug.convert_cast<bool>() ) {
-        QmlVlcConfig::enableDebug( true );
-    }
-
-    param_vtype hw_accel         = getParamVariant( "hw-accel" );
-    if ( !hw_accel.empty() && hw_accel.can_be_type<bool>() && hw_accel.convert_cast<bool>() ) {
-        QmlVlcConfig::enableHardwareAcceleration( true );
-    }
-
-    QmlVlcConfig::enableNoVideoTitleShow( true );
 }
 
 void QmlChimera::load_startup_options()
@@ -112,25 +68,6 @@ void QmlChimera::load_startup_options()
     param_type qml = getParam( "qml" );
     if ( qml )
         opts.set_qml( *qml );
-
-    load_libvlc_options();
-}
-
-libvlc_instance_t* QmlChimera::createLibvlcInstance()
-{
-    return QmlVlcConfig::createLibvlcInstance();
-}
-
-void QmlChimera::apply_player_options()
-{
-    assert( m_quickViewPtr );
-    if( m_quickViewPtr ) {
-        QQmlContext* context = m_quickViewPtr->rootContext();
-        context->setContextObject( this );
-        context->setContextProperty( QStringLiteral( "plugin" ), this );
-    }
-
-    Chimera::apply_player_options();
 }
 
 void QmlChimera::on_option_change( vlc_player_option_e o )
@@ -156,6 +93,12 @@ void QmlChimera::setQml()
 {
     if( !m_quickViewPtr )
         return;
+
+    if( m_quickViewPtr ) {
+        QQmlContext* context = m_quickViewPtr->rootContext();
+        context->setContextObject( this );
+        context->setContextProperty( QStringLiteral( "plugin" ), this );
+    }
 
     const std::string& qml = get_options().get_qml();
     QList<QQmlError> errors;

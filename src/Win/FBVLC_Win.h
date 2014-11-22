@@ -16,11 +16,16 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#ifndef H_FBVLCPLUGIN_WIN
-#define H_FBVLCPLUGIN_WIN
+#pragma once
 
-#include "../FBVLC.h"
+#include "PluginWindowWin.h"
+#include "PluginWindowlessWin.h"
+
+#include <libvlc_wrapper/vlc_vmem.h>
+
 #include "win32_fullscreen.h"
+
+#include "Chimera.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //WindowedWM class
@@ -38,23 +43,31 @@ private:
 //FBVLC_Win class
 ////////////////////////////////////////////////////////////////////////////////
 FB_FORWARD_PTR( FBVLC_Win )
-class FBVLC_Win: public FBVLC
+class FBVLC_Win
+    : public Chimera,
+      protected vlc::vmem
 {
 public:
     FBVLC_Win();
     virtual ~FBVLC_Win();
 
     BEGIN_PLUGIN_EVENT_MAP()
+        EVENTTYPE_CASE( FB::AttachedEvent, onWindowAttached, FB::PluginWindowlessWin )
+        EVENTTYPE_CASE( FB::DetachedEvent, onWindowDetached, FB::PluginWindowlessWin )
+        EVENTTYPE_CASE( FB::ResizedEvent, onWindowResized, FB::PluginWindowlessWin )
         EVENTTYPE_CASE( FB::RefreshEvent, onRefreshEvent, FB::PluginWindowlessWin )
 
         EVENTTYPE_CASE( FB::AttachedEvent, onWindowAttached, FB::PluginWindowWin )
         EVENTTYPE_CASE( FB::DetachedEvent, onWindowDetached, FB::PluginWindowWin )
         EVENTTYPE_CASE( FB::ResizedEvent, onWindowResized, FB::PluginWindowWin )
-        PLUGIN_EVENT_MAP_CASCADE( FBVLC )
+        PLUGIN_EVENT_MAP_CASCADE( Chimera )
     END_PLUGIN_EVENT_MAP()
 
 private:
     /** BEGIN EVENTDEF -- DON'T CHANGE THIS LINE **/
+    bool onWindowAttached( FB::AttachedEvent*, FB::PluginWindowlessWin* );
+    bool onWindowDetached( FB::DetachedEvent*, FB::PluginWindowlessWin* );
+    bool onWindowResized( FB::ResizedEvent*, FB::PluginWindowlessWin* );
     bool onRefreshEvent( FB::RefreshEvent*, FB::PluginWindowlessWin* );
 
     bool onWindowAttached( FB::AttachedEvent*, FB::PluginWindowWin* );
@@ -65,24 +78,28 @@ private:
     void update_window();
 
 public:
-    bool is_fullscreen();
-    void set_fullscreen( bool fs );
-    void toggle_fullscreen();
+    bool is_fullscreen() override;
+    void set_fullscreen( bool fs ) override;
 
 protected:
-    virtual void on_option_change( vlc_player_option_e );
-    virtual void on_frame_ready( const std::vector<char>* );
-    virtual void on_frame_cleanup();
+    bool isWindowless() override
+        { return FB::PluginCore::isWindowless(); }
 
-protected:
+    FB::JSAPIPtr createJSAPI() override;
+
+    void load_startup_options() override;
+
+    void on_option_change( vlc_player_option_e ) override;
+    void on_frame_ready( const std::vector<char>* ) override;
+    void on_frame_cleanup() override;
+
+private:
+    bool m_use_native_scaling;
 //for windowless mode
     HBRUSH m_hBgBrush;
 //for windowed mode
     std::auto_ptr<WindowedWM> m_wm;
 
-private:
     boost::mutex m_frame_guard;
     const std::vector<char>* m_frame_buf;
 };
-
-#endif//H_FBVLCPLUGIN_WIN

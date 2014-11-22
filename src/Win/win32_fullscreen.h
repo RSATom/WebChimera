@@ -16,8 +16,7 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#ifndef VLC_FULLSCREEN_H
-#define VLC_FULLSCREEN_H
+#pragma once
 
 #ifdef _WIN32
 
@@ -229,5 +228,3 @@ inline const VLCViewResources& VLCFullScreenWnd::RC() const
 }
 
 #endif //_WIN32
-
-#endif //VLC_FULLSCREEN_H
