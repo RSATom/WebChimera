@@ -174,6 +174,7 @@ void Chimera_Win::set_fullscreen( bool fs )
             FB::PluginWindowWin* w = static_cast<FB::PluginWindowWin*>( GetWindow() );
             ::SetParent( (HWND) m_quickViewPtr->winId(), w->getHWND() );
             m_quickViewPtr->showNormal();
+            onWindowResized( 0, w );
             Q_EMIT fullscreenChanged( false );
         }
     }
