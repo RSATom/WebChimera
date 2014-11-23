@@ -11,7 +11,7 @@ set(COPYRIGHT_YEARS "2011-2014")
 
 set(PLUGIN_NAME "WebChimera")
 set(PLUGIN_PREFIX "WebChimera")
-set( PLUGIN_DESCRIPTION "Web Plugin powered by Firebreath/Qt Qml/Vlc" )
+set( PLUGIN_DESCRIPTION "Browser Video plugin/player powered by Firebreath/Qt Qml/Vlc" )
 set( FBVLC_PLUGIN_DESCRIPTION "FireBreathed VLC (aka FBVLC) emulator" )
 set(PRODUCT_NAME "WebChimera Plugin")
 set(PROJECT_OWNER "Sergey Radionov")
