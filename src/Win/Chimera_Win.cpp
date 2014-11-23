@@ -7,6 +7,7 @@
 #include <QQmlContext.h>
 #include <QtQml/QQml.h>
 #include <QtEndian>
+#include <QAbstractNativeEventFilter>
 
 #include "QmlVlc/QmlVlcSurfacePlayerProxy.h"
 
@@ -61,6 +62,24 @@ QT_END_NAMESPACE
 extern std::string g_dllPath;
 
 ////////////////////////////////////////////////////////////////////////////////
+//EraseBkgndEater class
+////////////////////////////////////////////////////////////////////////////////
+//implements workaround of incorrect WM_ERASEBKGND message handling ( at least on Qt 5.3.2 )
+class EraseBkgndEater : public QAbstractNativeEventFilter
+{
+public:
+    bool nativeEventFilter( const QByteArray&, void* message, long* result ) override
+    {
+        MSG* winMessage = (MSG*)message;
+        if( winMessage->message == WM_ERASEBKGND ) {
+            *result = TRUE;
+            return true;
+        }
+        return false;
+    }
+};
+
+////////////////////////////////////////////////////////////////////////////////
 //Chimera_Win class
 ////////////////////////////////////////////////////////////////////////////////
 void Chimera_Win::StaticInitialize()
@@ -81,7 +100,12 @@ void Chimera_Win::StaticInitialize()
                                (const unsigned char*)qtConf_resource_data.data() );
     }
 #endif
+
     QmlChimera::StaticInitialize();
+
+    assert( qApp );
+    if( qApp )
+        qApp->installNativeEventFilter( new EraseBkgndEater );
 }
 
 void Chimera_Win::StaticDeinitialize()
