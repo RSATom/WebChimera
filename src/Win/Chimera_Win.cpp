@@ -110,6 +110,7 @@ bool Chimera_Win::onWindowAttached( FB::AttachedEvent *evt, FB::PluginWindowWin*
     vlc_open();
 
     m_quickViewPtr.reset( new QQuickView );
+    m_quickViewPtr->setTitle( QStringLiteral( "WebChimera" ) );
     m_quickViewPtr->setResizeMode( QQuickView::SizeRootObjectToView );
     m_quickViewPtr->setProperty( "_q_embedded_native_parent_handle", WId( w->getHWND() ) );
     m_quickViewPtr->setFlags( m_quickViewPtr->flags() | Qt::FramelessWindowHint );
