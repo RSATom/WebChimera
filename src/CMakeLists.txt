@@ -1,6 +1,6 @@
 #/**********************************************************\ 
 # 
-# Auto-generated CMakeLists.txt for the Chimera Web Plugin project
+# Auto-generated CMakeLists.txt for the WebChimera Plugin project
 #
 #\**********************************************************/
 

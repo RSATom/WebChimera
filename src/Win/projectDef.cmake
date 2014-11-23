@@ -1,6 +1,6 @@
 #/**********************************************************\
 # Auto-generated Windows project definition file for the
-# Chimera Web Plugin project
+# WebChimera Plugin project
 #\**********************************************************/
 
 # Windows template platform definition CMake file

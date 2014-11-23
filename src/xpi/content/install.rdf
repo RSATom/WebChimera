@@ -13,7 +13,7 @@
 		<em:localized>
 			<Description>
 				<em:locale>en-US</em:locale>
-				<em:name>Chimera Web Plugin</em:name>
+				<em:name>WebChimera Plugin</em:name>
 				<em:description>Web Plugin powered by Firebreath/Qt Qml/Vlc</em:description>
 				<em:creator>RSATom</em:creator>
 				<em:homepageURL>http://RSATom.name</em:homepageURL>

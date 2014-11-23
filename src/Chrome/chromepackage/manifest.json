@@ -1,5 +1,5 @@
 {
-  "name": "Chimera Web Plugin",
+  "name": "WebChimera Plugin",
   "version": "${FBSTRING_PLUGIN_VERSION}",
   "description": "Web Plugin powered by Firebreath/Qt Qml/Vlc",
 
