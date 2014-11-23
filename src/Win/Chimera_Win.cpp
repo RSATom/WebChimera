@@ -174,8 +174,10 @@ bool Chimera_Win::onWindowResized( FB::ResizedEvent*, FB::PluginWindowWin* w )
 
 bool Chimera_Win::onWindowsEvent( FB::WindowsEvent* event, FB::PluginWindowWin* w )
 {
-    if( WM_SETCURSOR == event->uMsg )
+    if( WM_SETCURSOR == event->uMsg ) {
+        event->lRes = FALSE; //allow change cursor by child windows
         return true;
+    }
 
     return false;
 }
