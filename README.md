@@ -7,4 +7,4 @@ This project is the next generation of [FBVLC](https://github.com/RSATom/fbvlc),
 
 Binaries can be downloaded from: https://sourceforge.net/projects/webchimera/
 
-Samples available at: http://rsatom.github.io/WebChimera/
+Homepage: http://WebChimera.org
