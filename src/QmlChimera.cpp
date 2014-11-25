@@ -170,10 +170,3 @@ bool QmlChimera::isOptionTrusted( const std::string& option )
 {
     return QmlVlcConfig::isOptionTrusted( QString::fromStdString( option ) );
 }
-
-bool QmlChimera::onWindowDetached( FB::DetachedEvent *evt, FB::PluginWindow* )
-{
-    m_quickViewPtr.reset();
-
-    return false;
-}

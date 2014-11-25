@@ -23,6 +23,7 @@ public:
 
     BEGIN_PLUGIN_EVENT_MAP()
         EVENTTYPE_CASE( FB::AttachedEvent, onWindowAttached, FB::PluginWindowWin )
+        EVENTTYPE_CASE( FB::DetachedEvent, onWindowDetached, FB::PluginWindowWin )
         EVENTTYPE_CASE( FB::ResizedEvent, onWindowResized, FB::PluginWindowWin )
         EVENTTYPE_CASE( FB::WindowsEvent, onWindowsEvent, FB::PluginWindowWin )
         PLUGIN_EVENT_MAP_CASCADE( QmlChimera )
@@ -31,13 +32,17 @@ public:
 private:
     /** BEGIN EVENTDEF -- DON'T CHANGE THIS LINE **/
     bool onWindowAttached( FB::AttachedEvent*, FB::PluginWindowWin* );
+    bool onWindowDetached( FB::DetachedEvent*, FB::PluginWindowWin* );
     bool onWindowResized( FB::ResizedEvent*, FB::PluginWindowWin* );
     bool onWindowsEvent( FB::WindowsEvent*, FB::PluginWindowWin* );
     /** END EVENTDEF -- DON'T CHANGE THIS LINE **/
 
 public:
     bool is_fullscreen();
-    void set_fullscreen(bool fs);
+    void set_fullscreen( bool fs );
+
+private:
+    QScopedPointer<QWindow> m_pluginWindow;
 };
 
 #endif //H_CHIMERA_WIN

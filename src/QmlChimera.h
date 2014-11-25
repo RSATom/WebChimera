@@ -45,13 +45,11 @@ Q_SIGNALS:
 
 public:
     BEGIN_PLUGIN_EVENT_MAP()
-        EVENTTYPE_CASE( FB::DetachedEvent, onWindowDetached, FB::PluginWindow )
         PLUGIN_EVENT_MAP_CASCADE( Chimera )
     END_PLUGIN_EVENT_MAP()
 
 private:
     /** BEGIN EVENTDEF -- DON'T CHANGE THIS LINE **/
-    bool onWindowDetached( FB::DetachedEvent *evt, FB::PluginWindow* );
     /** END EVENTDEF -- DON'T CHANGE THIS LINE **/
 
 protected:

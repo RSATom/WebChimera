@@ -129,14 +129,15 @@ Chimera_Win::~Chimera_Win()
 {
 }
 
-bool Chimera_Win::onWindowAttached( FB::AttachedEvent *evt, FB::PluginWindowWin* w )
+bool Chimera_Win::onWindowAttached( FB::AttachedEvent* evt, FB::PluginWindowWin* w )
 {
+    m_pluginWindow.reset( QWindow::fromWinId( (WId) w->getHWND() ) );
+
     vlc_open();
 
-    m_quickViewPtr.reset( new QQuickView );
+    m_quickViewPtr.reset( new QQuickView( m_pluginWindow.data() ) );
     m_quickViewPtr->setTitle( QStringLiteral( "WebChimera" ) );
     m_quickViewPtr->setResizeMode( QQuickView::SizeRootObjectToView );
-    m_quickViewPtr->setProperty( "_q_embedded_native_parent_handle", WId( w->getHWND() ) );
     m_quickViewPtr->setFlags( m_quickViewPtr->flags() | Qt::FramelessWindowHint );
 
     QQmlContext* context = m_quickViewPtr->rootContext();
@@ -156,6 +157,14 @@ bool Chimera_Win::onWindowAttached( FB::AttachedEvent *evt, FB::PluginWindowWin*
     return false;
 }
 
+bool Chimera_Win::onWindowDetached( FB::DetachedEvent*, FB::PluginWindowWin* )
+{
+    m_quickViewPtr.reset();
+    m_pluginWindow.reset();
+
+    return false;
+}
+
 bool Chimera_Win::onWindowResized( FB::ResizedEvent*, FB::PluginWindowWin* w )
 {
     const int newWidth = w->getWindowWidth();
@@ -164,7 +173,8 @@ bool Chimera_Win::onWindowResized( FB::ResizedEvent*, FB::PluginWindowWin* w )
         if( newWidth > 0 && newHeight > 0 ) {
             if( !m_quickViewPtr->isVisible() )
                 m_quickViewPtr->show();
-            MoveWindow( (HWND)m_quickViewPtr->winId(), 0, 0, newWidth, newHeight, TRUE );
+            m_quickViewPtr->setX( 0 ); m_quickViewPtr->setY( 0 );
+            m_quickViewPtr->resize( newWidth, newHeight );
         } else
             m_quickViewPtr->hide();
     }
@@ -192,16 +202,15 @@ bool Chimera_Win::is_fullscreen()
 
 void Chimera_Win::set_fullscreen( bool fs )
 {
-    if( m_quickViewPtr ) {
+    if( m_quickViewPtr && m_pluginWindow ) {
         if( fs && !is_fullscreen() ) {
-            ::SetParent( (HWND) m_quickViewPtr->winId(), NULL );
+            m_quickViewPtr->setParent( 0 );
             m_quickViewPtr->showFullScreen();
             Q_EMIT fullscreenChanged( true );
         } else if( !fs && is_fullscreen() ) {
-            FB::PluginWindowWin* w = static_cast<FB::PluginWindowWin*>( GetWindow() );
-            ::SetParent( (HWND) m_quickViewPtr->winId(), w->getHWND() );
             m_quickViewPtr->showNormal();
-            onWindowResized( 0, w );
+            m_quickViewPtr->setParent( m_pluginWindow.data() );
+            onWindowResized( 0, static_cast<FB::PluginWindowWin*>( GetWindow() ) );
             Q_EMIT fullscreenChanged( false );
         }
     }
