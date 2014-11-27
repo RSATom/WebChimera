@@ -10,6 +10,10 @@
 
 #include "JSRootQmlApi.h"
 
+#ifndef QT_NO_DEBUG
+#include <Shellapi.h>
+#endif
+
 void QmlChimera::StaticInitialize()
 {
     RegisterQmlVlc();
@@ -22,9 +26,10 @@ void QmlChimera::StaticInitialize()
         new QGuiApplication( argc, 0 );
 #else
         //Q_ASSERT(allArguments.size() == origArgc); at qcoreapplication.cpp:2109 workaround
-        static int argc = 1;
-        static char** argv = { 0 };
-        new QGuiApplication( argc, argv );
+        int argc;
+        LocalFree( CommandLineToArgvW( GetCommandLineW(), &argc ) );
+        std::vector<char*> argv( argc, nullptr );
+        new QGuiApplication( argc, argv.data() );
 #endif
         QGuiApplication::processEvents();
     }
