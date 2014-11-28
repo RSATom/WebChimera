@@ -8,6 +8,7 @@
 #include <QtQml/QQml.h>
 #include <QtEndian>
 #include <QAbstractNativeEventFilter>
+#include <QScreen>
 
 #include "QmlVlc/QmlVlcSurfacePlayerProxy.h"
 
@@ -200,11 +201,40 @@ bool Chimera_Win::is_fullscreen()
     return false;
 }
 
+QScreen* ScreenFromWindow( FB::PluginWindowWin* w )
+{
+    POINT topLeft = { 0, 0 };
+    ClientToScreen( w->getHWND(), &topLeft );
+
+    QRect winRect = QRect( 0, 0, w->getWindowWidth(), w->getWindowHeight() );
+    winRect.moveTo( topLeft.x, topLeft.y );
+    QPoint winCenter = winRect.center();
+
+    QList<QScreen*> screens = QGuiApplication::screens();
+    QScreen* bestScreen = QGuiApplication::primaryScreen();
+    unsigned intersectedArea = 0;
+    for( auto* screen : screens ) {
+        QRect screenRect = screen->geometry();
+        if( screenRect.contains( winCenter ) ) {
+            return screen;
+        }  else {
+            QRect ir = screenRect.intersected( winRect );
+            unsigned ia = ir.width() * ir.height();
+            if( ir.isValid() && ia > intersectedArea )
+                bestScreen = screen;
+        }
+    }
+
+    return bestScreen;
+}
+
 void Chimera_Win::set_fullscreen( bool fs )
 {
     if( m_quickViewPtr && m_pluginWindow ) {
         if( fs && !is_fullscreen() ) {
+            QScreen* screen = ScreenFromWindow( static_cast<FB::PluginWindowWin*>( GetWindow() ) );
             m_quickViewPtr->setParent( 0 );
+            m_quickViewPtr->setScreen( screen );
             m_quickViewPtr->showFullScreen();
             Q_EMIT fullscreenChanged( true );
         } else if( !fs && is_fullscreen() ) {
