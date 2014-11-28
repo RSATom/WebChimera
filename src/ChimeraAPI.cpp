@@ -271,6 +271,20 @@ FB::variant JSPlaylistItemsAPI::GetProperty( int idx )
     return boost::make_shared<JSMediaMediaDescAPI>( plg, media );
 }
 
+FB::variant JSPlaylistItemsAPI::GetProperty( const std::string& propertyName )
+{
+    int idx = 0;
+    for( auto c : propertyName ) {
+        if( c >= '0' && c <= '9' ) {
+            idx *= 10;
+            idx += c - '0';
+        } else
+            return FB::JSAPIAuto::GetProperty( propertyName );
+    };
+
+    return GetProperty( idx );
+}
+
 ////////////////////////////////////////////////////////////////////////////
 /// JSPlaylistAPI
 ////////////////////////////////////////////////////////////////////////////

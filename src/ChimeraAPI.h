@@ -155,7 +155,8 @@ public:
     void clear();
     bool remove( unsigned int idx );
 
-    virtual FB::variant GetProperty( int idx );
+    FB::variant GetProperty( int idx ) override;
+    FB::variant GetProperty( const std::string& propertyName ) override;
 
 private:
     ChimeraWeakPtr m_plugin;
