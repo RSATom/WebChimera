@@ -112,7 +112,7 @@ void Chimera_Win::StaticInitialize()
 void Chimera_Win::StaticDeinitialize()
 {
 #ifndef _DEBUG
-    qUnregisterResourceData(0x01, qtConf_resource_struct,
+    qUnregisterResourceData( 0x01, qtConf_resource_struct,
                              qtConf_resource_name,
                              (const unsigned char*)qtConf_resource_data.data() );
 #endif
