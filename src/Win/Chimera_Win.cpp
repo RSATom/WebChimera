@@ -233,8 +233,10 @@ void Chimera_Win::set_fullscreen( bool fs )
     if( m_quickViewPtr && m_pluginWindow ) {
         if( fs && !is_fullscreen() ) {
             QScreen* screen = ScreenFromWindow( static_cast<FB::PluginWindowWin*>( GetWindow() ) );
+            m_quickViewPtr->hide();
             m_quickViewPtr->setParent( 0 );
             m_quickViewPtr->setScreen( screen );
+            m_quickViewPtr->setGeometry( screen->geometry() );
             m_quickViewPtr->showFullScreen();
             Q_EMIT fullscreenChanged( true );
         } else if( !fs && is_fullscreen() ) {
