@@ -87,11 +87,19 @@ void Chimera_Win::StaticInitialize()
 {
 #ifndef _DEBUG
     if( !qApp ) {
-        std::string qtPrefix = g_dllPath + "/../";
-        boost::algorithm::replace_all( qtPrefix, "\\", "/" );
+        std::wstring qtPrefix = FB::utf8_to_wstring( g_dllPath ) + L"/../";
+        boost::algorithm::replace_all( qtPrefix, L"\\", L"/" );
+
+        std::stringstream escPrefixStream;
+        for( wchar_t c : qtPrefix ) {
+            if( c > 0xff )
+                escPrefixStream << "\\x" << std::setfill( '0' ) << std::setw( 4 ) << std::hex << c;
+            else
+                escPrefixStream << static_cast<std::string::value_type>( c );;
+        }
 
         qtConf_resource_data = "4321[Paths]\n";
-        qtConf_resource_data += "Prefix = " + qtPrefix + "\n";
+        qtConf_resource_data += "Prefix = " + escPrefixStream.str() + "\n";
         uint32_t qtConfSize = qtConf_resource_data.size() - sizeof( qtConfSize );
         uint32_t qtConfSwappedSize = qToBigEndian( qtConfSize );
         memcpy( &qtConf_resource_data[0], &qtConfSwappedSize, sizeof( qtConfSwappedSize ) );
