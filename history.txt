@@ -1,3 +1,17 @@
+v.0.2.0
+- project got new homepage: http://webchimera.org/
+- API documentation now available: https://github.com/RSATom/WebChimera/wiki
+- (JS) API made more consistent (look wiki)
+- (JS, QML) more trusted options added(":rtsp-http-port", ":avformat-format=mxg", ":demux=h264", ":h264-fps" available)
+- "application/x-fb-vlc" mime type support added with full support windowless and windowed modes (WebChimera could be used instead of FBVLC now)
+- builded with Visual Studio 2013 Community Edition
+- fixed background flickering on scrolling
+- fixed issue with keyboard input
+- (JS) fixed .playlist.items[n] on IE
+- allow go to fullscreen to different screens
+- fixed blank window with installation to path containing national characters
+- (QML) VlcVideoSurface.fillMode added
+
 v.0.1.11
 - (JS) .emitJsMessage( string message ) function added
 - (JS) .QmlMessage( string message ) event added
