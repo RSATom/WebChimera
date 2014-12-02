@@ -83,6 +83,9 @@ private:
     void OnLibVlcEvent( const libvlc_event_t* e );
     void VlcEvents( bool Attach );
 
+    void onMediaPlayerPlaying();
+
 private:
     libvlc_instance_t* m_libvlc;
+    bool m_forceMute;
 };

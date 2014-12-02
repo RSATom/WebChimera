@@ -10,7 +10,7 @@
 ///         the JSAPI object until the onPluginReady method is called
 ///////////////////////////////////////////////////////////////////////////////
 Chimera::Chimera()
-    : m_libvlc( 0 )
+    : m_libvlc( 0 ), m_forceMute( false )
 {
 }
 
@@ -58,9 +58,15 @@ void Chimera::OnLibVlcEvent( const libvlc_event_t* e )
                                               api.get(),
                                               e->u.media_player_buffering.new_cache ) );
         break;
-    case libvlc_MediaPlayerPlaying:
+    case libvlc_MediaPlayerPlaying: {
+        boost::shared_ptr<QmlChimera> thisPtr = FB::ptr_cast<QmlChimera>( shared_from_this() );
+        h->ScheduleOnMainThread( thisPtr,
+                                 boost::bind( &Chimera::onMediaPlayerPlaying,
+                                              thisPtr ) );
+
         event_to_fire = &JSRootAPI::fire_MediaPlayerPlaying;
         break;
+    }
     case libvlc_MediaPlayerPaused:
         event_to_fire = &JSRootAPI::fire_MediaPlayerPaused;
         break;
@@ -284,8 +290,10 @@ void Chimera::apply_player_options()
     const vlc_player_options& opts = get_options();
 
     param_vtype mute            = getParamVariant( "mute" );
-    if ( !mute.empty() && mute.can_be_type<bool>() )
+    if( !mute.empty() && mute.can_be_type<bool>() ) {
+        m_forceMute = mute.convert_cast<bool>( );
         get_player().audio().set_mute( mute.convert_cast<bool>() );
+    }
 
     param_vtype loop            = getParamVariant( "loop" );
     param_vtype autoloop        = getParamVariant( "autoloop" );
@@ -412,4 +420,13 @@ void Chimera::shutdown()
 
 void Chimera::on_option_change( vlc_player_option_e o )
 {
+}
+
+void Chimera::onMediaPlayerPlaying()
+{
+    if( m_forceMute ) {
+        //vlc 2.1.x "not mute on startup" bug workaround.
+        get_player().audio().set_mute( true );
+        m_forceMute = false;
+    }
 }
