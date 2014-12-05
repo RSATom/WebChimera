@@ -85,6 +85,8 @@ public:
 ////////////////////////////////////////////////////////////////////////////////
 void Chimera_Win::StaticInitialize()
 {
+    OutputDebugString( L"Chimera_Win::StaticInitialize()\n" );
+
 #ifndef _DEBUG
     if( !qApp ) {
         std::wstring qtPrefix = FB::utf8_to_wstring( g_dllPath ) + L"/../";
@@ -119,6 +121,8 @@ void Chimera_Win::StaticInitialize()
 
 void Chimera_Win::StaticDeinitialize()
 {
+    OutputDebugString( L"Chimera_Win::StaticDeinitialize()\n" );
+
 #ifndef _DEBUG
     qUnregisterResourceData( 0x01, qtConf_resource_struct,
                              qtConf_resource_name,
@@ -128,6 +132,8 @@ void Chimera_Win::StaticDeinitialize()
 
 Chimera_Win::Chimera_Win()
 {
+    OutputDebugString( L"Chimera_Win::Chimera_Win()\n" );
+
 #ifdef QT_STATIC
     qmlProtectModule( "QtQuick", 2 );
     qmlProtectModule( "QtQuick.Layouts", 1 );
@@ -136,6 +142,7 @@ Chimera_Win::Chimera_Win()
 
 Chimera_Win::~Chimera_Win()
 {
+    OutputDebugString( L"Chimera_Win::~Chimera_Win()\n" );
 }
 
 bool Chimera_Win::onWindowAttached( FB::AttachedEvent* evt, FB::PluginWindowWin* w )
