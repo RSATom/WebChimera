@@ -156,6 +156,10 @@ bool Chimera_Win::onWindowAttached( FB::AttachedEvent* evt, FB::PluginWindowWin*
     m_quickViewPtr->setResizeMode( QQuickView::SizeRootObjectToView );
     m_quickViewPtr->setFlags( m_quickViewPtr->flags() | Qt::FramelessWindowHint );
 
+    m_quickViewPtr->setColor( get_bgColor() );
+    connect( this, &QmlChimera::bgcolorChanged,
+             m_quickViewPtr.data(), &QQuickView::setColor );
+
     QQmlContext* context = m_quickViewPtr->rootContext();
     m_qmlVlcPlayer = new QmlVlcSurfacePlayerProxy( (vlc::player*)this, m_quickViewPtr.data() );
     m_qmlVlcPlayer->classBegin();
