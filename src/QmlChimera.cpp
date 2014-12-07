@@ -10,7 +10,7 @@
 
 #include "JSRootQmlApi.h"
 
-#ifndef QT_NO_DEBUG
+#if defined( FB_WIN ) && defined( QT_NO_DEBUG )
 #include <Shellapi.h>
 #endif
 
@@ -21,7 +21,7 @@ void QmlChimera::StaticInitialize()
     // Place one-time initialization stuff here; As of FireBreath 1.4 this should only
     // be called once per process
     if( !qApp ) {
-#ifdef QT_NO_DEBUG
+#if defined( QT_NO_DEBUG ) || !defined( FB_WIN )
         static int argc = 0;
         new QGuiApplication( argc, 0 );
 #else
