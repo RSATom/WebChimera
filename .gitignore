@@ -1,4 +1,5 @@
 build_win_*/
 build_mac/
 build/
+.DS_Store
 
