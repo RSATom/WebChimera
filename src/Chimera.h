@@ -18,10 +18,6 @@ class Chimera
       protected vlc_player_options
 {
 public:
-    static void StaticInitialize();
-    static void StaticDeinitialize();
-
-public:
     Chimera();
     virtual ~Chimera();
 
