@@ -13,6 +13,8 @@
 #include "Win/FBVLC_Win.h"
 #elif defined( FB_X11 )
 #include "X11/Chimera_X11.h"
+#elif defined( FB_MACOSX )
+#include "Mac/Chimera_Mac.h"
 #else
 #include "Chimera.h"
 #endif
@@ -29,15 +31,19 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     FB::PluginCorePtr createPlugin( const std::string& mimetype )
     {
-        if( "application/x-fb-vlc" == mimetype ) {
 #if defined( FB_WIN )
+        if( "application/x-fb-vlc" == mimetype ) {
             return boost::make_shared<FBVLC_Win>();
-#endif
         } else {
+#else
+        {
+#endif
 #if defined( FB_WIN )
             return boost::make_shared<Chimera_Win>();
 #elif defined( FB_X11 )
             return boost::make_shared<Chimera_X11>();
+#elif defined( FB_MACOSX )
+            return boost::make_shared<Chimera_Mac>();
 #else
             return boost::make_shared<Chimera>();
 #endif
@@ -53,6 +59,8 @@ public:
         Chimera_Win::StaticInitialize();
 #elif defined( FB_X11 )
         return Chimera_X11::StaticInitialize();
+#elif defined( FB_MACOSX )
+        return Chimera_Mac::StaticInitialize();
 #else
         return Chimera::StaticInitialize();
 #endif
@@ -63,8 +71,10 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     void globalPluginDeinitialize()
     {
-#ifdef FB_WIN
+#ifdef defined( FB_WIN )
         return Chimera_Win::StaticDeinitialize();
+#elif defined( FB_MACOSX )
+        return Chimera_Mac::StaticDeinitialize();
 #else
         return Chimera::StaticDeinitialize();
 #endif

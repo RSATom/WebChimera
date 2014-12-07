@@ -1,0 +1,22 @@
+#include "Chimera_Mac.h"
+
+////////////////////////////////////////////////////////////////////////////////
+//Chimera_Mac class
+////////////////////////////////////////////////////////////////////////////////
+void Chimera_Mac::StaticInitialize()
+{
+    QmlChimera::StaticInitialize();
+}
+
+void Chimera_Mac::StaticDeinitialize()
+{
+}
+
+Chimera_Mac::Chimera_Mac()
+{
+}
+
+Chimera_Mac::~Chimera_Mac()
+{
+}
+
