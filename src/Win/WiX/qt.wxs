@@ -37,6 +37,54 @@
 						<File Id="QtQuick.2_plugins.qmltypes" Source="$(var.QTDIR)\qml\QtQuick.2\plugins.qmltypes" />
 					</Component>
 				</Directory>
+				<Directory Id="qml_QtGraphicalEffects" Name="QtGraphicalEffects">
+					<Component Guid="{D06FD6AE-141D-4E05-8D6F-1D58B00CB9EF}" Id="c_QT_qml_QtGraphicalEffects">
+						<RegistryValue Root="HKCU" Key="SOFTWARE\${PLUGIN_NAME}\${FBSTRING_PLUGIN_VERSION}\qml\QtGraphicalEffects"
+						               Name="QtUninstall" Type="string" Value="${Qt5Core_VERSION_STRING}" KeyPath="yes" />
+						<RemoveFolder On="uninstall" Id="u_QT_qml_QtGraphicalEffects" />
+						<File Id="QtGraphicalEffects_qmldir" Source="$(var.QTDIR)\qml\QtGraphicalEffects\qmldir" />
+						<File Id="QtGraphicalEffects_Blend.qml" Source="$(var.QTDIR)\qml\QtGraphicalEffects\Blend.qml" />
+						<File Id="QtGraphicalEffects_BrightnessContrast.qml" Source="$(var.QTDIR)\qml\QtGraphicalEffects\BrightnessContrast.qml" />
+						<File Id="QtGraphicalEffects_Colorize.qml" Source="$(var.QTDIR)\qml\QtGraphicalEffects\Colorize.qml" />
+						<File Id="QtGraphicalEffects_ColorOverlay.qml" Source="$(var.QTDIR)\qml\QtGraphicalEffects\ColorOverlay.qml" />
+						<File Id="QtGraphicalEffects_ConicalGradient.qml" Source="$(var.QTDIR)\qml\QtGraphicalEffects\ConicalGradient.qml" />
+						<File Id="QtGraphicalEffects_Desaturate.qml" Source="$(var.QTDIR)\qml\QtGraphicalEffects\Desaturate.qml" />
+						<File Id="QtGraphicalEffects_DirectionalBlur.qml" Source="$(var.QTDIR)\qml\QtGraphicalEffects\DirectionalBlur.qml" />
+						<File Id="QtGraphicalEffects_Displace.qml" Source="$(var.QTDIR)\qml\QtGraphicalEffects\Displace.qml" />
+						<File Id="QtGraphicalEffects_DropShadow.qml" Source="$(var.QTDIR)\qml\QtGraphicalEffects\DropShadow.qml" />
+						<File Id="QtGraphicalEffects_FastBlur.qml" Source="$(var.QTDIR)\qml\QtGraphicalEffects\FastBlur.qml" />
+						<File Id="QtGraphicalEffects_GammaAdjust.qml" Source="$(var.QTDIR)\qml\QtGraphicalEffects\GammaAdjust.qml" />
+						<File Id="QtGraphicalEffects_GaussianBlur.qml" Source="$(var.QTDIR)\qml\QtGraphicalEffects\GaussianBlur.qml" />
+						<File Id="QtGraphicalEffects_Glow.qml" Source="$(var.QTDIR)\qml\QtGraphicalEffects\Glow.qml" />
+						<File Id="QtGraphicalEffects_HueSaturation.qml" Source="$(var.QTDIR)\qml\QtGraphicalEffects\HueSaturation.qml" />
+						<File Id="QtGraphicalEffects_InnerShadow.qml" Source="$(var.QTDIR)\qml\QtGraphicalEffects\InnerShadow.qml" />
+						<File Id="QtGraphicalEffects_LevelAdjust.qml" Source="$(var.QTDIR)\qml\QtGraphicalEffects\LevelAdjust.qml" />
+						<File Id="QtGraphicalEffects_LinearGradient.qml" Source="$(var.QTDIR)\qml\QtGraphicalEffects\LinearGradient.qml" />
+						<File Id="QtGraphicalEffects_MaskedBlur.qml" Source="$(var.QTDIR)\qml\QtGraphicalEffects\MaskedBlur.qml" />
+						<File Id="QtGraphicalEffects_OpacityMask.qml" Source="$(var.QTDIR)\qml\QtGraphicalEffects\OpacityMask.qml" />
+						<File Id="QtGraphicalEffects_RadialBlur.qml" Source="$(var.QTDIR)\qml\QtGraphicalEffects\RadialBlur.qml" />
+						<File Id="QtGraphicalEffects_RadialGradient.qml" Source="$(var.QTDIR)\qml\QtGraphicalEffects\RadialGradient.qml" />
+						<File Id="QtGraphicalEffects_RectangularGlow.qml" Source="$(var.QTDIR)\qml\QtGraphicalEffects\RectangularGlow.qml" />
+						<File Id="QtGraphicalEffects_RecursiveBlur.qml" Source="$(var.QTDIR)\qml\QtGraphicalEffects\RecursiveBlur.qml" />
+						<File Id="QtGraphicalEffects_ThresholdMask.qml" Source="$(var.QTDIR)\qml\QtGraphicalEffects\ThresholdMask.qml" />
+						<File Id="QtGraphicalEffects_ZoomBlur.qml" Source="$(var.QTDIR)\qml\QtGraphicalEffects\ZoomBlur.qml" />
+					</Component>
+					<Directory Id="qml_QtGraphicalEffects_private" Name="private">
+						<Component Guid="{34DB77B4-37E6-4FAA-8708-12F8A0E26846}" Id="c_QT_qml_QtGraphicalEffects_private">
+							<RegistryValue Root="HKCU" Key="SOFTWARE\${PLUGIN_NAME}\${FBSTRING_PLUGIN_VERSION}\qml\QtGraphicalEffects\private"
+							               Name="QtUninstall" Type="string" Value="${Qt5Core_VERSION_STRING}" KeyPath="yes" />
+							<RemoveFolder On="uninstall" Id="u_QT_qml_QtGraphicalEffects_private" />
+							<File Id="QtGraphicalEffects_private_FastGlow.qml" Source="$(var.QTDIR)\qml\QtGraphicalEffects\private\FastGlow.qml" />
+							<File Id="QtGraphicalEffects_private_FastInnerShadow.qml" Source="$(var.QTDIR)\qml\QtGraphicalEffects\private\FastInnerShadow.qml" />
+							<File Id="QtGraphicalEffects_private_FastMaskedBlur.qml" Source="$(var.QTDIR)\qml\QtGraphicalEffects\private\FastMaskedBlur.qml" />
+							<File Id="QtGraphicalEffects_private_GaussianDirectionalBlur.qml" Source="$(var.QTDIR)\qml\QtGraphicalEffects\private\GaussianDirectionalBlur.qml" />
+							<File Id="QtGraphicalEffects_private_GaussianGlow.qml" Source="$(var.QTDIR)\qml\QtGraphicalEffects\private\GaussianGlow.qml" />
+							<File Id="QtGraphicalEffects_private_GaussianInnerShadow.qml" Source="$(var.QTDIR)\qml\QtGraphicalEffects\private\GaussianInnerShadow.qml" />
+							<File Id="QtGraphicalEffects_private_GaussianMaskedBlur.qml" Source="$(var.QTDIR)\qml\QtGraphicalEffects\private\GaussianMaskedBlur.qml" />
+							<File Id="QtGraphicalEffects_private_SourceProxy.qml" Source="$(var.QTDIR)\qml\QtGraphicalEffects\private\SourceProxy.qml" />
+						</Component>
+					</Directory>
+				</Directory>
 			</Directory>
 		</DirectoryRef>
 	</Fragment>
@@ -48,6 +96,8 @@
 			<ComponentRef Id="c_QT_qml_QtQuick" />
 			<ComponentRef Id="c_QT_qml_QtQuick_Layouts" />
 			<ComponentRef Id="c_QT_qml_QtQuick.2" />
+			<ComponentRef Id="c_QT_qml_QtGraphicalEffects" />
+			<ComponentRef Id="c_QT_qml_QtGraphicalEffects_private" />
 		</ComponentGroup>
 	</Fragment>
 </Wix>
