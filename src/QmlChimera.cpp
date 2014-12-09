@@ -10,7 +10,7 @@
 
 #include "JSRootQmlApi.h"
 
-#if defined( FB_WIN ) && defined( QT_NO_DEBUG )
+#if defined( FB_WIN ) && !defined( QT_NO_DEBUG )
 #include <Shellapi.h>
 #endif
 

@@ -71,8 +71,10 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     void globalPluginDeinitialize()
     {
-#ifdef defined( FB_WIN )
+#if defined( FB_WIN )
         return Chimera_Win::StaticDeinitialize();
+#elif defined( FB_X11 )
+        return Chimera_X11::StaticDeinitialize();
 #elif defined( FB_MACOSX )
         return Chimera_Mac::StaticDeinitialize();
 #else
