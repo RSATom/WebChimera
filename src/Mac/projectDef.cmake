@@ -11,6 +11,7 @@ include_directories( ${DEPS_DIR}/libvlc-sdk/include )
 # remember that the current source dir is the project root; this file is in Mac/
 file( GLOB PLATFORM RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
     Mac/[^.]*.cpp
+    Mac/[^.]*.mm
     Mac/[^.]*.h
     Mac/[^.]*.cmake
 )
