@@ -89,4 +89,4 @@ target_link_libraries(${PROJECT_NAME}
     )
 
 #To create a DMG, include the following file
-#include(Mac/installer.cmake)
+#include( Mac/installer.cmake )
