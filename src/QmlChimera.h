@@ -22,7 +22,6 @@ public:
     QmlVlcSurfacePlayerProxy* getQmlVlcPlayer() const
         { return m_qmlVlcPlayer; }
 
-    void setQml();
     std::string getQmlError();
 
     Q_PROPERTY( QString bgcolor READ get_bgColor NOTIFY bgcolorChanged )
@@ -61,12 +60,9 @@ protected:
 
     void on_option_change( vlc_player_option_e o ) override;
 
-private:
     QUrl getQmlSource();
-    void cleanQuickView();
 
 protected:
     QmlVlcSurfacePlayerProxy* m_qmlVlcPlayer;
-    QScopedPointer<QQuickView> m_quickViewPtr;
     std::string m_qmlError;
 };
