@@ -6,6 +6,8 @@
 # Mac template platform definition CMake file
 # Included from ../CMakeLists.txt
 
+add_subdirectory( ${DEPS_DIR}/QuickLayer "${CMAKE_CURRENT_BINARY_DIR}/QuickLayer" )
+
 include_directories( ${DEPS_DIR}/libvlc-sdk/include )
 
 # remember that the current source dir is the project root; this file is in Mac/
@@ -61,6 +63,7 @@ set_source_files_properties(
 
 include_directories( ${VLC_PATH}/include )
 
+include_directories( ${_qt5Core_install_prefix}/include )
 # use this to add preprocessor definitions
 add_definitions(
 )
@@ -86,6 +89,7 @@ target_link_libraries(${PROJECT_NAME}
     ${Qt5Gui_EGL_LIBRARIES}
     ${Qt5Gui_OPENGL_LIBRARIES}
     ${VLC_PATH}/lib/libvlc.dylib
+    QuickLayer
     )
 
 #To create a DMG, include the following file
