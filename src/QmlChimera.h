@@ -1,7 +1,6 @@
 #pragma once
 
-#include <QScopedPointer>
-#include <QQuickView>
+#include <QUrl>
 
 #include <QmlVlc/QmlVlcPlayer.h>
 

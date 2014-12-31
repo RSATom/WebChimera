@@ -77,9 +77,8 @@ void QmlChimera::on_option_change( vlc_player_option_e o )
 {
     Chimera::on_option_change( o );
 
-    if( po_bg_color == o ) {
+    if( po_bg_color == o )
         Q_EMIT bgcolorChanged( get_bgColor() );
-    }
 }
 
 std::string QmlChimera::getQmlError()
