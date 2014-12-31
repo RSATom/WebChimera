@@ -41,21 +41,21 @@ bool Chimera_Mac::onWindowAttached( FB::AttachedEvent*, FB::PluginWindowMacCA* w
 {
     vlc_open();
 
-    typedef FB::PluginWindowMac::DrawingModel DM;
-    if( DM::DrawingModelCoreAnimation == w->getDrawingModel() ||
-        DM::DrawingModelInvalidatingCoreAnimation == w->getDrawingModel() )
+    typedef FB::PluginWindowMac PW;
+    if( PW::DrawingModelCoreAnimation == w->getDrawingModel() ||
+        PW::DrawingModelInvalidatingCoreAnimation == w->getDrawingModel() )
     {
         m_quickViewPtr.reset( new FboQuickView() );
 
         QuickLayer* layer = [[QuickLayer alloc] initWithFboQuickWindow: m_quickViewPtr.data()];
         m_quickLayer = layer;
         layer.asynchronous =
-            ( DM::DrawingModelInvalidatingCoreAnimation == w->getDrawingModel() ) ?
+            ( PW::DrawingModelInvalidatingCoreAnimation == w->getDrawingModel() ) ?
                 NO : YES;
         layer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
         layer.needsDisplayOnBoundsChange = YES;
 
-        if( DM::DrawingModelInvalidatingCoreAnimation == w->getDrawingModel() )
+        if( PW::DrawingModelInvalidatingCoreAnimation == w->getDrawingModel() )
             w->StartAutoInvalidate( 1. / 30. );
         [(CALayer*) w->getDrawingPrimitive() addSublayer: layer];
     } else {
