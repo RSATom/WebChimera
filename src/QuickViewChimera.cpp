@@ -1,5 +1,6 @@
 #include "QuickViewChimera.h"
 
+#include <QQmlContext>
 #include <QQmlComponent>
 
 void QuickViewChimera::setQml()
