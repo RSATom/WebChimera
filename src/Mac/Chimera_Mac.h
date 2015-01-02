@@ -28,6 +28,9 @@ public:
     //EVENTTYPE_CASE( FB::DetachedEvent, onWindowDetached, FB::PluginWindowMac )
     //EVENTTYPE_CASE( FB::ResizedEvent, onWindowResized, FB::PluginWindowMac )
     //EVENTTYPE_CASE( FB::WindowsEvent, onWindowsEvent, FB::PluginWindowMac )
+    EVENTTYPE_CASE( FB::MouseDownEvent, onMouseDown, FB::PluginWindowMacCA )
+    EVENTTYPE_CASE( FB::MouseUpEvent, onMouseUp, FB::PluginWindowMacCA )
+    EVENTTYPE_CASE( FB::MouseMoveEvent, onMouseMove, FB::PluginWindowMacCA )
     PLUGIN_EVENT_MAP_CASCADE( QmlChimera )
     END_PLUGIN_EVENT_MAP()
 
@@ -38,6 +41,9 @@ private:
     //bool onWindowDetached( FB::DetachedEvent*, FB::PluginWindowMac* );
     //bool onWindowResized( FB::ResizedEvent*, FB::PluginWindowMac* );
     //bool onWindowsEvent( FB::WindowsEvent*, FB::PluginWindowMac* );
+    bool onMouseDown( FB::MouseDownEvent*, FB::PluginWindowMac* );
+    bool onMouseUp( FB::MouseUpEvent*, FB::PluginWindowMacCA* );
+    bool onMouseMove( FB::MouseMoveEvent*, FB::PluginWindowMacCA* );
     /** END EVENTDEF -- DON'T CHANGE THIS LINE **/
 
 protected:

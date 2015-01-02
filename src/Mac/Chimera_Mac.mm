@@ -1,5 +1,6 @@
 #include "Chimera_Mac.h"
 
+#include <QCoreApplication>
 #include <QQmlContext>
 
 #include <QuickLayer/QuickLayer.h>
@@ -108,4 +109,48 @@ void Chimera_Mac::on_option_change( vlc_player_option_e o )
     if( po_qml == o ) {
         setQml();
     }
+}
+
+Qt::MouseButton FbToQtMouseButton( const FB::MouseButtonEvent& e )
+{
+    switch( e.m_Btn )
+    {
+        case FB::MouseButtonEvent::MouseButton_Left:
+            return Qt::LeftButton;
+        case FB::MouseButtonEvent::MouseButton_Right:
+            return Qt::RightButton;
+        case FB::MouseButtonEvent::MouseButton_Middle:
+            return Qt::MiddleButton;
+        case FB::MouseButtonEvent::MouseButton_None:
+            return Qt::NoButton;
+    }
+}
+
+bool Chimera_Mac::onMouseDown( FB::MouseDownEvent* e, FB::PluginWindowMac* w )
+{
+    Qt::MouseButton button = FbToQtMouseButton( *e );
+    QMouseEvent mouseEvent( QEvent::MouseButtonPress, QPointF( e->m_x, e->m_y),
+                            button, button, Qt::NoModifier );
+    QCoreApplication::sendEvent( m_quickViewPtr.data(), &mouseEvent );
+
+    return false;
+}
+
+bool Chimera_Mac::onMouseUp( FB::MouseUpEvent* e, FB::PluginWindowMacCA* w )
+{
+    Qt::MouseButton button = FbToQtMouseButton( *e );
+    QMouseEvent mouseEvent( QEvent::MouseButtonRelease, QPointF( e->m_x, e->m_y),
+                            button, button, Qt::NoModifier );
+    QCoreApplication::sendEvent( m_quickViewPtr.data(), &mouseEvent );
+
+    return true;
+}
+
+bool Chimera_Mac::onMouseMove( FB::MouseMoveEvent* e, FB::PluginWindowMacCA* w )
+{
+    QMouseEvent mouseEvent( QEvent::Move, QPointF( e->m_x, e->m_y),
+                            Qt::NoButton, Qt::NoButton, Qt::NoModifier );
+    QCoreApplication::sendEvent( m_quickViewPtr.data(), &mouseEvent );
+
+    return true;
 }
