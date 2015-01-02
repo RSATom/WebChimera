@@ -62,6 +62,10 @@ bool Chimera_Mac::onWindowAttached( FB::AttachedEvent*, FB::PluginWindowMacCA* w
         assert( false );
     }
 
+    m_qmlVlcPlayer = new QmlVlcSurfacePlayerProxy( static_cast<vlc::player*>( this ),
+                                                   m_quickViewPtr.data() );
+    m_qmlVlcPlayer->classBegin();
+
     apply_player_options();
     setQml();
 
