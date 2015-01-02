@@ -33,9 +33,14 @@ set(AXVERSION_NUM "${PLUGIN_VERSION}")
 # NOTE: THESE GUIDS *MUST* BE UNIQUE TO YOUR PLUGIN/ACTIVEX CONTROL!  YES, ALL OF THEM!
 set(FBTYPELIB_GUID 2b642482-539b-5158-b60c-725219b3a4b6)
 set(IFBControl_GUID 0d25ef13-5e83-527e-822e-e97f89d9055f)
-set( FBControl_GUID
-     df4501d0-6a9f-5d59-a08d-7be21a13c847
-     dc5b1d57-cf58-4500-b57e-fe62bc00fd64 ) #for FBVLC emulator
+if( WIN32 )
+    set( FBControl_GUID
+         df4501d0-6a9f-5d59-a08d-7be21a13c847
+         dc5b1d57-cf58-4500-b57e-fe62bc00fd64 ) #for FBVLC emulator
+else()
+    set( FBControl_GUID
+         df4501d0-6a9f-5d59-a08d-7be21a13c847 )
+endif()
 
 set(IFBComJavascriptObject_GUID 3321ffa1-0fcd-5c02-bf77-a966735a2296)
 set(FBComJavascriptObject_GUID d873591c-3064-53b2-afe9-e67d54974423)
@@ -47,9 +52,15 @@ else( FB_PLATFORM_ARCH_32 )
 endif( FB_PLATFORM_ARCH_32 )
 
 # these are the pieces that are relevant to using it from Javascript
-set( ACTIVEX_PROGID
-     "${PLUGIN_NAME}.${PLUGIN_NAME}"
-     "${PLUGIN_NAME}.FBVLC" )
+if( WIN32 )
+    set( ACTIVEX_PROGID
+         "${PLUGIN_NAME}.${PLUGIN_NAME}"
+         "${PLUGIN_NAME}.FBVLC" )
+else()
+    set( ACTIVEX_PROGID
+         "${PLUGIN_NAME}.${PLUGIN_NAME}" )
+endif()
+
 if( FB_PLATFORM_ARCH_32 )
     set(MOZILLA_PLUGINID "${PROJECT_DOMAIN}/${PLUGIN_NAME}")  # No 32bit postfix to maintain backward compatability.
 else( FB_PLATFORM_ARCH_32 )
@@ -58,10 +69,15 @@ endif( FB_PLATFORM_ARCH_32 )
 
 # strings
 set(FBSTRING_CompanyName "${PROJECT_OWNER}")
-set( FBSTRING_PluginDescription
-     "${PLUGIN_DESCRIPTION}"
-     "${FBVLC_PLUGIN_DESCRIPTION}"
-     )
+if( WIN32 )
+    set( FBSTRING_PluginDescription
+         "${PLUGIN_DESCRIPTION}"
+         "${FBVLC_PLUGIN_DESCRIPTION}" )
+else()
+    set( FBSTRING_PluginDescription
+         "${PLUGIN_DESCRIPTION}" )
+endif()
+
 set(FBSTRING_PLUGIN_VERSION "${PLUGIN_VERSION}")
 set(FBSTRING_LegalCopyright "Copyright ${COPYRIGHT_YEARS} ${PROJECT_OWNER}")
 if( WIN32 )
@@ -78,9 +94,14 @@ if( FB_PLATFORM_ARCH_32 )
 else( FB_PLATFORM_ARCH_32 )
     set(FBSTRING_PluginName "${PLUGIN_NAME} ${FB_PLATFORM_ARCH_NAME}")
 endif( FB_PLATFORM_ARCH_32 )
-set( FBSTRING_MIMEType
-     "${PLUGIN_MIMETYPE}"
-     "${FBVLC_PLUGIN_MIMETYPE}" )
+if( WIN32 )
+    set( FBSTRING_MIMEType
+         "${PLUGIN_MIMETYPE}"
+         "${FBVLC_PLUGIN_MIMETYPE}" )
+else()
+    set( FBSTRING_MIMEType
+         "${PLUGIN_MIMETYPE}" )
+endif()
 
 # Uncomment this next line if you're not planning on your plugin doing
 # any drawing:
