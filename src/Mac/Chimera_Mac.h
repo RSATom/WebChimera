@@ -23,6 +23,8 @@ public:
     virtual ~Chimera_Mac();
 
     BEGIN_PLUGIN_EVENT_MAP()
+    EVENTTYPE_CASE( FB::MouseEnteredEvent, onMouseEnter, FB::PluginWindowMacCA )
+    EVENTTYPE_CASE( FB::MouseExitedEvent, onMouseLeave, FB::PluginWindowMacCA )
     EVENTTYPE_CASE( FB::AttachedEvent, onWindowAttached, FB::PluginWindowMacCA )
     EVENTTYPE_CASE( FB::DetachedEvent, onWindowDetached, FB::PluginWindowMacCA )
     //EVENTTYPE_CASE( FB::DetachedEvent, onWindowDetached, FB::PluginWindowMac )
@@ -41,8 +43,10 @@ private:
     //bool onWindowDetached( FB::DetachedEvent*, FB::PluginWindowMac* );
     //bool onWindowResized( FB::ResizedEvent*, FB::PluginWindowMac* );
     //bool onWindowsEvent( FB::WindowsEvent*, FB::PluginWindowMac* );
-    bool onMouseDown( FB::MouseDownEvent*, FB::PluginWindowMac* );
+    bool onMouseDown( FB::MouseDownEvent*, FB::PluginWindowMacCA* );
     bool onMouseUp( FB::MouseUpEvent*, FB::PluginWindowMacCA* );
+    bool onMouseEnter( FB::MouseEnteredEvent*, FB::PluginWindowMacCA* );
+    bool onMouseLeave( FB::MouseExitedEvent*, FB::PluginWindowMacCA* );
     bool onMouseMove( FB::MouseMoveEvent*, FB::PluginWindowMacCA* );
     /** END EVENTDEF -- DON'T CHANGE THIS LINE **/
 

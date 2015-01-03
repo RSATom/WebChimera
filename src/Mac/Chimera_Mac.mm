@@ -1,5 +1,6 @@
 #include "Chimera_Mac.h"
 
+#include <QtDebug>
 #include <QCoreApplication>
 #include <QQmlContext>
 
@@ -126,29 +127,51 @@ Qt::MouseButton FbToQtMouseButton( const FB::MouseButtonEvent& e )
     }
 }
 
-bool Chimera_Mac::onMouseDown( FB::MouseDownEvent* e, FB::PluginWindowMac* w )
+bool Chimera_Mac::onMouseDown( FB::MouseDownEvent* e, FB::PluginWindowMacCA* )
 {
     Qt::MouseButton button = FbToQtMouseButton( *e );
-    QMouseEvent mouseEvent( QEvent::MouseButtonPress, QPointF( e->m_x, e->m_y),
+    QPointF mousePoint( e->m_x, e->m_y );
+    QMouseEvent mouseEvent( QEvent::MouseButtonPress, mousePoint, mousePoint,
                             button, button, Qt::NoModifier );
     QCoreApplication::sendEvent( m_quickViewPtr.data(), &mouseEvent );
 
     return false;
 }
 
-bool Chimera_Mac::onMouseUp( FB::MouseUpEvent* e, FB::PluginWindowMacCA* w )
+bool Chimera_Mac::onMouseUp( FB::MouseUpEvent* e, FB::PluginWindowMacCA* )
 {
     Qt::MouseButton button = FbToQtMouseButton( *e );
-    QMouseEvent mouseEvent( QEvent::MouseButtonRelease, QPointF( e->m_x, e->m_y),
+    QPointF mousePoint( e->m_x, e->m_y );
+    QMouseEvent mouseEvent( QEvent::MouseButtonRelease, mousePoint, mousePoint,
                             button, button, Qt::NoModifier );
     QCoreApplication::sendEvent( m_quickViewPtr.data(), &mouseEvent );
 
     return true;
 }
 
-bool Chimera_Mac::onMouseMove( FB::MouseMoveEvent* e, FB::PluginWindowMacCA* w )
+bool Chimera_Mac::onMouseEnter( FB::MouseEnteredEvent* e, FB::PluginWindowMacCA* )
 {
-    QMouseEvent mouseEvent( QEvent::Move, QPointF( e->m_x, e->m_y),
+    QPointF mousePoint( e->m_x, e->m_y );
+    QEnterEvent mouseEvent( mousePoint, mousePoint, mousePoint );
+    QCoreApplication::sendEvent( m_quickViewPtr.data(), &mouseEvent );
+
+    return true;
+}
+
+bool Chimera_Mac::onMouseLeave( FB::MouseExitedEvent* e, FB::PluginWindowMacCA* )
+{
+    QPointF mousePoint( e->m_x, e->m_y );
+    QMouseEvent mouseEvent( QEvent::Leave, mousePoint, mousePoint,
+                            Qt::NoButton, Qt::NoButton, Qt::NoModifier );
+    QCoreApplication::sendEvent( m_quickViewPtr.data(), &mouseEvent );
+
+    return true;
+}
+
+bool Chimera_Mac::onMouseMove( FB::MouseMoveEvent* e, FB::PluginWindowMacCA* )
+{
+    QPointF mousePoint( e->m_x, e->m_y );
+    QMouseEvent mouseEvent( QEvent::MouseMove, mousePoint, mousePoint,
                             Qt::NoButton, Qt::NoButton, Qt::NoModifier );
     QCoreApplication::sendEvent( m_quickViewPtr.data(), &mouseEvent );
 
