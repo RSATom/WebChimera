@@ -48,7 +48,7 @@ bool Chimera_Mac::onWindowAttached( FB::AttachedEvent*, FB::PluginWindowMacCA* w
         PW::DrawingModelInvalidatingCoreAnimation == w->getDrawingModel() )
     {
         m_quickViewPtr.reset( new FboQuickView() );
-        connect( m_quickViewPtr.data(), SIGNAL( statusChanged(Status) ),
+        connect( m_quickViewPtr.data(), SIGNAL( statusChanged( Status ) ),
                  this, SLOT( quickViewStatusChanged() ) );
 
         QuickLayer* layer = [[QuickLayer alloc] initWithFboQuickWindow: m_quickViewPtr.data()];
