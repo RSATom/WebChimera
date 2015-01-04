@@ -48,6 +48,8 @@ bool Chimera_Mac::onWindowAttached( FB::AttachedEvent*, FB::PluginWindowMacCA* w
         PW::DrawingModelInvalidatingCoreAnimation == w->getDrawingModel() )
     {
         m_quickViewPtr.reset( new FboQuickView() );
+        connect( m_quickViewPtr.data(), SIGNAL( statusChanged(Status) ),
+                 this, SLOT( quickViewStatusChanged() ) );
 
         QuickLayer* layer = [[QuickLayer alloc] initWithFboQuickWindow: m_quickViewPtr.data()];
         m_quickLayer = layer;
@@ -99,8 +101,23 @@ void Chimera_Mac::setQml()
         QUrl qmlUrl = QStringLiteral( "qml" );
         m_quickViewPtr->setQml( QString::fromStdString( qml ), qmlUrl );
     }
+}
 
-    //FIXME! handle qml errors and fill m_qmlErrory
+void Chimera_Mac::quickViewStatusChanged()
+{
+    QList<QQmlError> errors = m_quickViewPtr->errors();
+
+    if( !errors.empty() ) {
+        QString errStr;
+        for( int i = 0; i < errors.count(); ++i ) {
+            if( !errStr.isEmpty() ) {
+                 errStr += QStringLiteral( "; " );
+            }
+            errStr += errors[i].toString();
+        }
+        m_qmlError = errStr.toStdString();
+    } else
+        m_qmlError.clear();
 }
 
 void Chimera_Mac::on_option_change( vlc_player_option_e o )

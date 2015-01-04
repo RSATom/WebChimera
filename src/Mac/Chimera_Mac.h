@@ -57,6 +57,9 @@ private:
     void setQml();
     void cleanup();
 
+private Q_SLOTS:
+    void quickViewStatusChanged();
+
 private:
     QScopedPointer<FboQuickView> m_quickViewPtr;
     void* m_quickLayer;
