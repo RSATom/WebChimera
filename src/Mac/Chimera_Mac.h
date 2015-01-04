@@ -14,6 +14,7 @@ class FboQuickView; //#include <QuickLayer/FboQuickView.h>
 FB_FORWARD_PTR( Chimera_Mac )
 class Chimera_Mac: public QmlChimera
 {
+    Q_OBJECT
 public:
     static void StaticInitialize();
     static void StaticDeinitialize();
