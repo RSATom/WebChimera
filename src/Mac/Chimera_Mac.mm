@@ -143,7 +143,7 @@ bool Chimera_Mac::onMouseUp( FB::MouseUpEvent* e, FB::PluginWindowMacCA* )
     Qt::MouseButton button = FbToQtMouseButton( *e );
     QPointF mousePoint( e->m_x, e->m_y );
     QMouseEvent mouseEvent( QEvent::MouseButtonRelease, mousePoint, mousePoint,
-                            button, button, Qt::NoModifier );
+                            button, Qt::NoButton, Qt::NoModifier );
     QCoreApplication::sendEvent( m_quickViewPtr.data(), &mouseEvent );
 
     return true;
