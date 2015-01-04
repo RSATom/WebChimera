@@ -129,6 +129,14 @@ void Chimera_Mac::on_option_change( vlc_player_option_e o )
     }
 }
 
+bool Chimera_Mac::onWindowResized( FB::ResizedEvent* e, FB::PluginWindowMacCA* w )
+{
+    if( m_quickViewPtr )
+         m_quickViewPtr->resize( w->getWindowWidth(), w->getWindowHeight() );
+
+    return false;
+}
+
 Qt::MouseButton FbToQtMouseButton( const FB::MouseButtonEvent& e )
 {
     switch( e.m_Btn )

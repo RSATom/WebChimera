@@ -29,7 +29,7 @@ public:
     EVENTTYPE_CASE( FB::AttachedEvent, onWindowAttached, FB::PluginWindowMacCA )
     EVENTTYPE_CASE( FB::DetachedEvent, onWindowDetached, FB::PluginWindowMacCA )
     //EVENTTYPE_CASE( FB::DetachedEvent, onWindowDetached, FB::PluginWindowMac )
-    //EVENTTYPE_CASE( FB::ResizedEvent, onWindowResized, FB::PluginWindowMac )
+    EVENTTYPE_CASE( FB::ResizedEvent, onWindowResized, FB::PluginWindowMacCA )
     //EVENTTYPE_CASE( FB::WindowsEvent, onWindowsEvent, FB::PluginWindowMac )
     EVENTTYPE_CASE( FB::MouseDownEvent, onMouseDown, FB::PluginWindowMacCA )
     EVENTTYPE_CASE( FB::MouseUpEvent, onMouseUp, FB::PluginWindowMacCA )
@@ -42,7 +42,7 @@ private:
     bool onWindowAttached( FB::AttachedEvent*, FB::PluginWindowMacCA* );
     bool onWindowDetached( FB::DetachedEvent*, FB::PluginWindowMacCA* );
     //bool onWindowDetached( FB::DetachedEvent*, FB::PluginWindowMac* );
-    //bool onWindowResized( FB::ResizedEvent*, FB::PluginWindowMac* );
+    bool onWindowResized( FB::ResizedEvent*, FB::PluginWindowMacCA* );
     //bool onWindowsEvent( FB::WindowsEvent*, FB::PluginWindowMac* );
     bool onMouseDown( FB::MouseDownEvent*, FB::PluginWindowMacCA* );
     bool onMouseUp( FB::MouseUpEvent*, FB::PluginWindowMacCA* );
