@@ -6,7 +6,7 @@
 # Mac template platform definition CMake file
 # Included from ../CMakeLists.txt
 
-add_subdirectory( ${DEPS_DIR}/QuickLayer "${CMAKE_CURRENT_BINARY_DIR}/QuickLayer" )
+add_subdirectory( ${DEPS_DIR}/QuickLayer "${DEPS_BINARY_DIR}/QuickLayer" )
 
 include_directories( ${DEPS_DIR}/libvlc-sdk/include )
 

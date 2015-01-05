@@ -12,6 +12,7 @@ set( CMAKE_INCLUDE_CURRENT_DIR ON )
 set( CMAKE_AUTOMOC ON )
 
 set( DEPS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../deps )
+set( DEPS_BINARY_DIR ${CMAKE_BINARY_DIR}/deps )
 
 find_package( Qt5Core )
 find_package( Qt5Qml )
