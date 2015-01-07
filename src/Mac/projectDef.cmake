@@ -79,9 +79,20 @@ if( QT_STATIC )
         ${QTDIR}/qml/QtQuick/Layouts/plugins.qmltypes
         )
 
+    file( GLOB QML_QTGRAPHICALEFFECTS
+        ${QTDIR}/qml/QtGraphicalEffects/qmldir
+        ${QTDIR}/qml/QtGraphicalEffects/[^.]*.qml
+        )
+
+    file( GLOB QML_QTGRAPHICALEFFECTS_PRIVATE
+        ${QTDIR}/qml/QtGraphicalEffects/private/[^.]*.qml
+        )
+
     set( QML_MODULES
         ${QML_QTQUICK2}
         ${QML_QTQUICK_LAYOUTS}
+        ${QML_QTGRAPHICALEFFECTS}
+        ${QML_QTGRAPHICALEFFECTS_PRIVATE}
         )
 
     source_group( QmlModules FILES ${QML_MODULES} )
@@ -96,6 +107,18 @@ if( QT_STATIC )
         ${QML_QTQUICK_LAYOUTS}
         PROPERTIES
         MACOSX_PACKAGE_LOCATION MacOS/qml/QtQuick/Layouts
+        )
+
+    set_source_files_properties(
+        ${QML_QTGRAPHICALEFFECTS}
+        PROPERTIES
+        MACOSX_PACKAGE_LOCATION MacOS/qml/QtGraphicalEffects
+        )
+
+    set_source_files_properties(
+        ${QML_QTGRAPHICALEFFECTS_PRIVATE}
+        PROPERTIES
+        MACOSX_PACKAGE_LOCATION MacOS/qml/QtGraphicalEffects/private
         )
 endif( QT_STATIC )
 
