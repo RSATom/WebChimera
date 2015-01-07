@@ -18,6 +18,8 @@ file( GLOB PLATFORM RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
     Mac/[^.]*.cmake
     )
 
+source_group( Mac FILES ${PLATFORM} )
+
 set( VLC_PATH "${DEPS_DIR}/VLC-${VLC_VERSION}.app/Contents/MacOS" )
 
 file( GLOB LIBVLC_LIB ${VLC_PATH}/lib/[^.]*.dylib )
@@ -66,12 +68,42 @@ set_source_files_properties(
     MACOSX_PACKAGE_LOCATION MacOS/share/lua/playlist/
     )
 
-source_group( Mac FILES ${PLATFORM} )
+if( QT_STATIC )
+    set( QML_QTQUICK2
+        ${QTDIR}/qml/QtQuick.2/qmldir
+        ${QTDIR}/qml/QtQuick.2/plugins.qmltypes
+        )
+
+    set( QML_QTQUICK_LAYOUTS
+        ${QTDIR}/qml/QtQuick/Layouts/qmldir
+        ${QTDIR}/qml/QtQuick/Layouts/plugins.qmltypes
+        )
+
+    set( QML_MODULES
+        ${QML_QTQUICK2}
+        ${QML_QTQUICK_LAYOUTS}
+        )
+
+    source_group( QmlModules FILES ${QML_MODULES} )
+
+    set_source_files_properties(
+        ${QML_QTQUICK2}
+        PROPERTIES
+        MACOSX_PACKAGE_LOCATION MacOS/qml/QtQuick.2
+        )
+
+    set_source_files_properties(
+        ${QML_QTQUICK_LAYOUTS}
+        PROPERTIES
+        MACOSX_PACKAGE_LOCATION MacOS/qml/QtQuick/Layouts
+        )
+endif( QT_STATIC )
 
 set( SOURCES
     ${SOURCES}
     ${PLATFORM}
     ${LIBVLC}
+    ${QML_MODULES}
     )
 
 include_directories(
@@ -92,11 +124,34 @@ add_mac_plugin( ${PROJECT_NAME} ${PLIST} ${STRINGS} ${LOCALIZED} SOURCES )
 # add library dependencies here; leave ${PLUGIN_INTERNAL_DEPS} there unless you know what you're doing!
 target_link_libraries( ${PROJECT_NAME}
     ${PLUGIN_INTERNAL_DEPS}
+    ${Qt5Gui_PLUGINS}
     ${Qt5Gui_EGL_LIBRARIES}
     ${Qt5Gui_OPENGL_LIBRARIES}
     ${VLC_PATH}/lib/libvlc.dylib
     QuickLayer
     )
+
+if( QT_STATIC )
+    find_library( CARBON_FRAMEWORK Carbon )
+    find_library( SECURITY_FRAMEWORK Security )
+    find_library( QT5_PLATFORM_SUPPORT Qt5PlatformSupport )
+    find_library( IOKIT_FRAMEWORK IOKit )
+    find_library( ZLIB z )
+    find_library( QTHARFBUZZNG qtharfbuzzng )
+    find_library( QT_QUICK2_PLUGIN qtquick2plugin PATHS ${QTDIR}/qml/QtQuick.2 )
+    find_library( QT_LAYOUTS_PLUGIN qquicklayoutsplugin PATHS ${QTDIR}/qml/QtQuick/Layouts )
+
+    target_link_libraries( ${PROJECT_NAME}
+        ${CARBON_FRAMEWORK}
+        ${SECURITY_FRAMEWORK}
+        ${IOKIT_FRAMEWORK}
+        ${QT5_PLATFORM_SUPPORT}
+        ${ZLIB}
+        ${QTHARFBUZZNG}
+        ${QT_QUICK2_PLUGIN}
+        ${QT_LAYOUTS_PLUGIN}
+        )
+endif( QT_STATIC )
 
 #To create a DMG, include the following file
 #include( Mac/installer.cmake )

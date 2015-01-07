@@ -1,17 +1,34 @@
 #include "Chimera_Mac.h"
 
+#include <dlfcn.h>
+
 #include <QtDebug>
+#include <QtPlugin>
 #include <QCoreApplication>
 #include <QQmlContext>
 
 #include <QuickLayer/QuickLayer.h>
 #include <QuickLayer/FboQuickView.h>
 
+#include "QtConf.h"
+
+std::string getPluginPath()
+{
+    ::Dl_info dlinfo;
+    if( ::dladdr( (void*)::NP_Initialize, &dlinfo ) != 0 ) {
+        return dlinfo.dli_fname;
+    } else {
+        return std::string();
+    }
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 //Chimera_Mac class
 ////////////////////////////////////////////////////////////////////////////////
 void Chimera_Mac::StaticInitialize()
 {
+    InitQtConf( getPluginPath() + "/../" );
+
     QmlChimera::StaticInitialize();
 }
 
@@ -22,6 +39,10 @@ void Chimera_Mac::StaticDeinitialize()
 Chimera_Mac::Chimera_Mac()
     : m_quickLayer( 0 )
 {
+#ifdef QT_STATIC
+    qmlProtectModule( "QtQuick", 2 );
+    qmlProtectModule( "QtQuick.Layouts", 1 );
+#endif
 }
 
 Chimera_Mac::~Chimera_Mac()
