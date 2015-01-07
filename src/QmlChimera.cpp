@@ -26,9 +26,10 @@ void QmlChimera::StaticInitialize()
         new QGuiApplication( argc, 0 );
 #else
         //Q_ASSERT(allArguments.size() == origArgc); at qcoreapplication.cpp:2109 workaround
-        int argc;
+        static int argc;
         LocalFree( CommandLineToArgvW( GetCommandLineW(), &argc ) );
-        std::vector<char*> argv( argc, nullptr );
+        static char* argvStub = " ";
+        static std::vector<char*> argv( argc, argvStub );
         new QGuiApplication( argc, argv.data() );
 #endif
         QGuiApplication::processEvents();
