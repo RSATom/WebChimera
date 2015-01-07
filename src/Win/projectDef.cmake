@@ -7,7 +7,7 @@
 # Included from ../CMakeLists.txt
 
 # remember that the current source dir is the project root; this file is in Win/
-file (GLOB PLATFORM RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
+file( GLOB PLATFORM RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
     Win/[^.]*.cpp
     Win/[^.]*.h
     Win/[^.]*.rc
@@ -18,52 +18,52 @@ file (GLOB PLATFORM RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
 add_definitions(
     /D "_ATL_STATIC_REGISTRY"
     /D "_WIN32_WINNT=0x0501"
-)
+    )
 
 # get PCH related files
-file (GLOB PCH RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
+file( GLOB PCH RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
     StdAfx.*
-)
+    )
 
 # make sure that PCH-related files is NOT part of ${SOURCES}
-LIST(REMOVE_ITEM SOURCES ${PCH})
+LIST( REMOVE_ITEM SOURCES ${PCH} )
 
-SOURCE_GROUP("PCH files" FILES ${PCH})
-SOURCE_GROUP(Win FILES ${PLATFORM})
+SOURCE_GROUP( "PCH files" FILES ${PCH} )
+SOURCE_GROUP( Win FILES ${PLATFORM} )
 
-set (SOURCES
+set( SOURCES
     ${SOURCES}
     ${PLATFORM}
     )
 
 # set PCH
-MACRO(ADD_MSVC_PRECOMPILED_HEADER PrecompiledHeader PrecompiledSource SourcesVar)
- GET_FILENAME_COMPONENT(PrecompiledBasename ${PrecompiledHeader} NAME_WE)
- SET(__PrecompiledBinary "$(IntDir)\\$(TargetName).pch")
+MACRO( ADD_MSVC_PRECOMPILED_HEADER PrecompiledHeader PrecompiledSource SourcesVar )
+    GET_FILENAME_COMPONENT( PrecompiledBasename ${PrecompiledHeader} NAME_WE )
+    SET( __PrecompiledBinary "$(IntDir)\\$(TargetName).pch" )
 
- SET_SOURCE_FILES_PROPERTIES(${PrecompiledSource}
-   PROPERTIES COMPILE_FLAGS "/Yc -Zm160")
-   #OBJECT_OUTPUTS "${__PrecompiledBinary}"
+    SET_SOURCE_FILES_PROPERTIES( ${PrecompiledSource}
+        PROPERTIES COMPILE_FLAGS "/Yc -Zm160" )
+    #OBJECT_OUTPUTS "${__PrecompiledBinary}"
 
- foreach(CURFILE ${${SourcesVar}})
-   GET_FILENAME_COMPONENT(CURFILE_EXT ${CURFILE} EXT)
-   GET_FILENAME_COMPONENT(CURFILE_NAME ${CURFILE} NAME)
-   if (CURFILE_EXT STREQUAL ".cpp" AND NOT CURFILE_NAME STREQUAL PrecompiledBasename)
-     SET_SOURCE_FILES_PROPERTIES(${CURFILE}
-       PROPERTIES COMPILE_FLAGS "/Yu /FI\"${PrecompiledHeader}\" -Zm160")
-       #OBJECT_DEPENDS "${__PrecompiledBinary}"
-   endif()
- endforeach()
+    foreach( CURFILE ${${SourcesVar}} )
+        GET_FILENAME_COMPONENT( CURFILE_EXT ${CURFILE} EXT )
+        GET_FILENAME_COMPONENT( CURFILE_NAME ${CURFILE} NAME )
+        if( CURFILE_EXT STREQUAL ".cpp" AND NOT CURFILE_NAME STREQUAL PrecompiledBasename )
+            SET_SOURCE_FILES_PROPERTIES( ${CURFILE}
+                PROPERTIES COMPILE_FLAGS "/Yu /FI\"${PrecompiledHeader}\" -Zm160" )
+            #OBJECT_DEPENDS "${__PrecompiledBinary}"
+        endif()
+    endforeach()
 
  # Add precompiled header to SourcesVar
- LIST(APPEND ${SourcesVar} ${PrecompiledSource})
- LIST(APPEND ${SourcesVar} ${PrecompiledHeader})
+    list( APPEND ${SourcesVar} ${PrecompiledSource} )
+    list( APPEND ${SourcesVar} ${PrecompiledHeader} )
 ENDMACRO(ADD_MSVC_PRECOMPILED_HEADER)
 
 # activate PCH
-ADD_MSVC_PRECOMPILED_HEADER("stdafx.h" "stdafx.cpp" SOURCES)
+ADD_MSVC_PRECOMPILED_HEADER( "stdafx.h" "stdafx.cpp" SOURCES )
 
-add_windows_plugin(${PROJECT_NAME} SOURCES)
+add_windows_plugin( ${PROJECT_NAME} SOURCES )
 
 # This is an example of how to add a build step to sign the plugin DLL before
 # the WiX installer builds.  The first filename (certificate.pfx) should be
@@ -77,16 +77,16 @@ add_windows_plugin(${PROJECT_NAME} SOURCES)
 # still work. Your cert should only be on the build machine and shouldn't be in
 # source control!
 # -- uncomment lines below this to enable signing --
-#firebreath_sign_plugin(${PROJECT_NAME}
+#firebreath_sign_plugin( ${PROJECT_NAME}
 #    "${CMAKE_CURRENT_SOURCE_DIR}/sign/certificate.pfx"
 #    "${CMAKE_CURRENT_SOURCE_DIR}/sign/passphrase.txt"
-#    "http://timestamp.verisign.com/scripts/timestamp.dll")
+#    "http://timestamp.verisign.com/scripts/timestamp.dll" )
 
 include_directories( ${DEPS_DIR}/libvlc-sdk/include )
 
-get_property(LINK_FLAGS TARGET ${PROJECT_NAME} PROPERTY LINK_FLAGS)
-set(LINK_FLAGS "${LINK_FLAGS} /INCLUDE:__imp__D3DCompile@44")
-set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS ${LINK_FLAGS})
+get_property( LINK_FLAGS TARGET ${PROJECT_NAME} PROPERTY LINK_FLAGS )
+set( LINK_FLAGS "${LINK_FLAGS} /INCLUDE:__imp__D3DCompile@44" )
+set_target_properties( ${PROJECT_NAME} PROPERTIES LINK_FLAGS ${LINK_FLAGS} )
 
 # add library dependencies here; leave ${PLUGIN_INTERNAL_DEPS} there unless you know what you're doing!
 target_link_libraries( ${PROJECT_NAME}
@@ -113,7 +113,7 @@ if( QT_STATIC )
         strmiids.lib
         ${OPENSSL_LIBRARIES}
         Crypt32.lib
-    )
+        )
 
     target_link_libraries( ${PROJECT_NAME} debug "$ENV{QTDIR}/lib/qtharfbuzzngd.lib" )
     target_link_libraries( ${PROJECT_NAME} debug "$ENV{QTDIR}/lib/translatord.lib" )
@@ -130,14 +130,14 @@ if( QT_STATIC )
     target_link_libraries( ${PROJECT_NAME} optimized "$ENV{QTDIR}/qml/QtQuick/Layouts/qquicklayoutsplugin.lib" )
 endif( QT_STATIC )
 
-set(WIX_HEAT_FLAGS
+set( WIX_HEAT_FLAGS
     -gg                 # Generate GUIDs
     -srd                # Suppress Root Dir
     -cg PluginDLLGroup  # Set the Component group name
     -dr INSTALLDIR      # Set the directory ID to put the files in
     )
 
-set(VLC_PATH ${CMAKE_CURRENT_SOURCE_DIR}/Win/WiX/vlc-${VLC_VERSION})
+set( VLC_PATH ${CMAKE_CURRENT_SOURCE_DIR}/Win/WiX/vlc-${VLC_VERSION} )
 
 #generate vlc.wxs
 execute_process(
@@ -145,14 +145,14 @@ execute_process(
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/Win/Wix
     )
 
-set (WIX_SOURCES_WITH_VLC
+set( WIX_SOURCES_WITH_VLC
     ${CMAKE_CURRENT_SOURCE_DIR}/Win/WiX/ChimeraInstaller.wxs
     ${CMAKE_CURRENT_SOURCE_DIR}/Win/WiX/vlc.wxs
     ${CMAKE_CURRENT_SOURCE_DIR}/Win/WiX/qt.wxs
     )
 
-set(WIX_LINK_FLAGS ${WIX_LINK_FLAGS} -dVLC=${VLC_PATH} -dQTDIR=$ENV{QTDIR})
-set(FB_WIX_DEST ${FB_BIN_DIR}/${PLUGIN_NAME}/${CMAKE_CFG_INTDIR}/${PLUGIN_NAME}_${FBSTRING_PLUGIN_VERSION}_vlc_${VLC_VERSION}.msi)
+set( WIX_LINK_FLAGS ${WIX_LINK_FLAGS} -dVLC=${VLC_PATH} -dQTDIR=$ENV{QTDIR} )
+set( FB_WIX_DEST ${FB_BIN_DIR}/${PLUGIN_NAME}/${CMAKE_CFG_INTDIR}/${PLUGIN_NAME}_${FBSTRING_PLUGIN_VERSION}_vlc_${VLC_VERSION}.msi )
 
 add_wix_installer( ${PLUGIN_NAME}
     "${WIX_SOURCES_WITH_VLC}"
