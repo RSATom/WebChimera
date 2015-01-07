@@ -8,6 +8,8 @@
 
 #include "QmlVlc/QmlVlcSurfacePlayerProxy.h"
 
+#include "QtConf.h"
+
 extern std::string g_dllPath;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -49,12 +51,6 @@ void Chimera_Win::StaticInitialize()
 void Chimera_Win::StaticDeinitialize()
 {
     OutputDebugString( L"Chimera_Win::StaticDeinitialize()\n" );
-
-#ifndef _DEBUG
-    qUnregisterResourceData( 0x01, qtConf_resource_struct,
-                             qtConf_resource_name,
-                             (const unsigned char*)qtConf_resource_data.data() );
-#endif
 }
 
 Chimera_Win::Chimera_Win()
