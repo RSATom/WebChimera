@@ -2,7 +2,8 @@
 
 #include <QScopedPointer>
 
-#include "PluginWindowMacCA.h"
+#include <PluginWindowMacCA.h>
+#include <PluginEvents/KeyboardEvents.h>
 
 #include "../QmlChimera.h"
 
@@ -34,6 +35,8 @@ public:
     EVENTTYPE_CASE( FB::MouseDownEvent, onMouseDown, FB::PluginWindowMacCA )
     EVENTTYPE_CASE( FB::MouseUpEvent, onMouseUp, FB::PluginWindowMacCA )
     EVENTTYPE_CASE( FB::MouseMoveEvent, onMouseMove, FB::PluginWindowMacCA )
+    EVENTTYPE_CASE( FB::KeyDownEvent, onKeyDown, FB::PluginWindowMacCA )
+    EVENTTYPE_CASE( FB::KeyUpEvent, onKeyUp, FB::PluginWindowMacCA )
     PLUGIN_EVENT_MAP_CASCADE( QmlChimera )
     END_PLUGIN_EVENT_MAP()
 
@@ -49,6 +52,8 @@ private:
     bool onMouseEnter( FB::MouseEnteredEvent*, FB::PluginWindowMacCA* );
     bool onMouseLeave( FB::MouseExitedEvent*, FB::PluginWindowMacCA* );
     bool onMouseMove( FB::MouseMoveEvent*, FB::PluginWindowMacCA* );
+    bool onKeyDown( FB::KeyDownEvent*, FB::PluginWindowMacCA* );
+    bool onKeyUp( FB::KeyUpEvent*, FB::PluginWindowMacCA* );
     /** END EVENTDEF -- DON'T CHANGE THIS LINE **/
 
 protected:
