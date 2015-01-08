@@ -1,3 +1,12 @@
+v.0.2.2
+- Qt 5.4 used
+- WebChimera for Mac OS X implemented (experimental)
+- QtGraphicalEffects qml module added to distribution
+- show background color while qml is loading
+- added libvlc 2.1.5 workaround to fix mute on startup
+- fix loop when there are only one item in playlist
+- basic Node-Webkit support added (allow load local .qml files if "app:" protocol used)
+
 v.0.2.0
 - project got new homepage: http://webchimera.org/
 - API documentation now available: https://github.com/RSATom/WebChimera/wiki
