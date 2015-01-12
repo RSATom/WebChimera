@@ -13,6 +13,34 @@
 extern std::string g_dllPath;
 
 ////////////////////////////////////////////////////////////////////////////////
+//ChimeraQuickView class
+////////////////////////////////////////////////////////////////////////////////
+class ChimeraQuickView : public QQuickView
+{
+public:
+    ChimeraQuickView( QWindow* parent )
+        : QQuickView( parent ) {}
+
+protected:
+    bool nativeEvent( const QByteArray&, void* message, long* result ) override;
+};
+
+bool ChimeraQuickView::nativeEvent( const QByteArray&, void* message, long* result )
+{
+    MSG* winMessage = reinterpret_cast<MSG*>( message );
+    switch( winMessage->message ) {
+        case WM_MOUSEACTIVATE:
+            //always activate QuickView on mouse click
+            *result = MA_ACTIVATE;
+            break;
+        default:
+            return false;
+    }
+
+    return true;
+}
+
+////////////////////////////////////////////////////////////////////////////////
 //EraseBkgndEater class
 ////////////////////////////////////////////////////////////////////////////////
 //implements workaround of incorrect WM_ERASEBKGND message handling ( at least on Qt 5.3.2 )
@@ -74,7 +102,7 @@ bool Chimera_Win::onWindowAttached( FB::AttachedEvent* evt, FB::PluginWindowWin*
 
     vlc_open();
 
-    m_quickViewPtr.reset( new QQuickView( m_pluginWindow.data() ) );
+    m_quickViewPtr.reset( new ChimeraQuickView( m_pluginWindow.data() ) );
     m_quickViewPtr->setTitle( QStringLiteral( "WebChimera" ) );
     m_quickViewPtr->setResizeMode( QQuickView::SizeRootObjectToView );
     m_quickViewPtr->setFlags( m_quickViewPtr->flags() | Qt::FramelessWindowHint );
