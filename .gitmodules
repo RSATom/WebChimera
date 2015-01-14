@@ -1,7 +1,7 @@
-[submodule "QmlVlc"]
+[submodule "deps/QmlVlc"]
 	path = deps/QmlVlc
 	url = https://github.com/RSATom/QmlVlc.git
-[submodule "deps/deps/firebreath"]
+[submodule "deps/firebreath"]
 	path = deps/firebreath
 	url = git://github.com/firebreath/FireBreath.git
 [submodule "deps/libvlc-sdk"]
