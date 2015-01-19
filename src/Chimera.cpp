@@ -59,7 +59,7 @@ void Chimera::OnLibVlcEvent( const libvlc_event_t* e )
                                               e->u.media_player_buffering.new_cache ) );
         break;
     case libvlc_MediaPlayerPlaying: {
-        boost::shared_ptr<QmlChimera> thisPtr = FB::ptr_cast<QmlChimera>( shared_from_this() );
+        boost::shared_ptr<Chimera> thisPtr = FB::ptr_cast<Chimera>( shared_from_this() );
         h->ScheduleOnMainThread( thisPtr,
                                  boost::bind( &Chimera::onMediaPlayerPlaying,
                                               thisPtr ) );
