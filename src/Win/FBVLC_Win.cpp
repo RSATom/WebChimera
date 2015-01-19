@@ -115,11 +115,15 @@ bool FBVLC_Win::onRefreshEvent( FB::RefreshEvent *evt, FB::PluginWindowlessWin* 
             if( src_aspect > dst_aspect ) {
                 if( w->getWindowWidth() != media_width ) { //don't scale if size equal
                     dst_media_height = static_cast<unsigned>( w->getWindowWidth() / src_aspect + 0.5 );
+                } else {
+                    dst_media_height = media_height;
                 }
             }
             else {
                 if( w->getWindowHeight() != media_height ) { //don't scale if size equal
                     dst_media_width = static_cast<unsigned>( w->getWindowHeight() * src_aspect + 0.5 );
+                } else {
+                    dst_media_width = media_width;
                 }
             }
 
