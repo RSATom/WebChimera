@@ -60,7 +60,7 @@ FB::JSAPIPtr FBVLC_Win::createJSAPI()
  
 void FBVLC_Win::load_startup_options()
 {
-   typedef boost::optional<std::string> param_type;
+    typedef boost::optional<std::string> param_type;
     typedef const FB::variant&          param_vtype;
 
     Chimera::load_startup_options();
@@ -205,7 +205,7 @@ bool FBVLC_Win::onWindowResized( FB::ResizedEvent* evt, FB::PluginWindowWin* w )
     return true;
 }
 
-bool FBVLC_Win::onWindowAttached( FB::AttachedEvent *evt, FB::PluginWindowlessWin* w )
+bool FBVLC_Win::onWindowAttached( FB::AttachedEvent* evt, FB::PluginWindowlessWin* w )
 {
     vlc_open();
 
@@ -229,7 +229,7 @@ bool FBVLC_Win::onWindowDetached( FB::DetachedEvent* evt, FB::PluginWindowlessWi
     return true;
 }
 
-bool FBVLC_Win::onWindowResized( FB::ResizedEvent *evt, FB::PluginWindowlessWin* w )
+bool FBVLC_Win::onWindowResized( FB::ResizedEvent* evt, FB::PluginWindowlessWin* w )
 {
     if( m_use_native_scaling )
         vlc::vmem::set_desired_size( vlc::original_media_width,
