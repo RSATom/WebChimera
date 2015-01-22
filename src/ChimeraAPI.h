@@ -680,6 +680,10 @@ public:
         registerProperty( "setting",
                           make_property( this, &JSMediaDescAPI::get_setting,
                                                &JSMediaDescAPI::set_setting ) );
+
+        registerProperty( "disabled",
+                          make_property( this, &JSMediaDescAPI::get_disabled,
+                                               &JSMediaDescAPI::set_disabled ) );
     }
 
     virtual ~JSMediaDescAPI(){}
@@ -709,6 +713,9 @@ public:
     std::string get_artworkURL();
     std::string get_trackID();
     std::string get_mrl();
+
+    bool get_disabled();
+    void set_disabled( bool disabled );
 
 private:
     std::string get_meta( libvlc_meta_t e_meta );

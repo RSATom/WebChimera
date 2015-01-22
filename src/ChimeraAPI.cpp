@@ -1065,6 +1065,26 @@ std::string JSMediaDescAPI::get_mrl()
     return get_media().mrl();
 }
 
+bool JSMediaDescAPI::get_disabled()
+{
+    ChimeraPtr plg = getPlugin();
+    vlc_player& p = plg->get_player();
+
+    int idx = p.find_media_index( get_media() );
+    return idx < 0 ? false : p.is_item_disabled( idx );
+}
+
+void JSMediaDescAPI::set_disabled( bool disabled )
+{
+    ChimeraPtr plg = getPlugin();
+    vlc_player& p = plg->get_player();
+
+    int idx = p.find_media_index( get_media() );
+    if( idx >= 0 ) {
+        p.disable_item( idx, disabled );
+    }
+}
+
 ////////////////////////////////////////////////////////////////////////////
 /// JSCurrentMediaDescAPI
 ////////////////////////////////////////////////////////////////////////////
