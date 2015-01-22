@@ -677,10 +677,10 @@ public:
         registerProperty( "title",
                           make_property( this, &JSMediaDescAPI::get_title,
                                                &JSMediaDescAPI::set_title ) );
-		registerProperty( "setting",
-			              make_property(this, &JSMediaDescAPI::get_setting,
-			                                  &JSMediaDescAPI::set_setting));
-	}
+        registerProperty( "setting",
+                          make_property( this, &JSMediaDescAPI::get_setting,
+                                               &JSMediaDescAPI::set_setting ) );
+    }
 
     virtual ~JSMediaDescAPI(){}
 
