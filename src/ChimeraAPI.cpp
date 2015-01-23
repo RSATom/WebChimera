@@ -439,6 +439,14 @@ bool JSPlaylistAPI::removeItem( unsigned int idx )
     return p.delete_item( idx );
 }
 
+void JSPlaylistAPI::advanceItem( unsigned idx, int count )
+{
+    ChimeraPtr plg = getPlugin();
+    vlc_player& p = plg->get_player();
+
+    p.advance_item( idx, count );
+}
+
 ////////////////////////////////////////////////////////////////////////////
 /// JSSubtitleAPI
 ////////////////////////////////////////////////////////////////////////////
