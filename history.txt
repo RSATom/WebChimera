@@ -1,3 +1,11 @@
+v.0.2.3
+- Win: FBVLC Compatibility mode fixed
+- Mac: Fixed mouse events handling on Google Chrome
+- (QML, JS) .playlist[].disabled rw property added
+- (QML, JS) .playlist.advanceItem(idx, count) added
+- Win: fixed focus lose on mouse click
+- Win.FBVLC.Windowless: fixed aspect ratio issue when media width/height equal to output window width/height
+
 v.0.2.2
 - Qt 5.4 used
 - WebChimera for Mac OS X implemented (experimental)
