@@ -6,6 +6,8 @@
 # Mac template platform definition CMake file
 # Included from ../CMakeLists.txt
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+
 set( QTDIR ${_qt5Core_install_prefix} )
 
 add_subdirectory( ${DEPS_DIR}/QuickLayer "${DEPS_BINARY_DIR}/QuickLayer" )
