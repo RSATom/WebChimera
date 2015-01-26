@@ -18,7 +18,6 @@
 
 #include "Chimera_Win.h"
 
-#include <QtCore/qglobal.h>
 #include <QQmlContext.h>
 #include <QtQml/QQml.h>
 #include <QAbstractNativeEventFilter>
