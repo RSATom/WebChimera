@@ -21,6 +21,7 @@
 #include <boost/algorithm/string.hpp>
 
 #include <QGuiApplication>
+#include <QDir>
 
 #include <QmlVlc/QmlVlc.h>
 
@@ -111,15 +112,33 @@ QUrl QmlChimera::getQmlSource()
 {
     QUrl qml = QStringLiteral( "qrc:/default.qml" );
 
-    std::string url = m_host->getDOMWindow()->getLocation();
-    QUrl baseUrl = QString::fromUtf8( url.data(), url.size() );
+    FB::DOM::WindowPtr domWindow = m_host->getDOMWindow();
+    std::string url = domWindow->getLocation();
+    const bool isApp = boost::istarts_with( url, "app://" );
+    QUrl baseUrl = QString::fromStdString( url );
+
+    if( isApp && domWindow->getJSObject()->HasProperty( "process" ) ) {
+        FB::JSObjectPtr process =
+            domWindow->getProperty<FB::JSObjectPtr>( "process" );
+
+        FB::variant vCwd = process->Invoke( "cwd", FB::variant_list_of() );
+        if( vCwd.is_of_type<std::string>() ) {
+            QString cwd =
+                QDir::fromNativeSeparators(
+                    QString::fromStdString( vCwd.cast<std::string>() ) );
+
+            if( !cwd.endsWith( QDir::separator() ) )
+                cwd += QDir::separator();
+
+            baseUrl = QUrl::fromLocalFile( cwd );
+        }
+    }
 
     vlc_player_options& opts = get_options();
     const std::string& qml_source = opts.get_qml_source();
     if( !qml_source.empty() ) {
         QUrl qmlTmp = QString::fromUtf8( qml_source.data(), qml_source.size() );
-        bool isApp = boost::istarts_with( url, "app://" );
-        if( qmlTmp.isRelative() && !isApp ) {
+        if( qmlTmp.isRelative() ) {
             qmlTmp = baseUrl.resolved( qmlTmp );
         }
 #ifdef NDEBUG
