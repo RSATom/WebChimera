@@ -51,5 +51,8 @@ public:
     void set_qml( const std::string& qml );
 
     FB_JSAPI_EVENT( QmlMessage, 1, ( std::string ) );
+    FB_JSAPI_EVENT( QmlStringMessage, 2, ( int, std::string ) );
+    FB_JSAPI_EVENT( QmlNumberMessage, 3, ( int, int, int ) );
+
     void emitJsMessage( const std::string& message );
 };

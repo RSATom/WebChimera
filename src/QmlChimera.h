@@ -49,7 +49,10 @@ public:
 
     Q_INVOKABLE virtual void toggleFullscreen()
         { toggle_fullscreen(); };
+
     Q_INVOKABLE virtual void fireQmlMessage( const QString& message );
+    Q_INVOKABLE virtual void fireQmlStringMessage( int type, const QString& arg );
+    Q_INVOKABLE virtual void fireQmlNumberMessage( int type, int arg1, int arg2 );
 
     void emitJsMessage( const std::string& message )
         { Q_EMIT jsMessage( QString::fromStdString( message ) ); }

@@ -77,6 +77,18 @@ void QmlChimera::fireQmlMessage( const QString& message )
     api->fire_QmlMessage( message.toStdString() );
 }
 
+void QmlChimera::fireQmlStringMessage( int type, const QString& arg )
+{
+    JSRootQmlAPIPtr api  = boost::static_pointer_cast<JSRootQmlAPI>( getRootJSAPI() );
+    api->fire_QmlStringMessage( type, arg.toStdString() );
+}
+
+void QmlChimera::fireQmlNumberMessage( int type, int arg1, int arg2 )
+{
+    JSRootQmlAPIPtr api  = boost::static_pointer_cast<JSRootQmlAPI>( getRootJSAPI() );
+    api->fire_QmlNumberMessage( type, arg1, arg2 );
+}
+
 void QmlChimera::load_startup_options()
 {
    typedef boost::optional<std::string> param_type;
