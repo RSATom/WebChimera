@@ -1,3 +1,10 @@
+- (JS) .QmlStringMessage( int type, string message ) event added
+- (JS) .QmlNumberMessage( int type, int arg1, int arg2 ) event added
+- (QML) fireQmlStringMessage( int type, string message ) global function added
+- (QML) fireQmlNumberMessage( int type, int arg1, int arg2 ) global function added
+- Win: fixed mouse events handling under Internet Explorer
+- prepend path from process.cwd() to 'qmlsrc' if 'app://' protocol used under Node-Webkit/NW.js
+
 v.0.2.3
 - Win: FBVLC Compatibility mode fixed
 - Mac: Fixed mouse events handling on Google Chrome
