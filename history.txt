@@ -4,6 +4,7 @@
 - (QML) fireQmlNumberMessage( int type, int arg1, int arg2 ) global function added
 - Win: fixed mouse events handling under Internet Explorer
 - prepend path from process.cwd() to 'qmlsrc' if 'app://' protocol used under Node-Webkit/NW.js
+- Win: don't allow screensaver or screen off when video is playing
 
 v.0.2.3
 - Win: FBVLC Compatibility mode fixed
