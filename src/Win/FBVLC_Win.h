@@ -93,6 +93,9 @@ protected:
     void on_frame_ready( const std::vector<char>* ) override;
     void on_frame_cleanup() override;
 
+    void onMediaPlayerPlaying() override;
+    void onMediaPlayerNotPlaying() override;
+
 private:
     bool m_use_native_scaling;
 //for windowless mode

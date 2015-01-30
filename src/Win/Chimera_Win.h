@@ -58,6 +58,10 @@ public:
     bool is_fullscreen();
     void set_fullscreen( bool fs );
 
+protected:
+    void onMediaPlayerPlaying() override;
+    void onMediaPlayerNotPlaying() override;
+
 private:
     QScopedPointer<QWindow> m_pluginWindow;
 };

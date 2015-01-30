@@ -37,6 +37,8 @@ Chimera::Chimera()
 ///////////////////////////////////////////////////////////////////////////////
 Chimera::~Chimera()
 {
+    onMediaPlayerNotPlaying();
+
     // This is optional, but if you reset m_api (the shared_ptr to your JSAPI
     // root object) and tell the host to free the retained JSAPI objects then
     // unless you are holding another shared_ptr reference to your JSAPI object
@@ -59,6 +61,7 @@ void Chimera::OnLibVlcEvent( const libvlc_event_t* e )
     FB::BrowserHostPtr h = m_host;
 
     void (JSRootAPI::*event_to_fire)(void) = 0;
+    bool scheduleNotPlaying = false;
 
     switch ( e->type ) {
     case libvlc_MediaPlayerMediaChanged:
@@ -87,9 +90,11 @@ void Chimera::OnLibVlcEvent( const libvlc_event_t* e )
     }
     case libvlc_MediaPlayerPaused:
         event_to_fire = &JSRootAPI::fire_MediaPlayerPaused;
+        scheduleNotPlaying = true;
         break;
     case libvlc_MediaPlayerStopped:
         event_to_fire = &JSRootAPI::fire_MediaPlayerStopped;
+        scheduleNotPlaying = true;
         break;
     case libvlc_MediaPlayerForward:
         event_to_fire = &JSRootAPI::fire_MediaPlayerForward;
@@ -99,9 +104,11 @@ void Chimera::OnLibVlcEvent( const libvlc_event_t* e )
         break;
     case libvlc_MediaPlayerEndReached:
         event_to_fire = &JSRootAPI::fire_MediaPlayerEndReached;
+        scheduleNotPlaying = true;
         break;
     case libvlc_MediaPlayerEncounteredError:
         event_to_fire = &JSRootAPI::fire_MediaPlayerEncounteredError;
+        scheduleNotPlaying = true;
         break;
     case libvlc_MediaPlayerTimeChanged: {
         double new_time = static_cast<double>( e->u.media_player_time_changed.new_time );
@@ -152,6 +159,13 @@ void Chimera::OnLibVlcEvent( const libvlc_event_t* e )
 
     if( event_to_fire ) {
         h->ScheduleOnMainThread( api, boost::bind( event_to_fire, api.get() ) );
+    }
+
+    if( scheduleNotPlaying ) {
+        boost::shared_ptr<Chimera> thisPtr = FB::ptr_cast<Chimera>( shared_from_this() );
+        h->ScheduleOnMainThread( thisPtr,
+                                 boost::bind( &Chimera::onMediaPlayerNotPlaying,
+                                              thisPtr ) );
     }
 }
 
@@ -447,4 +461,8 @@ void Chimera::onMediaPlayerPlaying()
         get_player().audio().set_mute( true );
         m_forceMute = false;
     }
+}
+
+void Chimera::onMediaPlayerNotPlaying()
+{
 }

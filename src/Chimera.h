@@ -90,14 +90,15 @@ protected:
 
     virtual void on_option_change( vlc_player_option_e );
 
+    virtual void onMediaPlayerPlaying();
+    virtual void onMediaPlayerNotPlaying();
+
 private:
     void load_libvlc_options();
 
     static void OnLibVlcEvent_proxy( const libvlc_event_t* e, void* param );
     void OnLibVlcEvent( const libvlc_event_t* e );
     void VlcEvents( bool Attach );
-
-    void onMediaPlayerPlaying();
 
 private:
     libvlc_instance_t* m_libvlc;

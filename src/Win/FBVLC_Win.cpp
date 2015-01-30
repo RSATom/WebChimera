@@ -293,3 +293,17 @@ void FBVLC_Win::on_frame_cleanup()
 
     update_window();
 }
+
+void FBVLC_Win::onMediaPlayerPlaying()
+{
+    Chimera::onMediaPlayerPlaying();
+
+    ::SetThreadExecutionState( ES_CONTINUOUS | ES_DISPLAY_REQUIRED );
+}
+
+void FBVLC_Win::onMediaPlayerNotPlaying()
+{
+    Chimera::onMediaPlayerNotPlaying();
+
+    ::SetThreadExecutionState( ES_CONTINUOUS );
+}

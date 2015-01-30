@@ -217,3 +217,17 @@ void Chimera_Win::set_fullscreen( bool fs )
         }
     }
 }
+
+void Chimera_Win::onMediaPlayerPlaying()
+{
+    QuickViewChimera::onMediaPlayerPlaying();
+
+    ::SetThreadExecutionState( ES_CONTINUOUS | ES_DISPLAY_REQUIRED );
+}
+
+void Chimera_Win::onMediaPlayerNotPlaying()
+{
+    QuickViewChimera::onMediaPlayerNotPlaying();
+
+    ::SetThreadExecutionState( ES_CONTINUOUS );
+}
