@@ -150,14 +150,14 @@ void Chimera::OnLibVlcEvent( const libvlc_event_t* e )
     //    break;
     };
 
-    if ( event_to_fire ) {
+    if( event_to_fire ) {
         h->ScheduleOnMainThread( api, boost::bind( event_to_fire, api.get() ) );
     }
 }
 
 void Chimera::VlcEvents( bool Attach )
 {
-    if ( !get_player().is_open() )
+    if( !get_player().is_open() )
         return;
 
     libvlc_event_manager_t* em =
