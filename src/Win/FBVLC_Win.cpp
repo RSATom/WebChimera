@@ -183,6 +183,7 @@ bool FBVLC_Win::onWindowAttached( FB::AttachedEvent* evt, FB::PluginWindowWin* w
     m_wm->CreateWindows( w->getHWND() );
     vlc_open();
     m_wm->LibVlcAttach( &get_player() );
+    apply_player_options();
     return true;
 }
 
