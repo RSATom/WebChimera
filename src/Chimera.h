@@ -30,7 +30,7 @@
 #include "vlc_player_options.h"
 
 FB_FORWARD_PTR( Chimera )
-class Chimera 
+class Chimera
     : public FB::PluginCore,
       protected vlc_player,
       protected vlc_player_options
