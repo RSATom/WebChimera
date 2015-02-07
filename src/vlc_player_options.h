@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright © 2002-2011 VideoLAN and VLC authors
+ * Copyright Â© 2002-2011 VideoLAN and VLC authors
  * $Id$
  *
  * Authors: Sergey Radionov <rsatom_gmail.com>
