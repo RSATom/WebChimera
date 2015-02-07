@@ -57,16 +57,17 @@ private:
 
 public:
     libvlc_instance_t* getLibVlc()
-        { return m_libvlc; };
+        { return m_libvlc; }
     vlc_player& get_player()
-        { return *static_cast<vlc_player*>( this ); };
+        { return *static_cast<vlc_player*>( this ); }
     vlc_player_options& get_options()
         { return *static_cast<vlc_player_options*>( this ); }
     const vlc_player_options& get_options() const
         { return *static_cast<const vlc_player_options*>( this ); }
 
     int add_playlist_item( const std::string& mrl );
-    int add_playlist_item( const std::string& mrl, const std::vector<std::string>& options );
+    int add_playlist_item( const std::string& mrl,
+                           const std::vector<std::string>& options );
 
 public:
     virtual bool is_fullscreen() { return false; };
