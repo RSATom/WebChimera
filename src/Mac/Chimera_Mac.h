@@ -85,6 +85,6 @@ private Q_SLOTS:
     void quickViewStatusChanged();
 
 private:
-    QScopedPointer<FboQuickView> m_quickViewPtr;
-    void* m_quickLayer;
+    struct Private;
+    std::unique_ptr<Private> m_p;
 };

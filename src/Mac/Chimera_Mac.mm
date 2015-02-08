@@ -41,7 +41,7 @@ std::string getPluginPath()
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-//Chimera_Mac class
+//Chimera_Mac static members
 ////////////////////////////////////////////////////////////////////////////////
 void Chimera_Mac::StaticInitialize()
 {
@@ -54,8 +54,28 @@ void Chimera_Mac::StaticDeinitialize()
 {
 }
 
+////////////////////////////////////////////////////////////////////////////////
+//Chimera_Mac::Private struct
+////////////////////////////////////////////////////////////////////////////////
+struct Chimera_Mac::Private
+{
+    Private();
+
+    QScopedPointer<FboQuickView> quickViewPtr;
+    QuickLayer* quickLayer;
+};
+
+Chimera_Mac::Private::Private()
+    : quickLayer( 0 )
+{
+
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//Chimera_Mac class
+////////////////////////////////////////////////////////////////////////////////
 Chimera_Mac::Chimera_Mac()
-    : m_quickLayer( 0 )
+    : m_p( new Private )
 {
 #ifdef QT_STATIC
     qmlProtectModule( "QtQuick", 2 );
@@ -70,12 +90,12 @@ Chimera_Mac::~Chimera_Mac()
 
 void Chimera_Mac::cleanup()
 {
-    if( m_quickLayer ) {
-        [(QuickLayer*)m_quickLayer release];
-        m_quickLayer = 0;
+    if( m_p->quickLayer ) {
+        [m_p->quickLayer release];
+        m_p->quickLayer = 0;
     }
 
-    m_quickViewPtr.reset();
+    m_p->quickViewPtr.reset();
 }
 
 bool Chimera_Mac::onWindowAttached( FB::AttachedEvent*, FB::PluginWindowMacCA* w )
@@ -86,12 +106,14 @@ bool Chimera_Mac::onWindowAttached( FB::AttachedEvent*, FB::PluginWindowMacCA* w
     if( PW::DrawingModelCoreAnimation == w->getDrawingModel() ||
         PW::DrawingModelInvalidatingCoreAnimation == w->getDrawingModel() )
     {
-        m_quickViewPtr.reset( new FboQuickView() );
-        connect( m_quickViewPtr.data(), SIGNAL( statusChanged( Status ) ),
+        m_p->quickViewPtr.reset( new FboQuickView() );
+        connect( m_p->quickViewPtr.data(), SIGNAL( statusChanged( Status ) ),
                  this, SLOT( quickViewStatusChanged() ) );
 
-        QuickLayer* layer = [[QuickLayer alloc] initWithFboQuickWindow: m_quickViewPtr.data()];
-        m_quickLayer = layer;
+        m_p->quickLayer =
+            [[QuickLayer alloc] initWithFboQuickWindow: m_p->quickViewPtr.data()];
+        QuickLayer* layer = m_p->quickLayer;
+
         layer.asynchronous =
             ( PW::DrawingModelInvalidatingCoreAnimation == w->getDrawingModel() ) ?
                 NO : YES;
@@ -105,8 +127,9 @@ bool Chimera_Mac::onWindowAttached( FB::AttachedEvent*, FB::PluginWindowMacCA* w
         assert( false );
     }
 
-    m_qmlVlcPlayer = new QmlVlcSurfacePlayerProxy( static_cast<vlc::player*>( this ),
-                                                   m_quickViewPtr.data() );
+    m_qmlVlcPlayer =
+        new QmlVlcSurfacePlayerProxy( static_cast<vlc::player*>( this ),
+                                      m_p->quickViewPtr.data() );
     m_qmlVlcPlayer->classBegin();
 
     applyPlayerOptions();
@@ -124,27 +147,27 @@ bool Chimera_Mac::onWindowDetached( FB::DetachedEvent*, FB::PluginWindowMacCA* )
 
 void Chimera_Mac::setQml()
 {
-    if( !m_quickViewPtr )
+    if( !m_p->quickViewPtr )
         return;
 
-    if( m_quickViewPtr ) {
-        QQmlContext* context = m_quickViewPtr->rootContext();
+    if( m_p->quickViewPtr ) {
+        QQmlContext* context = m_p->quickViewPtr->rootContext();
         context->setContextObject( this );
         context->setContextProperty( QStringLiteral( "plugin" ), this );
     }
 
     const std::string& qml = get_options().get_qml();
     if( qml.empty() ) {
-        m_quickViewPtr->setSource( getQmlSource() );
+        m_p->quickViewPtr->setSource( getQmlSource() );
     } else {
         QUrl qmlUrl = QStringLiteral( "qml" );
-        m_quickViewPtr->setQml( QString::fromStdString( qml ), qmlUrl );
+        m_p->quickViewPtr->setQml( QString::fromStdString( qml ), qmlUrl );
     }
 }
 
 void Chimera_Mac::quickViewStatusChanged()
 {
-    QList<QQmlError> errors = m_quickViewPtr->errors();
+    QList<QQmlError> errors = m_p->quickViewPtr->errors();
 
     if( !errors.empty() ) {
         QString errStr;
@@ -170,8 +193,8 @@ void Chimera_Mac::on_option_change( vlc_player_option_e o )
 
 bool Chimera_Mac::onWindowResized( FB::ResizedEvent* e, FB::PluginWindowMacCA* w )
 {
-    if( m_quickViewPtr )
-         m_quickViewPtr->resize( w->getWindowWidth(), w->getWindowHeight() );
+    if( m_p->quickViewPtr )
+         m_p->quickViewPtr->resize( w->getWindowWidth(), w->getWindowHeight() );
 
     return false;
 }
@@ -197,7 +220,7 @@ bool Chimera_Mac::onMouseDown( FB::MouseDownEvent* e, FB::PluginWindowMacCA* )
     QPointF mousePoint( e->m_x, e->m_y );
     QMouseEvent mouseEvent( QEvent::MouseButtonPress, mousePoint, mousePoint,
                             button, button, Qt::NoModifier );
-    QCoreApplication::sendEvent( m_quickViewPtr.data(), &mouseEvent );
+    QCoreApplication::sendEvent( m_p->quickViewPtr.data(), &mouseEvent );
 
     return false;
 }
@@ -208,7 +231,7 @@ bool Chimera_Mac::onMouseUp( FB::MouseUpEvent* e, FB::PluginWindowMacCA* )
     QPointF mousePoint( e->m_x, e->m_y );
     QMouseEvent mouseEvent( QEvent::MouseButtonRelease, mousePoint, mousePoint,
                             button, Qt::NoButton, Qt::NoModifier );
-    QCoreApplication::sendEvent( m_quickViewPtr.data(), &mouseEvent );
+    QCoreApplication::sendEvent( m_p->quickViewPtr.data(), &mouseEvent );
 
     return true;
 }
@@ -217,7 +240,7 @@ bool Chimera_Mac::onMouseEnter( FB::MouseEnteredEvent* e, FB::PluginWindowMacCA*
 {
     QPointF mousePoint( e->m_x, e->m_y );
     QEnterEvent mouseEvent( mousePoint, mousePoint, mousePoint );
-    QCoreApplication::sendEvent( m_quickViewPtr.data(), &mouseEvent );
+    QCoreApplication::sendEvent( m_p->quickViewPtr.data(), &mouseEvent );
 
     return true;
 }
@@ -227,7 +250,7 @@ bool Chimera_Mac::onMouseLeave( FB::MouseExitedEvent* e, FB::PluginWindowMacCA* 
     QPointF mousePoint( e->m_x, e->m_y );
     QMouseEvent mouseEvent( QEvent::Leave, mousePoint, mousePoint,
                             Qt::NoButton, Qt::NoButton, Qt::NoModifier );
-    QCoreApplication::sendEvent( m_quickViewPtr.data(), &mouseEvent );
+    QCoreApplication::sendEvent( m_p->quickViewPtr.data(), &mouseEvent );
 
     return true;
 }
@@ -237,7 +260,7 @@ bool Chimera_Mac::onMouseMove( FB::MouseMoveEvent* e, FB::PluginWindowMacCA* )
     QPointF mousePoint( e->m_x, e->m_y );
     QMouseEvent mouseEvent( QEvent::MouseMove, mousePoint, mousePoint,
                             Qt::NoButton, Qt::NoButton, Qt::NoModifier );
-    QCoreApplication::sendEvent( m_quickViewPtr.data(), &mouseEvent );
+    QCoreApplication::sendEvent( m_p->quickViewPtr.data(), &mouseEvent );
 
     return true;
 }
@@ -339,7 +362,7 @@ bool Chimera_Mac::onKeyDown( FB::KeyDownEvent* e, FB::PluginWindowMacCA* )
     Qt::Key qtKey = FbToQtMouseButton( e->m_key_code );
     if( Qt::Key_unknown != qtKey ) {
         QKeyEvent keyEvent( QEvent::KeyPress, qtKey, Qt::NoModifier );
-        QCoreApplication::sendEvent( m_quickViewPtr.data(), &keyEvent );
+        QCoreApplication::sendEvent( m_p->quickViewPtr.data(), &keyEvent );
 
         return true;
     }
@@ -352,7 +375,7 @@ bool Chimera_Mac::onKeyUp( FB::KeyUpEvent* e, FB::PluginWindowMacCA* )
     Qt::Key qtKey = FbToQtMouseButton( e->m_key_code );
     if( Qt::Key_unknown != qtKey ) {
         QKeyEvent keyEvent( QEvent::KeyRelease, qtKey, Qt::NoModifier );
-        QCoreApplication::sendEvent( m_quickViewPtr.data(), &keyEvent );
+        QCoreApplication::sendEvent( m_p->quickViewPtr.data(), &keyEvent );
 
         return true;
     }
