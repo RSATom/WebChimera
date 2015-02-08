@@ -50,11 +50,6 @@ private:
     bool onCoreGraphicsDraw( FB::CoreGraphicsDraw*, FB::PluginWindowMacCG* );
     /** END EVENTDEF -- DON'T CHANGE THIS LINE **/
 
-public:
-    virtual bool is_fullscreen() { return false; };
-    virtual void set_fullscreen( bool fs ) { };
-    virtual void toggle_fullscreen() { };
-
 protected:
     virtual void on_frame_ready( const std::vector<char>* frame_buf );
     virtual void on_frame_cleanup();

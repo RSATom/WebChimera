@@ -80,7 +80,7 @@ void Chimera_Mac::cleanup()
 
 bool Chimera_Mac::onWindowAttached( FB::AttachedEvent*, FB::PluginWindowMacCA* w )
 {
-    vlc_open();
+    vlcOpen();
 
     typedef FB::PluginWindowMac PW;
     if( PW::DrawingModelCoreAnimation == w->getDrawingModel() ||
@@ -109,7 +109,7 @@ bool Chimera_Mac::onWindowAttached( FB::AttachedEvent*, FB::PluginWindowMacCA* w
                                                    m_quickViewPtr.data() );
     m_qmlVlcPlayer->classBegin();
 
-    apply_player_options();
+    applyPlayerOptions();
     setQml();
 
     return true;

@@ -43,12 +43,12 @@ public:
 
     Q_PROPERTY( QString bgcolor READ get_bgColor NOTIFY bgcolorChanged )
     Q_PROPERTY( QmlVlcSurfacePlayerProxy* vlcPlayer READ getQmlVlcPlayer CONSTANT )
-    Q_PROPERTY( bool fullscreen READ is_fullscreen WRITE set_fullscreen NOTIFY fullscreenChanged )
+    Q_PROPERTY( bool fullscreen READ isFullscreen WRITE setFullscreen NOTIFY fullscreenChanged )
 
     QString get_bgColor() const;
 
-    Q_INVOKABLE virtual void toggleFullscreen()
-        { toggle_fullscreen(); };
+    Q_INVOKABLE void toggleFullscreen() override
+        { Chimera::toggleFullscreen(); }
 
     Q_INVOKABLE virtual void fireQmlMessage( const QString& message );
     Q_INVOKABLE virtual void fireQmlStringMessage( int type, const QString& arg );
@@ -74,7 +74,7 @@ private:
 protected:
     FB::JSAPIPtr createJSAPI() override;
 
-    void load_startup_options() override;
+    void loadStartupOptions() override;
 
     bool isOptionTrusted( const std::string& option ) override;
 

@@ -219,7 +219,7 @@ const FB::variant& Chimera::getParamVariant( const std::string& key ) const
     return empty;
 }
 
-void Chimera::load_startup_options()
+void Chimera::loadStartupOptions()
 {
     typedef boost::optional<std::string> param_type;
     typedef const FB::variant&           param_vtype;
@@ -259,7 +259,7 @@ void Chimera::load_startup_options()
         opts.set_use_proxy( use_proxy.convert_cast<bool>() );
 }
 
-void Chimera::load_libvlc_options()
+void Chimera::loadLibvlcOptions()
 {
     typedef boost::optional<std::string> param_type;
     typedef const FB::variant&           param_vtype;
@@ -297,14 +297,14 @@ void Chimera::load_libvlc_options()
     QmlVlcConfig::enableNoVideoTitleShow( true );
 }
 
-void Chimera::vlc_open()
+void Chimera::vlcOpen()
 {
     if( get_player().is_open() )
         return ;
 
     if( !m_libvlc ) {
-        load_startup_options();
-        load_libvlc_options();
+        loadStartupOptions();
+        loadLibvlcOptions();
         m_libvlc = QmlVlcConfig::createLibvlcInstance();
     }
 
@@ -314,7 +314,7 @@ void Chimera::vlc_open()
      }
 }
 
-void Chimera::apply_player_options()
+void Chimera::applyPlayerOptions()
 {
     typedef boost::optional<std::string> param_type;
     typedef const FB::variant&           param_vtype;
@@ -352,13 +352,13 @@ void Chimera::apply_player_options()
     if ( src )
         set_mrl = *src;
     if( !set_mrl.empty() ) {
-        int item = add_playlist_item( set_mrl.c_str() );
+        int item = addPlaylistItem( set_mrl.c_str() );
         if ( opts.get_autoplay() )
             get_player().play( item );
     }
 }
 
-void Chimera::vlc_close()
+void Chimera::vlcClose()
 {
     get_player().stop();
 
@@ -397,12 +397,12 @@ std::string Chimera::detectHttpProxy( const std::string& mrl ) const
     return proxy_str;
 }
 
-int Chimera::add_playlist_item( const std::string& mrl )
+int Chimera::addPlaylistItem( const std::string& mrl )
 {
-    return add_playlist_item( mrl, std::vector<std::string>() );
+    return addPlaylistItem( mrl, std::vector<std::string>() );
 }
 
-int Chimera::add_playlist_item( const std::string& mrl, const std::vector<std::string>& options )
+int Chimera::addPlaylistItem( const std::string& mrl, const std::vector<std::string>& options )
 {
     const std::string proxy_str = detectHttpProxy( mrl );
 
@@ -437,7 +437,7 @@ void Chimera::onPluginReady()
     // created, and we are ready to interact with the page and such.  The
     // PluginWindow may or may not have already fire the AttachedEvent at
     // this point.
-    vlc_open();
+    vlcOpen();
 }
 
 void Chimera::shutdown()
@@ -447,7 +447,7 @@ void Chimera::shutdown()
     // object should be released here so that this object can be safely
     // destroyed. This is the last point that shared_from_this and weak_ptr
     // references to this object will be valid
-    vlc_close();
+    vlcClose();
 }
 
 void Chimera::on_option_change( vlc_player_option_e o )

@@ -96,7 +96,7 @@ public:
         { return _qml; }
 
 protected:
-    virtual void on_option_change( vlc_player_option_e ){};
+    virtual void on_option_change( vlc_player_option_e ) {}
 
 private:
     bool        _autoplay;

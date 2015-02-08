@@ -78,8 +78,8 @@ private:
     void update_window();
 
 public:
-    bool is_fullscreen() override;
-    void set_fullscreen( bool fs ) override;
+    bool isFullscreen() override;
+    void setFullscreen( bool fs ) override;
 
 protected:
     bool isWindowless() override
@@ -87,7 +87,7 @@ protected:
 
     FB::JSAPIPtr createJSAPI() override;
 
-    void load_startup_options() override;
+    void loadStartupOptions() override;
 
     void on_option_change( vlc_player_option_e ) override;
     void on_frame_ready( const std::vector<char>* ) override;

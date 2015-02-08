@@ -32,20 +32,20 @@ FBVLC_X11::~FBVLC_X11()
 
 bool FBVLC_X11::onWindowAttached( FB::AttachedEvent*, FB::PluginWindowX11* w )
 {
-    vlc_open();
+    vlcOpen();
     libvlc_media_player_set_xwindow( get_player().get_mp(), w->getWindow() );
     return true;
 }
 
 bool FBVLC_X11::onWindowDetached( FB::DetachedEvent*, FB::PluginWindowX11* )
 {
-    vlc_close();
+    vlcClose();
     return true;
 }
 
 bool FBVLC_X11::onWindowAttached( FB::AttachedEvent*, X11WindowlessWindow* w )
 {
-    vlc_open();
+    vlcOpen();
 
     m_xcbConnection = XGetXCBConnection( w->getDisplay() );
     m_xcbContextId = xcb_generate_id( m_xcbConnection );
@@ -58,7 +58,7 @@ bool FBVLC_X11::onWindowAttached( FB::AttachedEvent*, X11WindowlessWindow* w )
 
 bool FBVLC_X11::onWindowDetached( FB::DetachedEvent*, X11WindowlessWindow* )
 {
-    vlc_close();
+    vlcClose();
 
     xcb_free_gc( m_xcbConnection, m_xcbContextId );
     m_xcbContextId = 0;

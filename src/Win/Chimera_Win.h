@@ -55,8 +55,8 @@ private:
     /** END EVENTDEF -- DON'T CHANGE THIS LINE **/
 
 public:
-    bool is_fullscreen();
-    void set_fullscreen( bool fs );
+    bool isFullscreen() override;
+    void setFullscreen( bool fs ) override;
 
 protected:
     void onMediaPlayerPlaying() override;

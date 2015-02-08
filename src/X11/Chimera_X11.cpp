@@ -42,7 +42,7 @@ Chimera_X11::~Chimera_X11()
 
 bool Chimera_X11::onWindowAttached( FB::AttachedEvent *evt, FB::PluginWindowX11* w )
 {
-    vlc_open();
+    vlcOpen();
 
     QWindow* browserWindow = QWindow::fromWinId( w->getWindow() );//FIXME, memory leak
     m_quickViewPtr.reset( new QQuickView( browserWindow ) );

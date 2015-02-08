@@ -65,15 +65,15 @@ public:
     const vlc_player_options& get_options() const
         { return *static_cast<const vlc_player_options*>( this ); }
 
-    int add_playlist_item( const std::string& mrl );
-    int add_playlist_item( const std::string& mrl,
+    int addPlaylistItem( const std::string& mrl );
+    int addPlaylistItem( const std::string& mrl,
                            const std::vector<std::string>& options );
 
 public:
-    virtual bool is_fullscreen() { return false; };
-    virtual void set_fullscreen( bool fs ) {};
-    virtual void toggle_fullscreen()
-        { set_fullscreen( !is_fullscreen() ); };
+    virtual bool isFullscreen() { return false; }
+    virtual void setFullscreen( bool fs ) {}
+    virtual void toggleFullscreen()
+        { setFullscreen( !isFullscreen() ); }
 
 private:
     std::string detectHttpProxy( const std::string& mrl ) const;
@@ -81,13 +81,13 @@ private:
 protected:
     const FB::variant& getParamVariant( const std::string& key ) const;
 
-    virtual void load_startup_options();
-    void vlc_open();
-    virtual void apply_player_options();
-    void vlc_close();
+    virtual void loadStartupOptions();
+    void vlcOpen();
+    void applyPlayerOptions();
+    void vlcClose();
 
-    virtual bool isOptionTrusted( const std::string& option )
-        { return false; };
+    virtual bool isOptionTrusted( const std::string& /*option*/ )
+        { return false; }
 
     virtual void on_option_change( vlc_player_option_e );
 
@@ -95,7 +95,7 @@ protected:
     virtual void onMediaPlayerNotPlaying();
 
 private:
-    void load_libvlc_options();
+    void loadLibvlcOptions();
 
     static void OnLibVlcEvent_proxy( const libvlc_event_t* e, void* param );
     void OnLibVlcEvent( const libvlc_event_t* e );

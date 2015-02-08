@@ -99,7 +99,7 @@ bool Chimera_Win::onWindowAttached( FB::AttachedEvent* evt, FB::PluginWindowWin*
 {
     m_pluginWindow.reset( QWindow::fromWinId( (WId) w->getHWND() ) );
 
-    vlc_open();
+    vlcOpen();
 
     m_quickViewPtr.reset( new ChimeraQuickView( m_pluginWindow.data() ) );
     m_quickViewPtr->setTitle( QStringLiteral( "WebChimera" ) );
@@ -114,10 +114,10 @@ bool Chimera_Win::onWindowAttached( FB::AttachedEvent* evt, FB::PluginWindowWin*
     m_qmlVlcPlayer = new QmlVlcSurfacePlayerProxy( (vlc::player*)this, m_quickViewPtr.data() );
     m_qmlVlcPlayer->classBegin();
 
-    //have to call apply_player_options()
+    //have to call applyPlayerOptions()
     //after QmlVlcSurfacePlayerProxy::classBegin
     //to allow attach Proxy's vmem to plugin before play
-    apply_player_options();
+    applyPlayerOptions();
 
     setQml();
 
@@ -197,7 +197,7 @@ QScreen* ScreenFromWindow( FB::PluginWindowWin* w )
     return bestScreen;
 }
 
-void Chimera_Win::set_fullscreen( bool fs )
+void Chimera_Win::setFullscreen( bool fs )
 {
     if( m_quickViewPtr && m_pluginWindow ) {
         if( fs && !is_fullscreen() ) {

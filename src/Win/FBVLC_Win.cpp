@@ -57,13 +57,13 @@ FB::JSAPIPtr FBVLC_Win::createJSAPI()
 {
     return boost::make_shared<JSRootAPI>( FB::ptr_cast<Chimera>( shared_from_this() ), m_host );
 }
- 
-void FBVLC_Win::load_startup_options()
+
+void FBVLC_Win::loadStartupOptions()
 {
     typedef boost::optional<std::string> param_type;
     typedef const FB::variant&          param_vtype;
 
-    Chimera::load_startup_options();
+    Chimera::loadStartupOptions();
 
     param_vtype native_scaling  = getParamVariant( "native-scaling" );
     if( !native_scaling.empty() && native_scaling.can_be_type<bool>() )
@@ -181,16 +181,16 @@ bool FBVLC_Win::onWindowAttached( FB::AttachedEvent* evt, FB::PluginWindowWin* w
 {
     m_wm.reset( new WindowedWM( GetModuleHandleA( getFSPath().c_str() ), &get_options() ) );
     m_wm->CreateWindows( w->getHWND() );
-    vlc_open();
+    vlcOpen();
     m_wm->LibVlcAttach( &get_player() );
-    apply_player_options();
+    applyPlayerOptions();
     return true;
 }
 
 bool FBVLC_Win::onWindowDetached( FB::DetachedEvent* evt, FB::PluginWindowWin* w )
 {
     m_wm->LibVlcDetach();
-    vlc_close();
+    vlcClose();
     m_wm->DestroyWindows();
     return true;
 }
@@ -212,7 +212,7 @@ bool FBVLC_Win::onWindowResized( FB::ResizedEvent* evt, FB::PluginWindowWin* w )
 
 bool FBVLC_Win::onWindowAttached( FB::AttachedEvent* evt, FB::PluginWindowlessWin* w )
 {
-    vlc_open();
+    vlcOpen();
 
     if( get_player().is_open() ) {
         vlc::vmem::open( &get_player().basic_player() );
@@ -220,7 +220,7 @@ bool FBVLC_Win::onWindowAttached( FB::AttachedEvent* evt, FB::PluginWindowlessWi
 
     onWindowResized( 0, w );
 
-    apply_player_options();
+    applyPlayerOptions();
 
     return true;
 }
@@ -229,7 +229,7 @@ bool FBVLC_Win::onWindowDetached( FB::DetachedEvent* evt, FB::PluginWindowlessWi
 {
     vlc::vmem::close();
 
-    vlc_close();
+    vlcClose();
 
     return true;
 }
@@ -246,16 +246,16 @@ bool FBVLC_Win::onWindowResized( FB::ResizedEvent* evt, FB::PluginWindowlessWin*
     return true;
 }
 
-bool FBVLC_Win::is_fullscreen()
+bool FBVLC_Win::isFullscreen()
 {
     if( isWindowless() ) {
-        return false;//fullscreen mode not supported in windowless mode for now
+        return false; //fullscreen mode not supported in windowless mode for now
     } else {
         return m_wm.get() ? m_wm->IsFullScreen() : false ;
     }
 }
 
-void FBVLC_Win::set_fullscreen( bool fs )
+void FBVLC_Win::setFullscreen( bool fs )
 {
     //fullscreen mode not supported in windowless mode for now
     if( !isWindowless() && m_wm.get() ) {

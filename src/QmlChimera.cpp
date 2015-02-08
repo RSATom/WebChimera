@@ -89,12 +89,12 @@ void QmlChimera::fireQmlNumberMessage( int type, int arg1, int arg2 )
     api->fire_QmlNumberMessage( type, arg1, arg2 );
 }
 
-void QmlChimera::load_startup_options()
+void QmlChimera::loadStartupOptions()
 {
    typedef boost::optional<std::string> param_type;
     typedef const FB::variant&          param_vtype;
 
-    Chimera::load_startup_options();
+    Chimera::loadStartupOptions();
 
     vlc_player_options& opts = get_options();
 

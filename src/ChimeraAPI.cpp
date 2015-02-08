@@ -370,7 +370,7 @@ int JSPlaylistAPI::add( const std::string& mrl )
 {
     ChimeraPtr plg = getPlugin();
 
-    return plg->add_playlist_item( mrl.c_str() );
+    return plg->addPlaylistItem( mrl.c_str() );
 }
 
 int JSPlaylistAPI::addWithOptions( const std::string& mrl,
@@ -381,7 +381,7 @@ int JSPlaylistAPI::addWithOptions( const std::string& mrl,
 
     ChimeraPtr plg = getPlugin();
 
-    return plg->add_playlist_item( mrl, options );
+    return plg->addPlaylistItem( mrl, options );
 }
 
 void JSPlaylistAPI::play()
@@ -798,21 +798,21 @@ bool JSVideoAPI::get_fullscreen()
 {
     ChimeraPtr plg = getPlugin();
 
-    return plg->is_fullscreen();
+    return plg->isFullscreen();
 }
 
 void JSVideoAPI::set_fullscreen( bool fs )
 {
     ChimeraPtr plg = getPlugin();
 
-    return plg->set_fullscreen( fs );
+    return plg->setFullscreen( fs );
 }
 
 void JSVideoAPI::toggleFullscreen()
 {
     ChimeraPtr plg = getPlugin();
 
-    plg->toggle_fullscreen();
+    plg->toggleFullscreen();
 }
 
 std::string JSVideoAPI::get_aspectRatio()
@@ -1178,7 +1178,7 @@ void JSRootAPI::play( const std::string& mrl )
 
     p.clear_items();
 
-    int item = plg->add_playlist_item( mrl.c_str() );
+    int item = plg->addPlaylistItem( mrl.c_str() );
     if( item >= 0) {
         p.play( item );
     }
@@ -1310,19 +1310,19 @@ bool JSRootAPI::get_fullscreen()
 {
     ChimeraPtr plg = getPlugin();
 
-    return plg->is_fullscreen();
+    return plg->isFullscreen();
 }
 
 void JSRootAPI::set_fullscreen( bool fs )
 {
     ChimeraPtr plg = getPlugin();
 
-    return plg->set_fullscreen( fs );
+    return plg->setFullscreen( fs );
 }
 
 void JSRootAPI::toggleFullscreen()
 {
     ChimeraPtr plg = getPlugin();
 
-    plg->toggle_fullscreen();
+    plg->toggleFullscreen();
 }
