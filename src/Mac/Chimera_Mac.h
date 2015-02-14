@@ -74,6 +74,10 @@ private:
     bool onKeyUp( FB::KeyUpEvent*, FB::PluginWindowMacCA* );
     /** END EVENTDEF -- DON'T CHANGE THIS LINE **/
 
+public:
+    bool isFullscreen() override;
+    void setFullscreen( bool fs ) override;
+
 protected:
     void on_option_change( vlc_player_option_e );
 

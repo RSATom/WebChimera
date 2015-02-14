@@ -27,6 +27,7 @@
 
 #include <QuickLayer/QuickLayer.h>
 #include <QuickLayer/FboQuickView.h>
+#include <QuickLayer/FboQuickWrapperWindow.h>
 
 #include "QtConf.h"
 
@@ -63,10 +64,12 @@ struct Chimera_Mac::Private
 
     QScopedPointer<FboQuickView> quickViewPtr;
     QuickLayer* quickLayer;
+
+    QPointer<FboQuickWrapperWindow> fullscreenWindow;
 };
 
 Chimera_Mac::Private::Private()
-    : quickLayer( 0 )
+    : quickLayer( nullptr ), fullscreenWindow( nullptr )
 {
 
 }
@@ -90,9 +93,14 @@ Chimera_Mac::~Chimera_Mac()
 
 void Chimera_Mac::cleanup()
 {
+    if( m_p->fullscreenWindow ) {
+        delete m_p->fullscreenWindow;
+        m_p->fullscreenWindow = nullptr;
+    }
+
     if( m_p->quickLayer ) {
         [m_p->quickLayer release];
-        m_p->quickLayer = 0;
+        m_p->quickLayer = nullptr;
     }
 
     m_p->quickViewPtr.reset();
@@ -193,7 +201,7 @@ void Chimera_Mac::on_option_change( vlc_player_option_e o )
 
 bool Chimera_Mac::onWindowResized( FB::ResizedEvent* e, FB::PluginWindowMacCA* w )
 {
-    if( m_p->quickViewPtr )
+    if( m_p->quickViewPtr && !isFullscreen() )
          m_p->quickViewPtr->resize( w->getWindowWidth(), w->getWindowHeight() );
 
     return false;
@@ -216,17 +224,23 @@ Qt::MouseButton FbToQtMouseButton( const FB::MouseButtonEvent& e )
 
 bool Chimera_Mac::onMouseDown( FB::MouseDownEvent* e, FB::PluginWindowMacCA* )
 {
+    if( isFullscreen() )
+        return false;
+
     Qt::MouseButton button = FbToQtMouseButton( *e );
     QPointF mousePoint( e->m_x, e->m_y );
     QMouseEvent mouseEvent( QEvent::MouseButtonPress, mousePoint, mousePoint,
                             button, button, Qt::NoModifier );
     QCoreApplication::sendEvent( m_p->quickViewPtr.data(), &mouseEvent );
 
-    return false;
+    return true;
 }
 
 bool Chimera_Mac::onMouseUp( FB::MouseUpEvent* e, FB::PluginWindowMacCA* )
 {
+    if( isFullscreen() )
+        return false;
+
     Qt::MouseButton button = FbToQtMouseButton( *e );
     QPointF mousePoint( e->m_x, e->m_y );
     QMouseEvent mouseEvent( QEvent::MouseButtonRelease, mousePoint, mousePoint,
@@ -238,6 +252,9 @@ bool Chimera_Mac::onMouseUp( FB::MouseUpEvent* e, FB::PluginWindowMacCA* )
 
 bool Chimera_Mac::onMouseEnter( FB::MouseEnteredEvent* e, FB::PluginWindowMacCA* )
 {
+    if( isFullscreen() )
+        return false;
+
     QPointF mousePoint( e->m_x, e->m_y );
     QEnterEvent mouseEvent( mousePoint, mousePoint, mousePoint );
     QCoreApplication::sendEvent( m_p->quickViewPtr.data(), &mouseEvent );
@@ -247,6 +264,9 @@ bool Chimera_Mac::onMouseEnter( FB::MouseEnteredEvent* e, FB::PluginWindowMacCA*
 
 bool Chimera_Mac::onMouseLeave( FB::MouseExitedEvent* e, FB::PluginWindowMacCA* )
 {
+    if( isFullscreen() )
+        return false;
+
     QPointF mousePoint( e->m_x, e->m_y );
     QMouseEvent mouseEvent( QEvent::Leave, mousePoint, mousePoint,
                             Qt::NoButton, Qt::NoButton, Qt::NoModifier );
@@ -257,6 +277,9 @@ bool Chimera_Mac::onMouseLeave( FB::MouseExitedEvent* e, FB::PluginWindowMacCA* 
 
 bool Chimera_Mac::onMouseMove( FB::MouseMoveEvent* e, FB::PluginWindowMacCA* )
 {
+    if( isFullscreen() )
+        return false;
+
     QPointF mousePoint( e->m_x, e->m_y );
     QMouseEvent mouseEvent( QEvent::MouseMove, mousePoint, mousePoint,
                             Qt::NoButton, Qt::NoButton, Qt::NoModifier );
@@ -359,6 +382,9 @@ Qt::Key FbToQtMouseButton( const FB::FBKeyCode k )
 
 bool Chimera_Mac::onKeyDown( FB::KeyDownEvent* e, FB::PluginWindowMacCA* )
 {
+    if( isFullscreen() )
+        return false;
+
     Qt::Key qtKey = FbToQtMouseButton( e->m_key_code );
     if( Qt::Key_unknown != qtKey ) {
         QKeyEvent keyEvent( QEvent::KeyPress, qtKey, Qt::NoModifier );
@@ -372,6 +398,9 @@ bool Chimera_Mac::onKeyDown( FB::KeyDownEvent* e, FB::PluginWindowMacCA* )
 
 bool Chimera_Mac::onKeyUp( FB::KeyUpEvent* e, FB::PluginWindowMacCA* )
 {
+    if( isFullscreen() )
+        return false;
+
     Qt::Key qtKey = FbToQtMouseButton( e->m_key_code );
     if( Qt::Key_unknown != qtKey ) {
         QKeyEvent keyEvent( QEvent::KeyRelease, qtKey, Qt::NoModifier );
@@ -381,4 +410,33 @@ bool Chimera_Mac::onKeyUp( FB::KeyUpEvent* e, FB::PluginWindowMacCA* )
     }
 
     return false;
+}
+
+bool Chimera_Mac::isFullscreen()
+{
+    return ( nullptr != m_p->fullscreenWindow );
+}
+
+void Chimera_Mac::setFullscreen( bool fs )
+{
+    if( fs && !isFullscreen() ) {
+        m_p->fullscreenWindow =
+            new FboQuickWrapperWindow( m_p->quickViewPtr.data() );
+
+        QWindow* fsw = m_p->fullscreenWindow;
+        fsw->setFlags( fsw->flags() | Qt::CustomizeWindowHint );
+        const FB::Rect r = GetWindow()->getWindowPosition();
+        fsw->setGeometry( r.left, r.top, r.right - r.left, r.bottom - r.top );
+        fsw->showFullScreen();
+
+        [m_p->quickLayer setHidden: YES];
+    } else if( !fs && isFullscreen() ) {
+        m_p->fullscreenWindow->showNormal();
+        delete m_p->fullscreenWindow;
+        m_p->fullscreenWindow = nullptr;
+
+        m_p->quickViewPtr->resize( GetWindow()->getWindowWidth(),
+                                   GetWindow()->getWindowHeight() );
+        [m_p->quickLayer setHidden: NO];
+    }
 }
