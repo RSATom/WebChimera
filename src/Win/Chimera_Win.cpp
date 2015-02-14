@@ -139,7 +139,7 @@ bool Chimera_Win::onWindowResized( FB::ResizedEvent*, FB::PluginWindowWin* w )
 {
     const int newWidth = w->getWindowWidth();
     const int newHeight = w->getWindowHeight();
-    if( m_quickViewPtr && !is_fullscreen() ) {
+    if( m_quickViewPtr && !isFullscreen() ) {
         if( newWidth > 0 && newHeight > 0 ) {
             if( !m_quickViewPtr->isVisible() )
                 m_quickViewPtr->show();
@@ -162,7 +162,7 @@ bool Chimera_Win::onWindowsEvent( FB::WindowsEvent* event, FB::PluginWindowWin* 
     return false;
 }
 
-bool Chimera_Win::is_fullscreen()
+bool Chimera_Win::isFullscreen()
 {
     if( m_quickViewPtr )
         return 0 != ( m_quickViewPtr->visibility() & QWindow::FullScreen );
@@ -200,7 +200,7 @@ QScreen* ScreenFromWindow( FB::PluginWindowWin* w )
 void Chimera_Win::setFullscreen( bool fs )
 {
     if( m_quickViewPtr && m_pluginWindow ) {
-        if( fs && !is_fullscreen() ) {
+        if( fs && !isFullscreen() ) {
             QScreen* screen = ScreenFromWindow( static_cast<FB::PluginWindowWin*>( GetWindow() ) );
             m_quickViewPtr->hide();
             m_quickViewPtr->setParent( 0 );
@@ -208,7 +208,7 @@ void Chimera_Win::setFullscreen( bool fs )
             m_quickViewPtr->setGeometry( screen->geometry() );
             m_quickViewPtr->showFullScreen();
             Q_EMIT fullscreenChanged( true );
-        } else if( !fs && is_fullscreen() ) {
+        } else if( !fs && isFullscreen() ) {
             m_quickViewPtr->showNormal();
             m_quickViewPtr->setParent( m_pluginWindow.data() );
             onWindowResized( 0, static_cast<FB::PluginWindowWin*>( GetWindow() ) );
