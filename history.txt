@@ -1,3 +1,4 @@
+v.0.2.4
 - Mac: fullscreen mode support added
 - (QML, JS) .subtitle.delay rw property added
 - (QML, JS) .audio.delay rw property added
