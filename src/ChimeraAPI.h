@@ -59,6 +59,9 @@ public:
         registerProperty( "channel",
                           make_property( this, &JSAudioAPI::get_channel,
                                                &JSAudioAPI::set_channel ) );
+        registerProperty( "delay",
+                          make_property( this, &JSAudioAPI::get_delay,
+                                               &JSAudioAPI::set_delay ) );
 
         registerMethod( "toggleMute",
                         make_method( this, &JSAudioAPI::toggleMute ) );
@@ -83,6 +86,9 @@ public:
 
     unsigned int get_channel();
     void set_channel( unsigned int );
+
+    int get_delay();
+    void set_delay( int );
 
     void toggleMute();
 
@@ -290,6 +296,9 @@ public:
         registerProperty( "track",
                           make_property( this, &JSSubtitleAPI::get_track,
                                                &JSSubtitleAPI::set_track ) );
+        registerProperty( "delay",
+                          make_property( this, &JSSubtitleAPI::get_delay,
+                                               &JSSubtitleAPI::set_delay ) );
 
         registerMethod( "description",
                         make_method( this, &JSSubtitleAPI::description ) );
@@ -303,6 +312,9 @@ public:
 
     int get_track();
     void set_track( int idx );
+
+    int get_delay();
+    void set_delay( int );
 
     std::string description( unsigned int i );
 

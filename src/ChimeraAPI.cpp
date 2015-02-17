@@ -146,6 +146,22 @@ std::string JSAudioAPI::description( unsigned int trackID )
     return track_name;
 }
 
+int JSAudioAPI::get_delay()
+{
+    ChimeraPtr plg = getPlugin();
+    vlc_player& p = plg->get_player();
+
+    return p.audio().get_delay();
+}
+
+void JSAudioAPI::set_delay( int delay )
+{
+    ChimeraPtr plg = getPlugin();
+    vlc_player& p = plg->get_player();
+
+    p.audio().set_delay( delay );
+}
+
 ////////////////////////////////////////////////////////////////////////////
 /// JSInputAPI
 ////////////////////////////////////////////////////////////////////////////
@@ -530,6 +546,22 @@ std::string JSSubtitleAPI::description( unsigned int sID )
     libvlc_track_description_list_release( root_s_desc );
 
     return s_name;
+}
+
+int JSSubtitleAPI::get_delay()
+{
+    ChimeraPtr plg = getPlugin();
+    vlc_player& p = plg->get_player();
+
+    return p.subtitles().get_delay();
+}
+
+void JSSubtitleAPI::set_delay( int delay )
+{
+    ChimeraPtr plg = getPlugin();
+    vlc_player& p = plg->get_player();
+
+    p.subtitles().set_delay( delay );
 }
 
 ////////////////////////////////////////////////////////////////////////////

@@ -1,3 +1,5 @@
+- (QML, JS) .subtitle.delay rw property added
+- (QML, JS) .audio.delay rw property added
 - (JS) .QmlStringMessage( int type, string message ) event added
 - (JS) .QmlNumberMessage( int type, int arg1, int arg2 ) event added
 - (QML) fireQmlStringMessage( int type, string message ) global function added
