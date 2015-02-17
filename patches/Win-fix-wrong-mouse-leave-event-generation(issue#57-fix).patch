@@ -1,0 +1,41 @@
+From 34ea269b3b173498312b0203d6875ef3b4ba0253 Mon Sep 17 00:00:00 2001
+From: Sergey Radionov <RSATom@gmail.com>
+Date: Fri, 6 Feb 2015 15:48:02 +0600
+Subject: [PATCH] Win: fix wrong mouse leave event generation
+
+When Qt runs in process with low integrity level,
+and place child QWindow to HWND from less restricted process,
+ChildWindowFromPointEx could fail with ERROR_ACCESS_DENIED
+and QWindowsScreen::windowAt will return 0 despite mouse is on window.
+
+Task-number: QTBUG-44332
+Change-Id: I07e1594b90cbde8a9496f8d53ef247a7c69d8715
+Reviewed-by: Friedemann Kleint <Friedemann.Kleint@theqtcompany.com>
+---
+ src/plugins/platforms/windows/qwindowsmousehandler.cpp | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/src/plugins/platforms/windows/qwindowsmousehandler.cpp b/src/plugins/platforms/windows/qwindowsmousehandler.cpp
+index acb6925..b3c31c3 100644
+--- a/src/plugins/platforms/windows/qwindowsmousehandler.cpp
++++ b/src/plugins/platforms/windows/qwindowsmousehandler.cpp
+@@ -271,6 +271,16 @@ bool QWindowsMouseHandler::translateMouseEvent(QWindow *window, HWND hwnd,
+     QWindow *currentWindowUnderMouse = platformWindow->hasMouseCapture() ?
+         QWindowsScreen::windowAt(globalPosition, CWP_SKIPINVISIBLE | CWP_SKIPTRANSPARENT) : window;
+ 
++    // QTBUG-44332: When Qt is running at low integrity level and
++    // a Qt Window is parented on a Window of a higher integrity process
++    // using QWindow::fromWinId() (for example, Qt running in a browser plugin)
++    // ChildWindowFromPointEx() may not find the Qt window (failing with ERROR_ACCESS_DENIED)
++    if (!currentWindowUnderMouse) {
++        const QRect clientRect(QPoint(0, 0), window->size());
++        if (clientRect.contains(winEventPosition / QWindowsScaling::factor()))
++            currentWindowUnderMouse = window;
++    }
++
+     compressMouseMove(&msg);
+     // Qt expects the platform plugin to capture the mouse on
+     // any button press until release.
+-- 
+1.9.0.msysgit.0
+
