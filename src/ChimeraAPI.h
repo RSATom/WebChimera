@@ -45,8 +45,8 @@ public:
         registerAttribute( "Dolby",         libvlc_AudioChannel_Dolbys,  true );
 
         registerProperty( "count",
-                          make_property( this,
-                                         &JSAudioAPI::get_trackCount ) );
+                          make_property( this, &JSAudioAPI::get_trackCount ) );
+
         registerProperty( "track",
                           make_property( this, &JSAudioAPI::get_track,
                                                &JSAudioAPI::set_track ) );
@@ -58,7 +58,7 @@ public:
                                                &JSAudioAPI::set_volume ) );
         registerProperty( "channel",
                           make_property( this, &JSAudioAPI::get_channel,
-                                              &JSAudioAPI::set_channel ) );
+                                               &JSAudioAPI::set_channel ) );
 
         registerMethod( "toggleMute",
                         make_method( this, &JSAudioAPI::toggleMute ) );
