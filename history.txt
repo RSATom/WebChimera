@@ -1,5 +1,9 @@
+- Mac: fullscreen mode support added
 - (QML, JS) .subtitle.delay rw property added
 - (QML, JS) .audio.delay rw property added
+- fixed .playlist.advanceItem(idx, count) with negative count values
+- (Qml) mediaPlayerTimeChanged event argument renamed to 'time'
+- Win.FBVLC.Windowed: fixed startup options load
 - (JS) .QmlStringMessage( int type, string message ) event added
 - (JS) .QmlNumberMessage( int type, int arg1, int arg2 ) event added
 - (QML) fireQmlStringMessage( int type, string message ) global function added
