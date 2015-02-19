@@ -20,13 +20,13 @@
 
 #include "PluginWindowX11.h"
 
-#include "../Chimera.h"
+#include "../QuickViewChimera.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //FBVLC_X11 class
 ////////////////////////////////////////////////////////////////////////////////
 FB_FORWARD_PTR( Chimera_X11 )
-class Chimera_X11: public Chimera
+class Chimera_X11: public QuickViewChimera
 {
 public:
     Chimera_X11();
@@ -43,4 +43,7 @@ private:
     bool onWindowAttached( FB::AttachedEvent*, FB::PluginWindowX11* );
     bool onWindowResized( FB::ResizedEvent*, FB::PluginWindowX11* );
     /** END EVENTDEF -- DON'T CHANGE THIS LINE **/
+
+private:
+    QScopedPointer<QWindow> m_pluginWindow;
 };

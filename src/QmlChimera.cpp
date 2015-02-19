@@ -27,7 +27,7 @@
 
 #include "DOM/Window.h"
 
-#include "JSRootQmlApi.h"
+#include "JSRootQmlAPI.h"
 
 #if defined( FB_WIN ) && !defined( QT_NO_DEBUG )
 #include <Shellapi.h>

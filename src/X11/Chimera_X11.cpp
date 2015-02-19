@@ -42,35 +42,48 @@ Chimera_X11::~Chimera_X11()
 
 bool Chimera_X11::onWindowAttached( FB::AttachedEvent *evt, FB::PluginWindowX11* w )
 {
+    m_pluginWindow.reset( QWindow::fromWinId( (WId) w->getWindow() ) );
+
     vlcOpen();
 
-    QWindow* browserWindow = QWindow::fromWinId( w->getWindow() );//FIXME, memory leak
-    m_quickViewPtr.reset( new QQuickView( browserWindow ) );
-
+    m_quickViewPtr.reset( new QQuickView( m_pluginWindow.data() ) );
+    m_quickViewPtr->setTitle( QStringLiteral( "WebChimera" ) );
     m_quickViewPtr->setResizeMode( QQuickView::SizeRootObjectToView );
+    m_quickViewPtr->setFlags( m_quickViewPtr->flags() | Qt::FramelessWindowHint );
+
+    m_quickViewPtr->setColor( get_bgColor() );
+    connect( this, &QmlChimera::bgcolorChanged,
+             m_quickViewPtr.data(), &QQuickView::setColor );
 
     QQmlContext* context = m_quickViewPtr->rootContext();
     m_qmlVlcPlayer = new QmlVlcSurfacePlayerProxy( (vlc::player*)this, m_quickViewPtr.data() );
     m_qmlVlcPlayer->classBegin();
-    context->setContextProperty( "vlcPlayer", QVariant::fromValue( m_qmlVlcPlayer ) );
 
-    process_startup_options();
+    //have to call applyPlayerOptions()
+    //after QmlVlcSurfacePlayerProxy::classBegin
+    //to allow attach Proxy's vmem to plugin before play
+    applyPlayerOptions();
 
     setQml();
 
-    m_quickViewPtr->setX( 0 );
-    m_quickViewPtr->setY( 0 );
-
-    m_quickViewPtr->resize( w->getWindowWidth(), w->getWindowHeight() );
-    m_quickViewPtr->show();
+    //simulate resize
+    onWindowResized( 0, w );
 
     return false;
 }
 
-bool Chimera_X11::onWindowResized( FB::ResizedEvent *evt, FB::PluginWindowX11* w )
+bool Chimera_X11::onWindowResized( FB::ResizedEvent*, FB::PluginWindowX11* w )
 {
-    if( m_quickViewPtr ) {
-        m_quickViewPtr->resize( w->getWindowWidth(), w->getWindowHeight() );
+    const int newWidth = w->getWindowWidth();
+    const int newHeight = w->getWindowHeight();
+    if( m_quickViewPtr && !isFullscreen() ) {
+        if( newWidth > 0 && newHeight > 0 ) {
+            if( !m_quickViewPtr->isVisible() )
+                m_quickViewPtr->show();
+            m_quickViewPtr->setX( 0 ); m_quickViewPtr->setY( 0 );
+            m_quickViewPtr->resize( newWidth, newHeight );
+        } else
+            m_quickViewPtr->hide();
     }
 
     return false;
