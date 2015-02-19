@@ -67,11 +67,11 @@ public:
 #if defined( FB_WIN )
         Chimera_Win::StaticInitialize();
 #elif defined( FB_X11 )
-        return Chimera_X11::StaticInitialize();
+        Chimera_X11::StaticInitialize();
 #elif defined( FB_MACOSX )
-        return Chimera_Mac::StaticInitialize();
+        Chimera_Mac::StaticInitialize();
 #else
-        return Chimera::StaticInitialize();
+        Chimera::StaticInitialize();
 #endif
     }
 
@@ -81,13 +81,13 @@ public:
     void globalPluginDeinitialize()
     {
 #if defined( FB_WIN )
-        return Chimera_Win::StaticDeinitialize();
+        Chimera_Win::StaticDeinitialize();
 #elif defined( FB_X11 )
-        return Chimera_X11::StaticDeinitialize();
+        Chimera_X11::StaticDeinitialize();
 #elif defined( FB_MACOSX )
-        return Chimera_Mac::StaticDeinitialize();
+        Chimera_Mac::StaticDeinitialize();
 #else
-        return Chimera::StaticDeinitialize();
+        Chimera::StaticDeinitialize();
 #endif
     }
 };
