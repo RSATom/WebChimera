@@ -88,3 +88,11 @@ bool Chimera_X11::onWindowResized( FB::ResizedEvent*, FB::PluginWindowX11* w )
 
     return false;
 }
+
+bool Chimera_X11::onWindowDetached( FB::DetachedEvent*, FB::PluginWindowX11* )
+{
+    m_quickViewPtr.reset();
+    m_pluginWindow.reset();
+
+    return false;
+}

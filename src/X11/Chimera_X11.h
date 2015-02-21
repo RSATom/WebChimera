@@ -34,6 +34,7 @@ public:
 
     BEGIN_PLUGIN_EVENT_MAP()
         EVENTTYPE_CASE( FB::AttachedEvent, onWindowAttached, FB::PluginWindowX11 )
+        EVENTTYPE_CASE( FB::DetachedEvent, onWindowDetached, FB::PluginWindowX11 )
         EVENTTYPE_CASE( FB::ResizedEvent, onWindowResized, FB::PluginWindowX11 )
         PLUGIN_EVENT_MAP_CASCADE( Chimera )
     END_PLUGIN_EVENT_MAP()
@@ -41,6 +42,7 @@ public:
 private:
     /** BEGIN EVENTDEF -- DON'T CHANGE THIS LINE **/
     bool onWindowAttached( FB::AttachedEvent*, FB::PluginWindowX11* );
+    bool onWindowDetached( FB::DetachedEvent*, FB::PluginWindowX11* );
     bool onWindowResized( FB::ResizedEvent*, FB::PluginWindowX11* );
     /** END EVENTDEF -- DON'T CHANGE THIS LINE **/
 
