@@ -18,14 +18,6 @@
 
 #include "Chimera_X11.h"
 
-//#include <boost/algorithm/string/replace.hpp>
-
-//#include <QtCore/qglobal.h>
-//#include <QtPlugin>
-#include <QQmlContext>
-//#include <QtQml/QQml.h>
-//#include <QtEndian>
-#include <QtWidgets/QWidget>
 
 #include "QmlVlc/QmlVlcSurfacePlayerProxy.h"
 
