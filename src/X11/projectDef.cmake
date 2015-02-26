@@ -16,8 +16,7 @@ file (GLOB PLATFORM RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
 SOURCE_GROUP(X11 FILES ${PLATFORM})
 
 # use this to add preprocessor definitions
-add_definitions(
-)
+add_definitions( -std=c++11 )
 
 set (SOURCES
     ${SOURCES}
