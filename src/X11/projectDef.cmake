@@ -16,7 +16,7 @@ file (GLOB PLATFORM RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
 SOURCE_GROUP(X11 FILES ${PLATFORM})
 
 # use this to add preprocessor definitions
-add_definitions( -std=c++11 )
+add_definitions( -std=c++11 -Werror=return-type )
 
 set (SOURCES
     ${SOURCES}
@@ -31,4 +31,5 @@ add_x11_plugin(${PROJECT_NAME} SOURCES)
 target_link_libraries(${PROJECT_NAME}
     ${PLUGIN_INTERNAL_DEPS}
     vlc
+    GL
     )
