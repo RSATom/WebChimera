@@ -20,6 +20,8 @@
 
 #include "PluginWindowX11.h"
 
+#include "PluginEvents/X11Event.h"
+
 #include "../QuickViewChimera.h"
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -36,6 +38,7 @@ public:
         EVENTTYPE_CASE( FB::AttachedEvent, onWindowAttached, FB::PluginWindowX11 )
         EVENTTYPE_CASE( FB::DetachedEvent, onWindowDetached, FB::PluginWindowX11 )
         EVENTTYPE_CASE( FB::ResizedEvent, onWindowResized, FB::PluginWindowX11 )
+        EVENTTYPE_CASE( FB::X11Event, onX11Event, FB::PluginWindowX11 )
         PLUGIN_EVENT_MAP_CASCADE( Chimera )
     END_PLUGIN_EVENT_MAP()
 
@@ -44,6 +47,7 @@ private:
     bool onWindowAttached( FB::AttachedEvent*, FB::PluginWindowX11* );
     bool onWindowDetached( FB::DetachedEvent*, FB::PluginWindowX11* );
     bool onWindowResized( FB::ResizedEvent*, FB::PluginWindowX11* );
+    bool onX11Event( FB::X11Event*, FB::PluginWindowX11* );
     /** END EVENTDEF -- DON'T CHANGE THIS LINE **/
 
 private:

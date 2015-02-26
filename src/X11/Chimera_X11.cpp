@@ -18,6 +18,7 @@
 
 #include "Chimera_X11.h"
 
+#include <QTimer>
 
 #include "QmlVlc/QmlVlcSurfacePlayerProxy.h"
 
@@ -32,7 +33,16 @@ Chimera_X11::~Chimera_X11()
 {
 }
 
-bool Chimera_X11::onWindowAttached( FB::AttachedEvent *evt, FB::PluginWindowX11* w )
+bool Chimera_X11::onX11Event( FB::X11Event* evt, FB::PluginWindowX11* w )
+{
+    if( GDK_MAP == evt->m_event->type ) {
+        onWindowResized( 0, w );
+    }
+
+    return false;
+}
+
+bool Chimera_X11::onWindowAttached( FB::AttachedEvent* evt, FB::PluginWindowX11* w )
 {
     m_pluginWindow.reset( QWindow::fromWinId( (WId) w->getWindow() ) );
 
@@ -47,7 +57,6 @@ bool Chimera_X11::onWindowAttached( FB::AttachedEvent *evt, FB::PluginWindowX11*
     connect( this, &QmlChimera::bgcolorChanged,
              m_quickViewPtr.data(), &QQuickView::setColor );
 
-    QQmlContext* context = m_quickViewPtr->rootContext();
     m_qmlVlcPlayer = new QmlVlcSurfacePlayerProxy( (vlc::player*)this, m_quickViewPtr.data() );
     m_qmlVlcPlayer->classBegin();
 
@@ -56,10 +65,10 @@ bool Chimera_X11::onWindowAttached( FB::AttachedEvent *evt, FB::PluginWindowX11*
     //to allow attach Proxy's vmem to plugin before play
     applyPlayerOptions();
 
-    setQml();
-
     //simulate resize
-    onWindowResized( 0, w );
+    //onWindowResized( 0, w );
+
+    setQml();
 
     return false;
 }
