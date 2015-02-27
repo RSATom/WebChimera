@@ -28,6 +28,7 @@
 #include <QtEndian>
 
 #include <utf8_tools.h>
+#include <stdint.h>
 
 #ifdef QT_STATIC
     #if defined( XP_WIN )
