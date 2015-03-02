@@ -31,5 +31,4 @@ add_x11_plugin(${PROJECT_NAME} SOURCES)
 target_link_libraries(${PROJECT_NAME}
     ${PLUGIN_INTERNAL_DEPS}
     vlc
-    GL
     )
