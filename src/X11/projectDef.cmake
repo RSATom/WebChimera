@@ -32,3 +32,7 @@ target_link_libraries(${PROJECT_NAME}
     ${PLUGIN_INTERNAL_DEPS}
     vlc
     )
+
+if( Qt5Core_VERSION VERSION_LESS "5.3.0" )
+    target_link_libraries( ${PROJECT_NAME} GL )
+endif()
