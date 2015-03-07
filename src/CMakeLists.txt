@@ -54,9 +54,9 @@ file( GLOB LIBVLC_WRAPPER RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
 source_group( libvlc_wrapper FILES ${LIBVLC_WRAPPER} )
 
 include_directories(
-	${PLUGIN_INCLUDE_DIRS}
-	${CMAKE_CURRENT_SOURCE_DIR}/../deps
-	${CMAKE_CURRENT_SOURCE_DIR}/../deps/QmlVlc )
+    ${PLUGIN_INCLUDE_DIRS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/../deps
+    ${CMAKE_CURRENT_SOURCE_DIR}/../deps/QmlVlc )
 
 # Generated files are stored in ${GENERATED} by the project configuration
 SET_SOURCE_FILES_PROPERTIES(
