@@ -22,6 +22,7 @@
 
 #include <QGuiApplication>
 #include <QDir>
+#include <QTextCodec>
 
 #include <QmlVlc/QmlVlc.h>
 
@@ -168,4 +169,10 @@ QUrl QmlChimera::getQmlSource()
 bool QmlChimera::isOptionTrusted( const std::string& option )
 {
     return QmlVlcConfig::isOptionTrusted( QString::fromStdString( option ) );
+}
+
+QString QmlChimera::toUtf8( const QByteArray& data, const QString& encoding )
+{
+    QTextCodec* codec = QTextCodec::codecForName( encoding.toLatin1().data() );
+    return codec ? codec->toUnicode( data ) : QString();
 }

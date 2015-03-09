@@ -57,6 +57,8 @@ public:
     void emitJsMessage( const std::string& message )
         { Q_EMIT jsMessage( QString::fromStdString( message ) ); }
 
+    Q_INVOKABLE QString toUtf8( const QByteArray& data, const QString& encoding );
+
 Q_SIGNALS:
     void bgcolorChanged( const QString& bgcolor );
     void fullscreenChanged( bool fullscreen );
