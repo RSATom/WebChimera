@@ -48,14 +48,7 @@ Chimera::~Chimera()
 }
 
 //libvlc events arrives from separate thread
-void Chimera::OnLibVlcEvent_proxy( const libvlc_event_t* e, void *param )
-{
-    Chimera* plugin = static_cast<Chimera*>( param );
-    plugin->OnLibVlcEvent( e );
-}
-
-//libvlc events arrives from separate thread
-void Chimera::OnLibVlcEvent( const libvlc_event_t* e )
+void Chimera::media_player_event( const libvlc_event_t* e )
 {
     JSRootAPIPtr api  = boost::static_pointer_cast<JSRootAPI>( getRootJSAPI() );
     FB::BrowserHostPtr h = m_host;
@@ -168,47 +161,6 @@ void Chimera::OnLibVlcEvent( const libvlc_event_t* e )
                                               thisPtr ) );
     }
 }
-
-void Chimera::VlcEvents( bool Attach )
-{
-    if( !get_player().is_open() )
-        return;
-
-    libvlc_event_manager_t* em =
-        libvlc_media_player_event_manager( get_player().get_mp() );
-    if( !em )
-        return;
-
-    for( int e = libvlc_MediaPlayerMediaChanged; e <= libvlc_MediaPlayerVout; ++e ) {
-        switch( e ) {
-        case libvlc_MediaPlayerMediaChanged:
-        case libvlc_MediaPlayerNothingSpecial:
-        case libvlc_MediaPlayerOpening:
-        case libvlc_MediaPlayerBuffering:
-        case libvlc_MediaPlayerPlaying:
-        case libvlc_MediaPlayerPaused:
-        case libvlc_MediaPlayerStopped:
-        case libvlc_MediaPlayerForward:
-        case libvlc_MediaPlayerBackward:
-        case libvlc_MediaPlayerEndReached:
-        case libvlc_MediaPlayerEncounteredError:
-        case libvlc_MediaPlayerTimeChanged:
-        case libvlc_MediaPlayerPositionChanged:
-        case libvlc_MediaPlayerSeekableChanged:
-        case libvlc_MediaPlayerPausableChanged:
-        //case libvlc_MediaPlayerTitleChanged:
-        //case libvlc_MediaPlayerSnapshotTaken:
-        case libvlc_MediaPlayerLengthChanged:
-        //case libvlc_MediaPlayerVout:
-            if( Attach )
-                libvlc_event_attach( em, e, OnLibVlcEvent_proxy, this );
-            else
-                libvlc_event_detach( em, e, OnLibVlcEvent_proxy, this );
-            break;
-        }
-    }
-}
-
 const FB::variant& Chimera::getParamVariant( const std::string& key ) const
 {
     FB::VariantMap::const_iterator fnd = m_params.find( key.c_str() );
@@ -310,7 +262,7 @@ void Chimera::vlcOpen()
 
     if( m_libvlc && !get_player().is_open() ) {
         get_player().open( m_libvlc );
-        VlcEvents( true );
+        get_player().register_callback( this );
      }
 }
 
@@ -363,7 +315,7 @@ void Chimera::vlcClose()
     get_player().stop();
 
     if ( get_player().is_open() ) {
-        VlcEvents( false );
+        get_player().unregister_callback( this );
         get_player().close();
     }
 
