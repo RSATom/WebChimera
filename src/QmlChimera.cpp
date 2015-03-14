@@ -43,6 +43,7 @@
     #endif
     Q_IMPORT_PLUGIN( QtQuick2Plugin );
     Q_IMPORT_PLUGIN( QtQuickLayoutsPlugin );
+    Q_IMPORT_PLUGIN( QtQuickControlsPlugin );
 #endif
 
 void QmlChimera::StaticInitialize()
@@ -73,6 +74,7 @@ QmlChimera::QmlChimera()
 #ifdef QT_STATIC
     qmlProtectModule( "QtQuick", 2 );
     qmlProtectModule( "QtQuick.Layouts", 1 );
+    qmlProtectModule( "QtQuick.Controls", 1 );
 #endif
 }
 
