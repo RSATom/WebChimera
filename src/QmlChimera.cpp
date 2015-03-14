@@ -21,6 +21,7 @@
 #include <boost/algorithm/string.hpp>
 
 #include <QGuiApplication>
+#include <QtPlugin>
 #include <QDir>
 #include <QTextCodec>
 
@@ -32,6 +33,16 @@
 
 #if defined( FB_WIN ) && !defined( QT_NO_DEBUG )
 #include <Shellapi.h>
+#endif
+
+#ifdef QT_STATIC
+    #if defined( XP_WIN )
+        Q_IMPORT_PLUGIN( QWindowsIntegrationPlugin );
+    #elif defined( XP_MACOSX )
+        Q_IMPORT_PLUGIN( QCocoaIntegrationPlugin );
+    #endif
+    Q_IMPORT_PLUGIN( QtQuick2Plugin );
+    Q_IMPORT_PLUGIN( QtQuickLayoutsPlugin );
 #endif
 
 void QmlChimera::StaticInitialize()

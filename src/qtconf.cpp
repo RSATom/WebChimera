@@ -25,20 +25,9 @@
 #include <boost/algorithm/string/replace.hpp>
 
 #include <QCoreApplication>
-#include <QtPlugin>
 #include <QtEndian>
 
 #include <utf8_tools.h>
-
-#ifdef QT_STATIC
-    #if defined( XP_WIN )
-        Q_IMPORT_PLUGIN( QWindowsIntegrationPlugin );
-    #elif defined( XP_MACOSX )
-        Q_IMPORT_PLUGIN( QCocoaIntegrationPlugin );
-    #endif
-    Q_IMPORT_PLUGIN( QtQuick2Plugin );
-    Q_IMPORT_PLUGIN( QtQuickLayoutsPlugin );
-#endif
 
 static std::string qtConf_resource_data;
 
