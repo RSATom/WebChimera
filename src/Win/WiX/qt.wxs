@@ -18,6 +18,7 @@
 						               Name="QtUninstall" Type="string" Value="${Qt5Core_VERSION_STRING}" KeyPath="yes" />
 						<RemoveFolder On="uninstall" Id="u_QT_qml_QtQuick" />
 					</Component>
+
 					<Directory Id="qml_QtQuick_Layouts" Name="Layouts">
 						<Component Guid="{42079E09-8F18-4FC9-A55C-696E811C70DE}" Id="c_QT_qml_QtQuick_Layouts">
 							<RegistryValue Root="HKCU" Key="SOFTWARE\${PLUGIN_NAME}\${FBSTRING_PLUGIN_VERSION}\qml\QtQuick\Layouts"
@@ -27,14 +28,162 @@
 							<File Id="QtQuick_Layouts_plugins.qmltypes" Source="$(var.QTDIR)\qml\QtQuick\Layouts\plugins.qmltypes" />
 						</Component>
 					</Directory>
+
+					<Directory Id="qml_QtQuick_Controls" Name="Controls">
+						<Component Guid="{F4CC5A59-266C-4031-B04D-B86E30B87D39}" Id="c_QT_qml_QtQuick_Controls">
+							<RemoveFolder On="uninstall" Id="u_qml_QtQuick_Controls" />
+							<RegistryValue Root="HKCU" Key="SOFTWARE\${PLUGIN_NAME}\${FBSTRING_PLUGIN_VERSION}\qml\QtQuick\Controls" Name="QtUninstall" Type="string" Value="${Qt5Core_VERSION_STRING}" KeyPath="yes" />
+							<File Id="Controls_ApplicationWindow.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\ApplicationWindow.qml" />
+							<File Id="Controls_BusyIndicator.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\BusyIndicator.qml" />
+							<File Id="Controls_Button.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Button.qml" />
+							<File Id="Controls_Calendar.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Calendar.qml" />
+							<File Id="Controls_CheckBox.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\CheckBox.qml" />
+							<File Id="Controls_ComboBox.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\ComboBox.qml" />
+							<File Id="Controls_GroupBox.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\GroupBox.qml" />
+							<File Id="Controls_Label.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Label.qml" />
+							<File Id="Controls_Menu.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Menu.qml" />
+							<File Id="Controls_MenuBar.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\MenuBar.qml" />
+							<File Id="Controls_plugins.qmltypes" Source="$(var.QTDIR)\qml\QtQuick\Controls\plugins.qmltypes" />
+							<File Id="Controls_ProgressBar.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\ProgressBar.qml" />
+							<File Id="Controls_qmldir" Source="$(var.QTDIR)\qml\QtQuick\Controls\qmldir" />
+							<File Id="Controls_RadioButton.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\RadioButton.qml" />
+							<File Id="Controls_ScrollView.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\ScrollView.qml" />
+							<File Id="Controls_Slider.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Slider.qml" />
+							<File Id="Controls_SpinBox.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\SpinBox.qml" />
+							<File Id="Controls_SplitView.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\SplitView.qml" />
+							<File Id="Controls_StackView.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\StackView.qml" />
+							<File Id="Controls_StackViewDelegate.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\StackViewDelegate.qml" />
+							<File Id="Controls_StackViewTransition.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\StackViewTransition.qml" />
+							<File Id="Controls_StatusBar.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\StatusBar.qml" />
+							<File Id="Controls_Switch.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Switch.qml" />
+							<File Id="Controls_Tab.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Tab.qml" />
+							<File Id="Controls_TableView.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\TableView.qml" />
+							<File Id="Controls_TableViewColumn.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\TableViewColumn.qml" />
+							<File Id="Controls_TabView.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\TabView.qml" />
+							<File Id="Controls_TextArea.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\TextArea.qml" />
+							<File Id="Controls_TextField.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\TextField.qml" />
+							<File Id="Controls_ToolBar.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\ToolBar.qml" />
+							<File Id="Controls_ToolButton.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\ToolButton.qml" />
+						</Component>
+						<Directory Id="qml_QtQuick_Controls_Private" Name="Private">
+							<Component Guid="{21AA80D5-6CC6-404B-8AAE-FD0041626C36}" Id="c_QT_qml_QtQuick_Controls_Private">
+								<RemoveFolder On="uninstall" Id="u_qml_QtQuick_Controls_Private" />
+								<RegistryValue Root="HKCU" Key="SOFTWARE\${PLUGIN_NAME}\${FBSTRING_PLUGIN_VERSION}\qml\QtQuick\Controls\Private" Name="QtUninstall" Type="string" Value="${Qt5Core_VERSION_STRING}" KeyPath="yes" />
+								<File Id="Controls_Private_AbstractCheckable.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Private\AbstractCheckable.qml" />
+								<File Id="Controls_Private_BasicButton.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Private\BasicButton.qml" />
+								<File Id="Controls_Private_CalendarHeaderModel.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Private\CalendarHeaderModel.qml" />
+								<File Id="Controls_Private_CalendarUtils.js" Source="$(var.QTDIR)\qml\QtQuick\Controls\Private\CalendarUtils.js" />
+								<File Id="Controls_Private_ColumnMenuContent.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Private\ColumnMenuContent.qml" />
+								<File Id="Controls_Private_ContentItem.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Private\ContentItem.qml" />
+								<File Id="Controls_Private_Control.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Private\Control.qml" />
+								<File Id="Controls_Private_EditMenu.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Private\EditMenu.qml" />
+								<File Id="Controls_Private_EditMenu_base.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Private\EditMenu_base.qml" />
+								<File Id="Controls_Private_EditMenu_ios.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Private\EditMenu_ios.qml" />
+								<File Id="Controls_Private_FastGlow.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Private\FastGlow.qml" />
+								<File Id="Controls_Private_FocusFrame.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Private\FocusFrame.qml" />
+								<File Id="Controls_Private_HoverButton.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Private\HoverButton.qml" />
+								<File Id="Controls_Private_MenuContentItem.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Private\MenuContentItem.qml" />
+								<File Id="Controls_Private_MenuContentScroller.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Private\MenuContentScroller.qml" />
+								<File Id="Controls_Private_MenuItemSubControls.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Private\MenuItemSubControls.qml" />
+								<File Id="Controls_Private_ModalPopupBehavior.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Private\ModalPopupBehavior.qml" />
+								<File Id="Controls_Private_qmldir" Source="$(var.QTDIR)\qml\QtQuick\Controls\Private\qmldir" />
+								<File Id="Controls_Private_ScrollBar.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Private\ScrollBar.qml" />
+								<File Id="Controls_Private_ScrollViewHelper.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Private\ScrollViewHelper.qml" />
+								<File Id="Controls_Private_SourceProxy.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Private\SourceProxy.qml" />
+								<File Id="Controls_Private_StackView.js" Source="$(var.QTDIR)\qml\QtQuick\Controls\Private\StackView.js" />
+								<File Id="Controls_Private_StackViewSlideDelegate.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Private\StackViewSlideDelegate.qml" />
+								<File Id="Controls_Private_style.js" Source="$(var.QTDIR)\qml\QtQuick\Controls\Private\style.js" />
+								<File Id="Controls_Private_Style.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Private\Style.qml" />
+								<File Id="Controls_Private_SystemPaletteSingleton.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Private\SystemPaletteSingleton.qml" />
+								<File Id="Controls_Private_TabBar.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Private\TabBar.qml" />
+								<File Id="Controls_Private_TableViewSelection.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Private\TableViewSelection.qml" />
+								<File Id="Controls_Private_TextHandle.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Private\TextHandle.qml" />
+								<File Id="Controls_Private_TextInputWithHandles.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Private\TextInputWithHandles.qml" />
+								<File Id="Controls_Private_TextSingleton.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Private\TextSingleton.qml" />
+								<File Id="Controls_Private_ToolMenuButton.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Private\ToolMenuButton.qml" />
+							</Component>
+						</Directory>
+						<Directory Id="qml_QtQuick_Controls_Styles" Name="Styles">
+							<Component Guid="{D179FE7A-83A6-4587-90D6-D737FB57A2B0}" Id="c_QT_qml_QtQuick_Controls_Styles">
+								<RemoveFolder On="uninstall" Id="u_qml_QtQuick_Controls_Styles" />
+								<RegistryValue Root="HKCU" Key="SOFTWARE\${PLUGIN_NAME}\${FBSTRING_PLUGIN_VERSION}\qml\QtQuick\Controls\Styles" Name="QtUninstall" Type="string" Value="${Qt5Core_VERSION_STRING}" KeyPath="yes" />
+								<File Id="Controls_Styles_qmldir" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\qmldir" />
+							</Component>
+							<Directory Id="qml_QtQuick_Controls_Styles_Base" Name="Base">
+								<Component Guid="{F76AE64B-CE96-4598-B096-6C46DD08B550}" Id="c_QT_qml_QtQuick_Controls_Styles_Base">
+									<RemoveFolder On="uninstall" Id="u_qml_QtQuick_Controls_Styles_Base" />
+									<RegistryValue Root="HKCU" Key="SOFTWARE\${PLUGIN_NAME}\${FBSTRING_PLUGIN_VERSION}\qml\QtQuick\Controls\Styles\Base" Name="QtUninstall" Type="string" Value="${Qt5Core_VERSION_STRING}" KeyPath="yes" />
+									<File Id="Controls_Styles_Base_ApplicationWindowStyle.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\ApplicationWindowStyle.qml" />
+									<File Id="Controls_Styles_Base_BusyIndicatorStyle.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\BusyIndicatorStyle.qml" />
+									<File Id="Controls_Styles_Base_ButtonStyle.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\ButtonStyle.qml" />
+									<File Id="Controls_Styles_Base_CalendarStyle.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\CalendarStyle.qml" />
+									<File Id="Controls_Styles_Base_CheckBoxStyle.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\CheckBoxStyle.qml" />
+									<File Id="Controls_Styles_Base_ComboBoxStyle.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\ComboBoxStyle.qml" />
+									<File Id="Controls_Styles_Base_FocusFrameStyle.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\FocusFrameStyle.qml" />
+									<File Id="Controls_Styles_Base_GroupBoxStyle.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\GroupBoxStyle.qml" />
+									<File Id="Controls_Styles_Base_MenuBarStyle.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\MenuBarStyle.qml" />
+									<File Id="Controls_Styles_Base_MenuStyle.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\MenuStyle.qml" />
+									<File Id="Controls_Styles_Base_ProgressBarStyle.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\ProgressBarStyle.qml" />
+									<File Id="Controls_Styles_Base_RadioButtonStyle.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\RadioButtonStyle.qml" />
+									<File Id="Controls_Styles_Base_ScrollViewStyle.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\ScrollViewStyle.qml" />
+									<File Id="Controls_Styles_Base_SliderStyle.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\SliderStyle.qml" />
+									<File Id="Controls_Styles_Base_SpinBoxStyle.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\SpinBoxStyle.qml" />
+									<File Id="Controls_Styles_Base_StatusBarStyle.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\StatusBarStyle.qml" />
+									<File Id="Controls_Styles_Base_SwitchStyle.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\SwitchStyle.qml" />
+									<File Id="Controls_Styles_Base_TableViewStyle.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\TableViewStyle.qml" />
+									<File Id="Controls_Styles_Base_TabViewStyle.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\TabViewStyle.qml" />
+									<File Id="Controls_Styles_Base_TextAreaStyle.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\TextAreaStyle.qml" />
+									<File Id="Controls_Styles_Base_TextFieldStyle.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\TextFieldStyle.qml" />
+									<File Id="Controls_Styles_Base_ToolBarStyle.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\ToolBarStyle.qml" />
+									<File Id="Controls_Styles_Base_ToolButtonStyle.qml" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\ToolButtonStyle.qml" />
+								</Component>
+								<Directory Id="qml_QtQuick_Controls_Styles_Base_images" Name="images">
+									<Component Guid="{56998989-5523-4016-97D9-E64E1FCB1672}" Id="c_QT_qml_QtQuick_Controls_Styles_Base_images">
+										<RemoveFolder On="uninstall" Id="u_qml_QtQuick_Controls_Styles_Base_images" />
+										<RegistryValue Root="HKCU" Key="SOFTWARE\${PLUGIN_NAME}\${FBSTRING_PLUGIN_VERSION}\qml\QtQuick\Controls\Styles\Base\images" Name="QtUninstall" Type="string" Value="${Qt5Core_VERSION_STRING}" KeyPath="yes" />
+										<File Id="Controls_Styles_Base_images_arrow_down.png" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\images\arrow-down.png" />
+										<File Id="Controls_Styles_Base_images_arrow_down_2x.png" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\images\arrow-down@2x.png" />
+										<File Id="Controls_Styles_Base_images_arrow_left.png" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\images\arrow-left.png" />
+										<File Id="Controls_Styles_Base_images_arrow_left_2x.png" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\images\arrow-left@2x.png" />
+										<File Id="Controls_Styles_Base_images_arrow_right.png" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\images\arrow-right.png" />
+										<File Id="Controls_Styles_Base_images_arrow_right_2x.png" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\images\arrow-right@2x.png" />
+										<File Id="Controls_Styles_Base_images_arrow_up.png" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\images\arrow-up.png" />
+										<File Id="Controls_Styles_Base_images_arrow_up_2x.png" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\images\arrow-up@2x.png" />
+										<File Id="Controls_Styles_Base_images_button.png" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\images\button.png" />
+										<File Id="Controls_Styles_Base_images_button_down.png" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\images\button_down.png" />
+										<File Id="Controls_Styles_Base_images_check.png" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\images\check.png" />
+										<File Id="Controls_Styles_Base_images_check_2x.png" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\images\check@2x.png" />
+										<File Id="Controls_Styles_Base_images_editbox.png" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\images\editbox.png" />
+										<File Id="Controls_Styles_Base_images_focusframe.png" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\images\focusframe.png" />
+										<File Id="Controls_Styles_Base_images_groupbox.png" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\images\groupbox.png" />
+										<File Id="Controls_Styles_Base_images_header.png" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\images\header.png" />
+										<File Id="Controls_Styles_Base_images_leftanglearrow.png" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\images\leftanglearrow.png" />
+										<File Id="Controls_Styles_Base_images_progress_indeterminate.png" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\images\progress-indeterminate.png" />
+										<File Id="Controls_Styles_Base_images_rightanglearrow.png" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\images\rightanglearrow.png" />
+										<File Id="Controls_Styles_Base_images_scrollbar_handle_horizontal.png" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\images\scrollbar-handle-horizontal.png" />
+										<File Id="Controls_Styles_Base_images_scrollbar_handle_transient.png" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\images\scrollbar-handle-transient.png" />
+										<File Id="Controls_Styles_Base_images_scrollbar_handle_vertical.png" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\images\scrollbar-handle-vertical.png" />
+										<File Id="Controls_Styles_Base_images_slider_groove.png" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\images\slider-groove.png" />
+										<File Id="Controls_Styles_Base_images_slider_handle.png" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\images\slider-handle.png" />
+										<File Id="Controls_Styles_Base_images_spinner_large.png" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\images\spinner_large.png" />
+										<File Id="Controls_Styles_Base_images_spinner_medium.png" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\images\spinner_medium.png" />
+										<File Id="Controls_Styles_Base_images_spinner_small.png" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\images\spinner_small.png" />
+										<File Id="Controls_Styles_Base_images_tab.png" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\images\tab.png" />
+										<File Id="Controls_Styles_Base_images_tab_selected.png" Source="$(var.QTDIR)\qml\QtQuick\Controls\Styles\Base\images\tab_selected.png" />
+									</Component>
+								</Directory>
+							</Directory>
+						</Directory>
+					</Directory>
+
 				</Directory>
 				<Directory Id="qml_QtQuick.2" Name="QtQuick.2">
 					<Component Guid="{06F01314-3CC7-4DAB-8CFC-F865054C7988}" Id="c_QT_qml_QtQuick.2">
 						<RegistryValue Root="HKCU" Key="SOFTWARE\${PLUGIN_NAME}\${FBSTRING_PLUGIN_VERSION}\qml\QtQuick.2"
 						               Name="QtUninstall" Type="string" Value="${Qt5Core_VERSION_STRING}" KeyPath="yes" />
 						<RemoveFolder On="uninstall" Id="u_QT_qml_QtQuick.2" />
-						<File Id="QtQuick.2_qmldir" Source="$(var.QTDIR)\qml\QtQuick.2\qmldir" />
-						<File Id="QtQuick.2_plugins.qmltypes" Source="$(var.QTDIR)\qml\QtQuick.2\plugins.qmltypes" />
+						<File Source="$(var.QTDIR)\qml\QtQuick.2\qmldir" />
+						<File Source="$(var.QTDIR)\qml\QtQuick.2\plugins.qmltypes" />
 					</Component>
 				</Directory>
 				<Directory Id="qml_QtGraphicalEffects" Name="QtGraphicalEffects">
@@ -98,6 +247,13 @@
 			<ComponentRef Id="c_QT_qml_QtQuick.2" />
 			<ComponentRef Id="c_QT_qml_QtGraphicalEffects" />
 			<ComponentRef Id="c_QT_qml_QtGraphicalEffects_private" />
+
+			<ComponentRef Id="c_QT_qml_QtQuick_Controls" />
+			<ComponentRef Id="c_QT_qml_QtQuick_Controls_Private" />
+			<ComponentRef Id="c_QT_qml_QtQuick_Controls_Styles" />
+			<ComponentRef Id="c_QT_qml_QtQuick_Controls_Styles_Base" />
+			<ComponentRef Id="c_QT_qml_QtQuick_Controls_Styles_Base_images" />
+			
 		</ComponentGroup>
 	</Fragment>
 </Wix>
