@@ -80,10 +80,6 @@ Chimera_Mac::Private::Private()
 Chimera_Mac::Chimera_Mac()
     : m_p( new Private )
 {
-#ifdef QT_STATIC
-    qmlProtectModule( "QtQuick", 2 );
-    qmlProtectModule( "QtQuick.Layouts", 1 );
-#endif
 }
 
 Chimera_Mac::~Chimera_Mac()

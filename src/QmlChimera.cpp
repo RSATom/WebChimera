@@ -59,7 +59,10 @@ void QmlChimera::StaticInitialize()
 QmlChimera::QmlChimera()
     : m_qmlVlcPlayer( 0 )
 {
-
+#ifdef QT_STATIC
+    qmlProtectModule( "QtQuick", 2 );
+    qmlProtectModule( "QtQuick.Layouts", 1 );
+#endif
 }
 
 FB::JSAPIPtr QmlChimera::createJSAPI()

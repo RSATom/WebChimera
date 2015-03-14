@@ -83,11 +83,6 @@ void Chimera_Win::StaticDeinitialize()
 Chimera_Win::Chimera_Win()
 {
     OutputDebugString( L"Chimera_Win::Chimera_Win()\n" );
-
-#ifdef QT_STATIC
-    qmlProtectModule( "QtQuick", 2 );
-    qmlProtectModule( "QtQuick.Layouts", 1 );
-#endif
 }
 
 Chimera_Win::~Chimera_Win()
