@@ -41,10 +41,12 @@ public:
 
     std::string getQmlError();
 
+    Q_PROPERTY( QString version READ get_version CONSTANT )
     Q_PROPERTY( QString bgcolor READ get_bgColor NOTIFY bgcolorChanged )
     Q_PROPERTY( QmlVlcSurfacePlayerProxy* vlcPlayer READ getQmlVlcPlayer CONSTANT )
     Q_PROPERTY( bool fullscreen READ isFullscreen WRITE setFullscreen NOTIFY fullscreenChanged )
 
+    QString get_version() const;
     QString get_bgColor() const;
 
     Q_INVOKABLE void toggleFullscreen() override

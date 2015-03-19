@@ -27,6 +27,7 @@
 
 #include <QmlVlc/QmlVlc.h>
 
+#include "global/config.h"
 #include "DOM/Window.h"
 
 #include "JSRootQmlAPI.h"
@@ -81,6 +82,11 @@ QmlChimera::QmlChimera()
 FB::JSAPIPtr QmlChimera::createJSAPI()
 {
     return boost::make_shared<JSRootQmlAPI>( FB::ptr_cast<QmlChimera>( shared_from_this() ), m_host );
+}
+
+QString QmlChimera::get_version() const
+{
+    return QStringLiteral( FBSTRING_PLUGIN_VERSION );
 }
 
 QString QmlChimera::get_bgColor() const
