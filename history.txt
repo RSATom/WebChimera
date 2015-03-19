@@ -1,3 +1,13 @@
+v.0.2.5
+- (QML) toUtf8( srting data, string encoding ) global function added
+- (QML) QtQuick.Controls module embedded
+- (JS) "hw-accel" startup property fixed
+- (QML) VlcPlayer.swap( VlcPlayer player ) added
+- (QML) VlcSubtitle.load( url ) added
+- (QML) VlcSubtitle.loadFromString( string subtitle, Type type ) added
+- fixed Youtube links playback when there are more than one item in playlist
+- Qt 5.4.1 used
+
 v.0.2.4
 - Mac: fullscreen mode support added
 - (QML, JS) .subtitle.delay rw property added
