@@ -190,7 +190,8 @@ QUrl QmlChimera::getQmlSource()
 
 bool QmlChimera::isOptionTrusted( const std::string& option )
 {
-    return QmlVlcConfig::isOptionTrusted( QString::fromStdString( option ) );
+    QmlVlcConfig& config = QmlVlcConfig::instance();
+    return config.isOptionTrusted( QString::fromStdString( option ) );
 }
 
 QString QmlChimera::toUtf8( const QByteArray& data, const QString& encoding )

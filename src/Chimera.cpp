@@ -216,37 +216,39 @@ void Chimera::loadLibvlcOptions()
     typedef boost::optional<std::string> param_type;
     typedef const FB::variant&           param_vtype;
 
+    QmlVlcConfig& config = QmlVlcConfig::instance();
+
     param_vtype network_caching = getParamVariant( "network-caching" );
     if( !network_caching.empty() && network_caching.can_be_type<int>() ) {
-        QmlVlcConfig::setNetworkCacheTime( network_caching.convert_cast<int>( ) );
+        config.setNetworkCacheTime( network_caching.convert_cast<int>( ) );
     };
 
     param_vtype adjust = getParamVariant( "adjust-filter" );
     if( !adjust.empty() && adjust.can_be_type<bool>() && adjust.convert_cast<bool>( ) ) {
-        QmlVlcConfig::enableAdjustFilter( true );
+        config.enableAdjustFilter( true );
     }
 
     param_vtype marq = getParamVariant( "marquee-filter" );
     if( !marq.empty() && marq.can_be_type<bool>() && marq.convert_cast<bool>( ) ) {
-        QmlVlcConfig::enableMarqueeFilter( true );
+        config.enableMarqueeFilter( true );
     }
 
     param_vtype logo = getParamVariant( "logo-filter" );
     if( !logo.empty() && logo.can_be_type<bool>() && logo.convert_cast<bool>( ) ) {
-        QmlVlcConfig::enableLogoFilter( true );
+        config.enableLogoFilter( true );
     }
 
     param_vtype debug = getParamVariant( "debug" );
     if( !debug.empty() && debug.can_be_type<bool>() && debug.convert_cast<bool>( ) ) {
-        QmlVlcConfig::enableDebug( true );
+        config.enableDebug( true );
     }
 
     param_vtype hw_accel = getParamVariant( "hw-accel" );
     if( !hw_accel.empty() && hw_accel.can_be_type<bool>() && hw_accel.convert_cast<bool>( ) ) {
-        QmlVlcConfig::enableHardwareAcceleration( true );
+        config.enableHardwareAcceleration( true );
     }
 
-    QmlVlcConfig::enableNoVideoTitleShow( true );
+    config.enableNoVideoTitleShow( true );
 }
 
 void Chimera::vlcOpen()
@@ -257,7 +259,7 @@ void Chimera::vlcOpen()
     if( !m_libvlc ) {
         loadStartupOptions();
         loadLibvlcOptions();
-        m_libvlc = QmlVlcConfig::createLibvlcInstance();
+        m_libvlc = QmlVlcConfig::instance().createLibvlcInstance();
     }
 
     if( m_libvlc && !get_player().is_open() ) {
@@ -320,7 +322,7 @@ void Chimera::vlcClose()
     }
 
     if ( m_libvlc ) {
-        libvlc_release( m_libvlc );
+        QmlVlcConfig::instance().releaseLibvlcInstance( m_libvlc );
         m_libvlc = 0;
     }
 }
