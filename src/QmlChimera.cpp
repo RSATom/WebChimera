@@ -24,6 +24,7 @@
 #include <QtPlugin>
 #include <QDir>
 #include <QTextCodec>
+#include <QtQml>
 
 #include <QmlVlc/QmlVlc.h>
 

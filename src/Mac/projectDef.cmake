@@ -165,6 +165,7 @@ if( QT_STATIC )
     find_library( QTHARFBUZZNG qtharfbuzzng )
     find_library( QT_QUICK2_PLUGIN qtquick2plugin PATHS ${QTDIR}/qml/QtQuick.2 )
     find_library( QT_LAYOUTS_PLUGIN qquicklayoutsplugin PATHS ${QTDIR}/qml/QtQuick/Layouts )
+    find_library( QT_CONTROLS_PLUGIN qtquickcontrolsplugin PATHS ${QTDIR}/qml/QtQuick/Controls )
 
     target_link_libraries( ${PROJECT_NAME}
         ${CARBON_FRAMEWORK}
@@ -175,6 +176,7 @@ if( QT_STATIC )
         ${QTHARFBUZZNG}
         ${QT_QUICK2_PLUGIN}
         ${QT_LAYOUTS_PLUGIN}
+        ${QT_CONTROLS_PLUGIN}
         )
 endif( QT_STATIC )
 
