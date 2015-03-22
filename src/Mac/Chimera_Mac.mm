@@ -426,6 +426,7 @@ void Chimera_Mac::setFullscreen( bool fs )
         fsw->showFullScreen();
 
         [m_p->quickLayer setHidden: YES];
+
         Q_EMIT fullscreenChanged( true );
     } else if( !fs && isFullscreen() ) {
         m_p->fullscreenWindow->showNormal();
@@ -435,6 +436,7 @@ void Chimera_Mac::setFullscreen( bool fs )
         m_p->quickViewPtr->resize( GetWindow()->getWindowWidth(),
                                    GetWindow()->getWindowHeight() );
         [m_p->quickLayer setHidden: NO];
+
         Q_EMIT fullscreenChanged( false );
     }
 }
