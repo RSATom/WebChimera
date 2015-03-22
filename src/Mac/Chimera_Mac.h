@@ -52,6 +52,7 @@ public:
     //EVENTTYPE_CASE( FB::WindowsEvent, onWindowsEvent, FB::PluginWindowMac )
     EVENTTYPE_CASE( FB::MouseDownEvent, onMouseDown, FB::PluginWindowMacCA )
     EVENTTYPE_CASE( FB::MouseUpEvent, onMouseUp, FB::PluginWindowMacCA )
+    EVENTTYPE_CASE( FB::MouseDoubleClickEvent, onMouseDblClick, FB::PluginWindowMacCA )
     EVENTTYPE_CASE( FB::MouseMoveEvent, onMouseMove, FB::PluginWindowMacCA )
     EVENTTYPE_CASE( FB::KeyDownEvent, onKeyDown, FB::PluginWindowMacCA )
     EVENTTYPE_CASE( FB::KeyUpEvent, onKeyUp, FB::PluginWindowMacCA )
@@ -67,6 +68,7 @@ private:
     //bool onWindowsEvent( FB::WindowsEvent*, FB::PluginWindowMac* );
     bool onMouseDown( FB::MouseDownEvent*, FB::PluginWindowMacCA* );
     bool onMouseUp( FB::MouseUpEvent*, FB::PluginWindowMacCA* );
+    bool onMouseDblClick( FB::MouseDoubleClickEvent*, FB::PluginWindowMacCA* );
     bool onMouseEnter( FB::MouseEnteredEvent*, FB::PluginWindowMacCA* );
     bool onMouseLeave( FB::MouseExitedEvent*, FB::PluginWindowMacCA* );
     bool onMouseMove( FB::MouseMoveEvent*, FB::PluginWindowMacCA* );

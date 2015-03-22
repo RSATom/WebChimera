@@ -246,6 +246,20 @@ bool Chimera_Mac::onMouseUp( FB::MouseUpEvent* e, FB::PluginWindowMacCA* )
     return true;
 }
 
+bool Chimera_Mac::onMouseDblClick( FB::MouseDoubleClickEvent* e, FB::PluginWindowMacCA* )
+{
+    if( isFullscreen() )
+        return false;
+
+    Qt::MouseButton button = FbToQtMouseButton( *e );
+    QPointF mousePoint( e->m_x, e->m_y );
+    QMouseEvent mouseEvent( QEvent::MouseButtonDblClick, mousePoint, mousePoint,
+                            button, Qt::NoButton, Qt::NoModifier );
+    QCoreApplication::sendEvent( m_p->quickViewPtr.data(), &mouseEvent );
+
+    return true;
+}
+
 bool Chimera_Mac::onMouseEnter( FB::MouseEnteredEvent* e, FB::PluginWindowMacCA* )
 {
     if( isFullscreen() )
