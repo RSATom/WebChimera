@@ -40,8 +40,8 @@ class vlc_player_options
 {
 public:
     vlc_player_options()
-        : _autoplay( true ), _enable_fullscreen( true),
-          _bg_color( /*black*/"#000000" ), _use_proxy( true )
+        : _autoplay( true ), _enable_fullscreen( true ),
+          _use_proxy( true ), _bg_color( /*black*/"#000000" )
     {}
 
     void set_autoplay( bool ap ) {
