@@ -81,11 +81,28 @@ if( QT_STATIC )
         ${QTDIR}/qml/QtQuick/Layouts/plugins.qmltypes
         )
 
+    file( GLOB QML_QTQUICK_CONTROLS
+        ${QTDIR}/qml/QtQuick/Controls/qmldir
+        ${QTDIR}/qml/QtQuick/Controls/plugins.qmltypes
+        ${QTDIR}/qml/QtQuick/Controls/[^.]*.qml
+        )
+    file( GLOB QML_QTQUICK_CONTROLS_STYLES
+        ${QTDIR}/qml/QtQuick/Controls/Styles/[^.]*
+        )
+    file( GLOB QML_QTQUICK_CONTROLS_STYLES_BASE
+        ${QTDIR}/qml/QtQuick/Controls/Styles/Base/[^.]*
+        )
+    file( GLOB QML_QTQUICK_CONTROLS_STYLES_BASE_IMAGES
+        ${QTDIR}/qml/QtQuick/Controls/Styles/Base/Images/[^.]*
+        )
+    file( GLOB QML_QTQUICK_CONTROLS_PRIVATE
+        ${QTDIR}/qml/QtQuick/Controls/Private/[^.]*
+        )
+
     file( GLOB QML_QTGRAPHICALEFFECTS
         ${QTDIR}/qml/QtGraphicalEffects/qmldir
         ${QTDIR}/qml/QtGraphicalEffects/[^.]*.qml
         )
-
     file( GLOB QML_QTGRAPHICALEFFECTS_PRIVATE
         ${QTDIR}/qml/QtGraphicalEffects/private/[^.]*.qml
         )
@@ -93,6 +110,11 @@ if( QT_STATIC )
     set( QML_MODULES
         ${QML_QTQUICK2}
         ${QML_QTQUICK_LAYOUTS}
+        ${QML_QTQUICK_CONTROLS}
+        ${QML_QTQUICK_CONTROLS_STYLES}
+        ${QML_QTQUICK_CONTROLS_STYLES_BASE}
+        ${QML_QTQUICK_CONTROLS_STYLES_BASE_IMAGES}
+        ${QML_QTQUICK_CONTROLS_PRIVATE}
         ${QML_QTGRAPHICALEFFECTS}
         ${QML_QTGRAPHICALEFFECTS_PRIVATE}
         )
@@ -112,11 +134,37 @@ if( QT_STATIC )
         )
 
     set_source_files_properties(
+        ${QML_QTQUICK_CONTROLS}
+        PROPERTIES
+        MACOSX_PACKAGE_LOCATION MacOS/qml/QtQuick/Controls
+        )
+
+    set_source_files_properties(
+        ${QML_QTQUICK_CONTROLS_STYLES}
+        PROPERTIES
+        MACOSX_PACKAGE_LOCATION MacOS/qml/QtQuick/Controls/Styles
+        )
+    set_source_files_properties(
+        ${QML_QTQUICK_CONTROLS_STYLES_BASE}
+        PROPERTIES
+        MACOSX_PACKAGE_LOCATION MacOS/qml/QtQuick/Controls/Styles/Base
+        )
+    set_source_files_properties(
+        ${QML_QTQUICK_CONTROLS_STYLES_BASE_IMAGES}
+        PROPERTIES
+        MACOSX_PACKAGE_LOCATION MacOS/qml/QtQuick/Controls/Styles/Base/Images
+        )
+    set_source_files_properties(
+        ${QML_QTQUICK_CONTROLS_PRIVATE}
+        PROPERTIES
+        MACOSX_PACKAGE_LOCATION MacOS/qml/QtQuick/Controls/Private
+        )
+
+    set_source_files_properties(
         ${QML_QTGRAPHICALEFFECTS}
         PROPERTIES
         MACOSX_PACKAGE_LOCATION MacOS/qml/QtGraphicalEffects
         )
-
     set_source_files_properties(
         ${QML_QTGRAPHICALEFFECTS_PRIVATE}
         PROPERTIES
