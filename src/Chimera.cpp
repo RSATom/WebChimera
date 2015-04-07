@@ -54,6 +54,7 @@ void Chimera::media_player_event( const libvlc_event_t* e )
     FB::BrowserHostPtr h = m_host;
 
     void (JSRootAPI::*event_to_fire)(void) = 0;
+    bool fireStateChanged = false;
     bool scheduleNotPlaying = false;
 
     switch ( e->type ) {
@@ -62,15 +63,18 @@ void Chimera::media_player_event( const libvlc_event_t* e )
         break;
     case libvlc_MediaPlayerNothingSpecial:
         event_to_fire = &JSRootAPI::fire_MediaPlayerNothingSpecial;
+        fireStateChanged = true;
         break;
     case libvlc_MediaPlayerOpening:
         event_to_fire = &JSRootAPI::fire_MediaPlayerOpening;
+        fireStateChanged = true;
         break;
     case libvlc_MediaPlayerBuffering:
         h->ScheduleOnMainThread( api,
                                  boost::bind( &JSRootAPI::fire_MediaPlayerBuffering,
                                               api.get(),
                                               e->u.media_player_buffering.new_cache ) );
+        fireStateChanged = true;
         break;
     case libvlc_MediaPlayerPlaying: {
         boost::shared_ptr<Chimera> thisPtr = FB::ptr_cast<Chimera>( shared_from_this() );
@@ -79,15 +83,18 @@ void Chimera::media_player_event( const libvlc_event_t* e )
                                               thisPtr ) );
 
         event_to_fire = &JSRootAPI::fire_MediaPlayerPlaying;
+        fireStateChanged = true;
         break;
     }
     case libvlc_MediaPlayerPaused:
         event_to_fire = &JSRootAPI::fire_MediaPlayerPaused;
         scheduleNotPlaying = true;
+        fireStateChanged = true;
         break;
     case libvlc_MediaPlayerStopped:
         event_to_fire = &JSRootAPI::fire_MediaPlayerStopped;
         scheduleNotPlaying = true;
+        fireStateChanged = true;
         break;
     case libvlc_MediaPlayerForward:
         event_to_fire = &JSRootAPI::fire_MediaPlayerForward;
@@ -98,10 +105,12 @@ void Chimera::media_player_event( const libvlc_event_t* e )
     case libvlc_MediaPlayerEndReached:
         event_to_fire = &JSRootAPI::fire_MediaPlayerEndReached;
         scheduleNotPlaying = true;
+        fireStateChanged = true;
         break;
     case libvlc_MediaPlayerEncounteredError:
         event_to_fire = &JSRootAPI::fire_MediaPlayerEncounteredError;
         scheduleNotPlaying = true;
+        fireStateChanged = true;
         break;
     case libvlc_MediaPlayerTimeChanged: {
         double new_time = static_cast<double>( e->u.media_player_time_changed.new_time );
@@ -152,6 +161,10 @@ void Chimera::media_player_event( const libvlc_event_t* e )
 
     if( event_to_fire ) {
         h->ScheduleOnMainThread( api, boost::bind( event_to_fire, api.get() ) );
+    }
+
+    if( fireStateChanged ) {
+        h->ScheduleOnMainThread( api, boost::bind( &JSRootAPI::fire_MediaPlayerStateChanged, api.get() ) );
     }
 
     if( scheduleNotPlaying ) {

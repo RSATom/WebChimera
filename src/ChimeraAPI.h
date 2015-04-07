@@ -951,6 +951,8 @@ public:
     FB_JSAPI_EVENT( MediaPlayerPausableChanged, 1, ( bool ) );
     FB_JSAPI_EVENT( MediaPlayerLengthChanged, 1, ( double ) );
 
+    FB_JSAPI_EVENT( MediaPlayerStateChanged, 0, () );
+
 private:
     ChimeraWeakPtr m_plugin;
     FB::BrowserHostPtr m_host;
