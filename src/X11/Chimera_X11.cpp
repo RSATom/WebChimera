@@ -95,3 +95,30 @@ bool Chimera_X11::onWindowDetached( FB::DetachedEvent*, FB::PluginWindowX11* )
 
     return false;
 }
+
+bool Chimera_X11::isFullscreen()
+{
+    if( m_quickViewPtr )
+        return 0 != ( m_quickViewPtr->visibility() & QWindow::FullScreen );
+
+    return false;
+}
+
+void Chimera_X11::setFullscreen( bool fs )
+{
+    if( m_quickViewPtr && m_pluginWindow ) {
+        if( fs && !isFullscreen() ) {
+            m_quickViewPtr->hide();
+            m_quickViewPtr->setParent( 0 );
+            m_quickViewPtr->showFullScreen();
+            Q_EMIT fullscreenChanged( true );
+        } else if( !fs && isFullscreen() ) {
+            m_quickViewPtr->showNormal();
+            m_quickViewPtr->hide();
+            m_quickViewPtr->setParent( m_pluginWindow.data() );
+            onWindowResized( 0, static_cast<FB::PluginWindowX11*>( GetWindow() ) );
+            m_quickViewPtr->requestActivate();
+            Q_EMIT fullscreenChanged( false );
+        }
+    }
+}

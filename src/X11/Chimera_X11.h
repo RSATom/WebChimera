@@ -50,6 +50,10 @@ private:
     bool onX11Event( FB::X11Event*, FB::PluginWindowX11* );
     /** END EVENTDEF -- DON'T CHANGE THIS LINE **/
 
+public:
+    bool isFullscreen() override;
+    void setFullscreen( bool fs ) override;
+
 private:
     QScopedPointer<QWindow> m_pluginWindow;
 };
