@@ -1,0 +1,14 @@
+Source: WebChimera
+Section: video
+Priority: optional
+Maintainer: Sergey Radionov <RSATom@gmail.com>
+Build-Depends: debhelper (>= 9), cmake, libgtk2.0-dev, bx11-xcb-dev, qtdeclarative5-dev, libvlc-dev
+Standards-Version: 3.9.5
+Homepage: http://WebChimera.org
+Vcs-Git: https://github.com/RSATom/WebChimera.git
+Vcs-Browser: https://github.com/RSATom/WebChimera/commits/master
+
+Package: WebChimera
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, qt5-default, qtdeclarative5-qtquick2-plugin, qtdeclarative5-quicklayouts-plugin, libqt5qml-graphicaleffects, libqt5qml-quickcontrols
+Description: Web browser plugin based on Vlc + Firebreath + Qt Quick 2/Qml
