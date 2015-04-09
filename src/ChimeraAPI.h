@@ -235,9 +235,9 @@ public:
         registerMethod( "clear",
                         make_method( this, &JSPlaylistAPI::clear ) );
         registerMethod( "removeItem",
-                       make_method( this, &JSPlaylistAPI::removeItem ) );
+                        make_method( this, &JSPlaylistAPI::removeItem ) );
         registerMethod( "advanceItem",
-                       make_method( this, &JSPlaylistAPI::advanceItem ) );
+                        make_method( this, &JSPlaylistAPI::advanceItem ) );
 
         m_items = boost::make_shared<JSPlaylistItemsAPI>( plugin, m_host );
         registerProperty( "items", make_property( this, &JSPlaylistAPI::get_items ) );
