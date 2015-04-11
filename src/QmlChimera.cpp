@@ -85,6 +85,17 @@ FB::JSAPIPtr QmlChimera::createJSAPI()
     return boost::make_shared<JSRootQmlAPI>( FB::ptr_cast<QmlChimera>( shared_from_this() ), m_host );
 }
 
+QmlChimera::Platform QmlChimera::get_platform() const
+{
+#if defined( FB_WIN )
+    return Windows;
+#elif defined( FB_X11 )
+    return X11;
+#elif defined( FB_MACOSX )
+    return OSX;
+#endif
+}
+
 QString QmlChimera::get_version() const
 {
     return QStringLiteral( FBSTRING_PLUGIN_VERSION );

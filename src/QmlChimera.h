@@ -36,16 +36,25 @@ public:
 public:
     QmlChimera();
 
+    enum Platform {
+        Windows = 0,
+        X11 = 1,
+        OSX = 2,
+    };
+    Q_ENUMS( Platform )
+
     QmlVlcSurfacePlayerProxy* getQmlVlcPlayer() const
         { return m_qmlVlcPlayer; }
 
     std::string getQmlError();
 
     Q_PROPERTY( QString version READ get_version CONSTANT )
+    Q_PROPERTY( Platform platform READ get_platform CONSTANT )
     Q_PROPERTY( QString bgcolor READ get_bgColor NOTIFY bgcolorChanged )
     Q_PROPERTY( QmlVlcSurfacePlayerProxy* vlcPlayer READ getQmlVlcPlayer CONSTANT )
     Q_PROPERTY( bool fullscreen READ isFullscreen WRITE setFullscreen NOTIFY fullscreenChanged )
 
+    Platform get_platform() const;
     QString get_version() const;
     QString get_bgColor() const;
 
