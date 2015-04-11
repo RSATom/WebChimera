@@ -94,6 +94,9 @@ public:
 
     std::string description( unsigned int trackID );
 
+    FB_JSAPI_EVENT( MuteChanged, 0, () );
+    FB_JSAPI_EVENT( VolumeChanged, 0, () );
+
 private:
     ChimeraWeakPtr m_plugin;
     FB::BrowserHostPtr m_host;

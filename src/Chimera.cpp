@@ -28,8 +28,10 @@
 ///         the JSAPI object until the onPluginReady method is called
 ///////////////////////////////////////////////////////////////////////////////
 Chimera::Chimera()
-    : m_libvlc( 0 ), m_forceMute( false )
+    : m_libvlc( 0 ), m_player( std::make_shared<vlc::player>() ),
+      m_forceMute( false )
 {
+    m_player->audio().register_callback( this );
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -37,6 +39,8 @@ Chimera::Chimera()
 ///////////////////////////////////////////////////////////////////////////////
 Chimera::~Chimera()
 {
+    m_player->audio().unregister_callback( this );
+
     onMediaPlayerNotPlaying();
 
     // This is optional, but if you reset m_api (the shared_ptr to your JSAPI
@@ -432,4 +436,21 @@ void Chimera::onMediaPlayerPlaying()
 
 void Chimera::onMediaPlayerNotPlaying()
 {
+}
+
+void Chimera::audio_event( vlc::audio_event_e e )
+{
+    JSRootAPIPtr api  = boost::static_pointer_cast<JSRootAPI>( getRootJSAPI() );
+    JSAudioAPIPtr audioApi =  api->get_audio().lock();
+
+    switch( e ) {
+        case vlc::audio_event_e::mute_changed:
+            audioApi->fire_MuteChanged();
+            break;
+        case vlc::audio_event_e::volume_changed:
+            audioApi->fire_VolumeChanged();
+            break;
+        default:
+            assert( false );
+    }
 }

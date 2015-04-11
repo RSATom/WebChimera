@@ -32,10 +32,9 @@
 FB_FORWARD_PTR( Chimera )
 class Chimera
     : public FB::PluginCore,
-      protected vlc_player,
       protected vlc_player_options,
-      private vlc::media_player_events_callback
-
+      private vlc::media_player_events_callback,
+      private vlc::audio_events_callback
 {
 public:
     static void StaticInitialize() {}
@@ -65,7 +64,9 @@ public:
     libvlc_instance_t* getLibVlc()
         { return m_libvlc; }
     vlc_player& get_player()
-        { return *static_cast<vlc_player*>( this ); }
+        { return *m_player; }
+    const std::shared_ptr<vlc_player>& get_player_ptr()
+        { return m_player; }
     vlc_player_options& get_options()
         { return *static_cast<vlc_player_options*>( this ); }
     const vlc_player_options& get_options() const
@@ -104,8 +105,10 @@ private:
     void loadLibvlcOptions();
 
     void media_player_event( const libvlc_event_t* e ) override;
+    void audio_event( vlc::audio_event_e e ) override;
 
 private:
     libvlc_instance_t* m_libvlc;
+    std::shared_ptr<vlc::player> m_player;
     bool m_forceMute;
 };
