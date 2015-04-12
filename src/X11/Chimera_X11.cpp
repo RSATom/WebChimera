@@ -55,7 +55,7 @@ bool Chimera_X11::onWindowAttached( FB::AttachedEvent* evt, FB::PluginWindowX11*
     connect( this, &QmlChimera::bgcolorChanged,
              m_quickViewPtr.data(), &QQuickView::setColor );
 
-    m_qmlVlcPlayer = new QmlVlcSurfacePlayerProxy( (vlc::player*)this, m_quickViewPtr.data() );
+    m_qmlVlcPlayer = new QmlVlcSurfacePlayerProxy( get_player_ptr(), m_quickViewPtr.data() );
     m_qmlVlcPlayer->classBegin();
 
     //have to call applyPlayerOptions()
