@@ -211,3 +211,8 @@ QString QmlChimera::toUtf8( const QByteArray& data, const QString& encoding )
     QTextCodec* codec = QTextCodec::codecForName( encoding.toLatin1().data() );
     return codec ? codec->toUnicode( data ) : QString();
 }
+
+void QmlChimera::goHome()
+{
+    getHost()->Navigate( "http://WebChimera.org", "_blank" );
+}

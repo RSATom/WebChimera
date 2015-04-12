@@ -70,6 +70,8 @@ public:
 
     Q_INVOKABLE QString toUtf8( const QByteArray& data, const QString& encoding );
 
+    Q_INVOKABLE void goHome();
+
 Q_SIGNALS:
     void bgcolorChanged( const QString& bgcolor );
     void fullscreenChanged( bool fullscreen );
