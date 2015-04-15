@@ -1,3 +1,22 @@
+v.0.2.6
+- (QML) goHome() global function added
+- play next playlist item if current playing item removed
+- (QML) "platform" global property added
+- X11: fullscreen mode added
+- (JS) .MediaPlayerStateChanged event added
+- QtQuick.Controls module embedded
+- Mac: deadlock on .stop() fixed
+- (QML, JS) move playlist item setting out from libvlc
+- (JS) .audio.MuteChanged event added
+- (QML) VlcAudio::muteChanged signal added
+- (JS) .audio.VolumeChanged event added
+- (QML) VlcAudio::volumeChanged signal added
+- (QML) VlcPlayer::volumeChanged signal added
+- (QML) VlcPlaylist::add( VlcMediaDesc ) added
+- Mac: mouse double click handling added
+- Mac: fixed right/middle button handling
+- Mac: notify about fullscreen mode changes
+
 v.0.2.5
 - (QML) toUtf8( srting data, string encoding ) global function added
 - (QML) QtQuick.Controls module embedded

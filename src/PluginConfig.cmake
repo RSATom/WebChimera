@@ -5,7 +5,7 @@
 #
 #\**********************************************************/
 
-set( PLUGIN_VERSION "0.2.5" )
+set( PLUGIN_VERSION "0.2.6" )
 set( VLC_VERSION "2.1.5" )
 set( COPYRIGHT_YEARS "2011-2015" )
 
