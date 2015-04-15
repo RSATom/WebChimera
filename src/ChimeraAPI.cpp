@@ -1071,16 +1071,6 @@ std::string JSMediaDescAPI::get_date()
     return get_meta( libvlc_meta_Date );
 }
 
-std::string JSMediaDescAPI::get_setting()
-{
-    return get_meta( libvlc_meta_Setting );
-}
-
-void JSMediaDescAPI::set_setting( const std::string& setting )
-{
-    set_meta( libvlc_meta_Setting, setting );
-}
-
 std::string JSMediaDescAPI::get_URL()
 {
     return get_meta( libvlc_meta_URL );
@@ -1140,6 +1130,30 @@ void JSMediaDescAPI::set_disabled( bool disabled )
     int idx = p.find_media_index( get_media() );
     if( idx >= 0 ) {
         p.disable_item( idx, disabled );
+    }
+}
+
+std::string JSMediaDescAPI::get_setting()
+{
+    ChimeraPtr plg = getPlugin();
+    vlc_player& p = plg->get_player();
+
+    int idx = p.find_media_index( get_media() );
+    if( idx >= 0 ) {
+        p.get_item_data( idx );
+    }
+
+    return std::string();
+}
+
+void JSMediaDescAPI::set_setting( const std::string& setting )
+{
+    ChimeraPtr plg = getPlugin();
+    vlc_player& p = plg->get_player();
+
+    int idx = p.find_media_index( get_media() );
+    if( idx >= 0 ) {
+        p.set_item_data( idx, setting );
     }
 }
 
