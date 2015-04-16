@@ -1,3 +1,6 @@
+v.0.2.7.1
+- Mac build
+
 v.0.2.7
 - "setting" playlist item property fixed
 
