@@ -1140,7 +1140,7 @@ std::string JSMediaDescAPI::get_setting()
 
     int idx = p.find_media_index( get_media() );
     if( idx >= 0 ) {
-        p.get_item_data( idx );
+        return p.get_item_data( idx );
     }
 
     return std::string();
