@@ -1,3 +1,6 @@
+v.0.2.7
+- "setting" playlist item property fixed
+
 v.0.2.6
 - (QML) goHome() global function added
 - play next playlist item if current playing item removed
