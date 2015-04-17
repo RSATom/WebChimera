@@ -15,7 +15,7 @@
 	<key>CFBundlePackageType</key>
 	<string>BRPL</string>
 	<key>CFBundleShortVersionString</key>
-    <string>${FBSTRING_PluginName} ${FBSTRING_PLUGIN_VERSION}</string>
+    <string>${FBSTRING_PLUGIN_VERSION}</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
