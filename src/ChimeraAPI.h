@@ -924,7 +924,7 @@ public:
     bool get_fullscreen();
     void set_fullscreen( bool fs );
 
-    int get_state();
+    unsigned get_state();
 
     void toggleFullscreen();
 

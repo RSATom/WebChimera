@@ -1344,7 +1344,7 @@ void JSRootAPI::set_bgcolor( const std::string& bg )
     o.set_bg_color( bg );
 }
 
-int JSRootAPI::get_state()
+unsigned JSRootAPI::get_state()
 {
     ChimeraPtr plg = getPlugin();
     vlc_player& p = plg->get_player();
