@@ -954,7 +954,7 @@ public:
     FB_JSAPI_EVENT( MediaPlayerPausableChanged, 1, ( bool ) );
     FB_JSAPI_EVENT( MediaPlayerLengthChanged, 1, ( double ) );
 
-    FB_JSAPI_EVENT( MediaPlayerStateChanged, 0, () );
+    FB_JSAPI_EVENT( MediaPlayerStateChanged, 1, ( unsigned ) );
 
 private:
     ChimeraWeakPtr m_plugin;
