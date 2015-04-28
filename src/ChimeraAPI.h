@@ -139,7 +139,7 @@ public:
     double get_length();
     double get_fps();
     bool get_hasVout();
-    unsigned int get_state();
+    unsigned get_state();
 
     double get_position();
     void set_position( double );

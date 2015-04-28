@@ -198,7 +198,7 @@ bool JSInputAPI::get_hasVout()
     return p.video().has_vout();
 }
 
-unsigned int JSInputAPI::get_state()
+unsigned JSInputAPI::get_state()
 {
     ChimeraPtr plg = getPlugin();
     vlc_player& p = plg->get_player();
