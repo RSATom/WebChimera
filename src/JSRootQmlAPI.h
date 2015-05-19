@@ -53,6 +53,7 @@ public:
     FB_JSAPI_EVENT( QmlMessage, 1, ( std::string ) );
     FB_JSAPI_EVENT( QmlStringMessage, 2, ( int, std::string ) );
     FB_JSAPI_EVENT( QmlNumberMessage, 3, ( int, int, int ) );
+    FB_JSAPI_EVENT( QmlItemShot, 2, ( int, std::string ) );
 
     void emitJsMessage( const std::string& message );
 };
