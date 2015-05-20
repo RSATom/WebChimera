@@ -64,7 +64,8 @@ public:
     Q_INVOKABLE void fireQmlMessage( const QString& message );
     Q_INVOKABLE void fireQmlStringMessage( int type, const QString& arg );
     Q_INVOKABLE void fireQmlNumberMessage( int type, int arg1, int arg2 );
-    Q_INVOKABLE void takeQmlItemShot( int shotId, QQuickItem* );
+
+    Q_INVOKABLE void takeShot( QQuickItem* );
 
     void emitJsMessage( const std::string& message )
         { Q_EMIT jsMessage( QString::fromStdString( message ) ); }
@@ -77,6 +78,7 @@ Q_SIGNALS:
     void bgcolorChanged( const QString& bgcolor );
     void fullscreenChanged( bool fullscreen );
     void jsMessage( const QString& message );
+    void shotReady( const QString& shot );
 
 private Q_SLOTS:
     void itemShotReady();
@@ -105,5 +107,4 @@ protected:
     QmlVlcSurfacePlayerProxy* m_qmlVlcPlayer;
     std::string m_qmlError;
     QSharedPointer<QQuickItemGrabResult> m_itemGrabResult;
-    int m_itemShotId;
 };

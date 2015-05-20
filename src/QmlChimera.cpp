@@ -72,7 +72,7 @@ void QmlChimera::StaticInitialize()
 }
 
 QmlChimera::QmlChimera()
-    : m_qmlVlcPlayer( 0 ), m_itemShotId( 0 )
+    : m_qmlVlcPlayer( 0 )
 {
 #ifdef QT_STATIC
     qmlProtectModule( "QtQuick", 2 );
@@ -218,11 +218,10 @@ void QmlChimera::goHome()
     getHost()->Navigate( "http://WebChimera.org", "_blank" );
 }
 
-void QmlChimera::takeQmlItemShot( int shotId, QQuickItem* item )
+void QmlChimera::takeShot( QQuickItem* item )
 {
     m_itemGrabResult = item->grabToImage();
     if( m_itemGrabResult ) {
-        m_itemShotId = shotId;
         connect( m_itemGrabResult.data(), &QQuickItemGrabResult::ready,
                  this, &QmlChimera::itemShotReady );
     }
@@ -236,11 +235,8 @@ void QmlChimera::itemShotReady()
     QBuffer buffer( &itemShotData );
     buffer.open( QIODevice::WriteOnly );
     itemShot.save( &buffer, "PNG" );
-    itemShotData = itemShotData.toBase64();
 
-    JSRootQmlAPIPtr api  = boost::static_pointer_cast<JSRootQmlAPI>( getRootJSAPI() );
-    api->fire_QmlItemShot( m_itemShotId, itemShotData.toStdString() );
-
-    m_itemShotId = 0;
     m_itemGrabResult.reset();
+
+    Q_EMIT shotReady( QString::fromLatin1( itemShotData.toBase64() ) );
 }
