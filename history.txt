@@ -1,3 +1,9 @@
+v.0.2.8
+- libvlc v2.2.1 used
+- (QML) added argument to stateChanged signal
+- (JS) added argument to .MediaPlayerStateChanged event
+- (QML) takeSnapshot( qmlItem ) global function and snapshotReady( snapshot ) global signal added
+
 v.0.2.7.1
 - Mac build
 

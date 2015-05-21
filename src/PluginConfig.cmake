@@ -5,8 +5,8 @@
 #
 #\**********************************************************/
 
-set( PLUGIN_VERSION "0.2.7.1" )
-set( VLC_VERSION "2.1.5" )
+set( PLUGIN_VERSION "0.2.8" )
+set( VLC_VERSION "2.2.1" )
 set( COPYRIGHT_YEARS "2011-2015" )
 
 set( PLUGIN_NAME "WebChimera" )
