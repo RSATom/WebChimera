@@ -65,7 +65,7 @@ public:
     Q_INVOKABLE void fireQmlStringMessage( int type, const QString& arg );
     Q_INVOKABLE void fireQmlNumberMessage( int type, int arg1, int arg2 );
 
-    Q_INVOKABLE void takeShot( QQuickItem* );
+    Q_INVOKABLE void takeSnapshot( QQuickItem* );
 
     void emitJsMessage( const std::string& message )
         { Q_EMIT jsMessage( QString::fromStdString( message ) ); }
@@ -78,10 +78,10 @@ Q_SIGNALS:
     void bgcolorChanged( const QString& bgcolor );
     void fullscreenChanged( bool fullscreen );
     void jsMessage( const QString& message );
-    void shotReady( const QString& shot );
+    void snapshotReady( const QString& snapshot );
 
 private Q_SLOTS:
-    void itemShotReady();
+    void grabResultReady();
 
 public:
     BEGIN_PLUGIN_EVENT_MAP()

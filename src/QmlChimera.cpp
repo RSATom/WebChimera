@@ -218,25 +218,25 @@ void QmlChimera::goHome()
     getHost()->Navigate( "http://WebChimera.org", "_blank" );
 }
 
-void QmlChimera::takeShot( QQuickItem* item )
+void QmlChimera::takeSnapshot( QQuickItem* item )
 {
     m_itemGrabResult = item->grabToImage();
     if( m_itemGrabResult ) {
         connect( m_itemGrabResult.data(), &QQuickItemGrabResult::ready,
-                 this, &QmlChimera::itemShotReady );
+                 this, &QmlChimera::grabResultReady );
     }
 }
 
-void QmlChimera::itemShotReady()
+void QmlChimera::grabResultReady()
 {
-    QImage itemShot = m_itemGrabResult->image();
+    QImage snapshot = m_itemGrabResult->image();
 
-    QByteArray itemShotData;
-    QBuffer buffer( &itemShotData );
+    QByteArray snapshotData;
+    QBuffer buffer( &snapshotData );
     buffer.open( QIODevice::WriteOnly );
-    itemShot.save( &buffer, "PNG" );
+    snapshot.save( &buffer, "PNG" );
 
     m_itemGrabResult.reset();
 
-    Q_EMIT shotReady( QString::fromLatin1( itemShotData.toBase64() ) );
+    Q_EMIT snapshotReady( QString::fromLatin1( snapshotData.toBase64() ) );
 }
