@@ -24,7 +24,7 @@ source_group( Mac FILES ${PLATFORM} )
 
 set( VLC_PATH "${DEPS_DIR}/VLC-${VLC_VERSION}.app/Contents/MacOS" )
 
-file( GLOB LIBVLC_LIB ${VLC_PATH}/lib/[^.]*.dylib )
+file( GLOB LIBVLC_LIB ${VLC_PATH}/lib/[^.]*[\\.]*[\\.]dylib )
 file( GLOB LIBVLC_PLUGINS ${VLC_PATH}/plugins/[^.]*.dylib )
 file( GLOB LIBVLC_LUA_EXTENSIONS ${VLC_PATH}/share/lua/extensions/[^.]*.luac )
 file( GLOB LIBVLC_LUA_MODULES ${VLC_PATH}/share/lua/modules/[^.]*.luac )
@@ -49,7 +49,7 @@ set_source_files_properties(
 set_source_files_properties(
     ${LIBVLC_PLUGINS}
     PROPERTIES
-    MACOSX_PACKAGE_LOCATION MacOS/plugins
+    MACOSX_PACKAGE_LOCATION MacOS/lib/vlc/plugins
     )
 
 set_source_files_properties(
@@ -227,6 +227,13 @@ if( QT_STATIC )
         ${QT_CONTROLS_PLUGIN}
         )
 endif( QT_STATIC )
+
+add_custom_command(
+    TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND mkdir -p ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/${PLUGIN_NAME}.plugin/Contents/MacOS/lib/vlc/lib
+    COMMAND ln -sf ../../libvlccore.8.dylib ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/${PLUGIN_NAME}.plugin/Contents/MacOS/lib/vlc/lib/libvlccore.8.dylib
+    COMMAND ln -sf ../../liblzma.5.dylib ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/${PLUGIN_NAME}.plugin/Contents/MacOS/lib/vlc/lib/liblzma.5.dylib
+)
 
 #To create a DMG, include the following file
 #include( Mac/installer.cmake )
