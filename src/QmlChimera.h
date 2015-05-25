@@ -24,6 +24,10 @@
 
 #include "Chimera.h"
 
+#if ( QT_VERSION >= QT_VERSION_CHECK( 5, 4, 0 ) )
+#define SNAPSHOT_ENABLED 1
+#endif
+
 FB_FORWARD_PTR( QmlChimera )
 class QmlChimera
     : public QObject, public Chimera
@@ -106,5 +110,7 @@ protected:
 protected:
     QmlVlcSurfacePlayerProxy* m_qmlVlcPlayer;
     std::string m_qmlError;
+#ifdef SNAPSHOT_ENABLED
     QSharedPointer<QQuickItemGrabResult> m_itemGrabResult;
+#endif
 };

@@ -25,7 +25,10 @@
 #include <QDir>
 #include <QTextCodec>
 #include <QtQml>
+
+#ifdef SNAPSHOT_ENABLED
 #include <QQuickItemGrabResult>
+#endif
 
 #include <QmlVlc/QmlVlc.h>
 
@@ -220,15 +223,20 @@ void QmlChimera::goHome()
 
 void QmlChimera::takeSnapshot( QQuickItem* item )
 {
+#ifdef SNAPSHOT_ENABLED
     m_itemGrabResult = item->grabToImage();
     if( m_itemGrabResult ) {
         connect( m_itemGrabResult.data(), &QQuickItemGrabResult::ready,
                  this, &QmlChimera::grabResultReady );
     }
+#else
+    qWarning( "Snapshot feature does not supported by used Qt version" );
+#endif
 }
 
 void QmlChimera::grabResultReady()
 {
+#ifdef SNAPSHOT_ENABLED
     QImage snapshot = m_itemGrabResult->image();
 
     QByteArray snapshotData;
@@ -239,4 +247,5 @@ void QmlChimera::grabResultReady()
     m_itemGrabResult.reset();
 
     Q_EMIT snapshotReady( QString::fromLatin1( snapshotData.toBase64() ) );
+#endif
 }
