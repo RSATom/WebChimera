@@ -87,6 +87,8 @@ private:
     void setQml();
     void cleanup();
 
+    QScreen* currentScreen();
+
 private Q_SLOTS:
     void quickViewStatusChanged();
 

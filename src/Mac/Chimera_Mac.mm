@@ -20,14 +20,18 @@
 
 #include <dlfcn.h>
 
+#include <QGuiApplication>
 #include <QtDebug>
 #include <QtPlugin>
 #include <QCoreApplication>
 #include <QQmlContext>
+#include <QScreen>
 
 #include <QuickLayer/QuickLayer.h>
 #include <QuickLayer/FboQuickView.h>
 #include <QuickLayer/FboQuickWrapperWindow.h>
+
+#include <DOM/Window.h>
 
 #include "QtConf.h"
 
@@ -427,16 +431,61 @@ bool Chimera_Mac::isFullscreen()
     return ( nullptr != m_p->fullscreenWindow );
 }
 
+QScreen* Chimera_Mac::currentScreen()
+{
+    QScreen* bestScreen = QGuiApplication::primaryScreen();
+
+    FB::DOM::WindowPtr window = m_host->getDOMWindow();
+    if( !window )
+        return bestScreen;
+
+    QRect winRect;
+
+    if( window->hasProperty( "screenX" ) ) {
+        winRect.setX( window->getProperty<int>( "screenX" ) );
+    }
+    if( window->hasProperty( "screenY" ) ) {
+        winRect.setY( window->getProperty<int>( "screenY" ) );
+    }
+    if( window->hasProperty( "outerWidth" ) ) {
+        winRect.setWidth( window->getProperty<int>( "outerWidth" ) );
+    }
+    if( window->hasProperty( "outerHeight" ) ) {
+        winRect.setHeight( window->getProperty<int>( "outerHeight" ) );
+    }
+
+    QPoint winCenter = winRect.center();
+
+    QList<QScreen*> screens = QGuiApplication::screens();
+    unsigned intersectedArea = 0;
+    for( auto* screen : screens ) {
+        QRect screenRect = screen->geometry();
+        if( screenRect.contains( winCenter ) ) {
+            return screen;
+        }  else {
+            QRect ir = screenRect.intersected( winRect );
+            unsigned ia = ir.width() * ir.height();
+            if( ir.isValid() && ia > intersectedArea )
+                bestScreen = screen;
+        }
+    }
+
+    return bestScreen;
+}
+
 void Chimera_Mac::setFullscreen( bool fs )
 {
     if( fs && !isFullscreen() ) {
+        QScreen* screen = currentScreen();
+
         m_p->fullscreenWindow =
             new FboQuickWrapperWindow( m_p->quickViewPtr.data() );
 
         QWindow* fsw = m_p->fullscreenWindow;
         fsw->setFlags( fsw->flags() | Qt::CustomizeWindowHint );
-        const FB::Rect r = GetWindow()->getWindowPosition();
-        fsw->setGeometry( r.left, r.top, r.right - r.left, r.bottom - r.top );
+
+        fsw->setScreen( screen );
+        fsw->setGeometry( screen->geometry() );
         fsw->showFullScreen();
 
         [m_p->quickLayer setHidden: YES];
