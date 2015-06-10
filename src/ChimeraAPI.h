@@ -202,7 +202,7 @@ public:
     {
         registerAttribute( "Normal", vlc::mode_normal, true );
         registerAttribute( "Loop",   vlc::mode_loop,   true );
-        registerAttribute( "Single", vlc::mode_last,   true );
+        registerAttribute( "Single", vlc::mode_single, true );
 
 
         registerProperty( "itemCount",
