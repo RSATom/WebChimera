@@ -4,9 +4,6 @@
 [submodule "deps/firebreath"]
 	path = deps/firebreath
 	url = git://github.com/firebreath/FireBreath.git
-[submodule "deps/libvlc-sdk"]
-	path = deps/libvlc-sdk
-	url = https://github.com/RSATom/libvlc-sdk.git
 [submodule "deps/QuickLayer"]
 	path = deps/QuickLayer
 	url = https://github.com/RSATom/QuickLayer.git
