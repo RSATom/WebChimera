@@ -40,7 +40,6 @@ public:
     static void StaticInitialize() {}
     static void StaticDeinitialize() {}
 
-public:
     Chimera();
     virtual ~Chimera();
 
@@ -74,16 +73,13 @@ public:
 
     int addPlaylistItem( const std::string& mrl );
     int addPlaylistItem( const std::string& mrl,
-                           const std::vector<std::string>& options );
+                         const std::vector<std::string>& options );
 
 public:
     virtual bool isFullscreen() { return false; }
     virtual void setFullscreen( bool fs ) {}
     virtual void toggleFullscreen()
         { setFullscreen( !isFullscreen() ); }
-
-private:
-    std::string detectHttpProxy( const std::string& mrl ) const;
 
 protected:
     const FB::variant& getParamVariant( const std::string& key ) const;
@@ -103,6 +99,8 @@ protected:
 
 private:
     void loadLibvlcOptions();
+
+    std::string detectHttpProxy( const std::string& mrl ) const;
 
     void media_player_event( const libvlc_event_t* e ) override;
     void audio_event( vlc::audio_event_e e ) override;
