@@ -91,17 +91,15 @@ set_target_properties( ${PROJECT_NAME} PROPERTIES LINK_FLAGS ${LINK_FLAGS} )
 # add library dependencies here; leave ${PLUGIN_INTERNAL_DEPS} there unless you know what you're doing!
 target_link_libraries( ${PROJECT_NAME}
     ${PLUGIN_INTERNAL_DEPS}
-    ${DEPS_DIR}/libvlc-sdk/lib/msvc/libvlc.lib
     ${Qt5Gui_EGL_LIBRARIES}
     ${Qt5Gui_OPENGL_LIBRARIES}
     d3dcompiler.lib
     )
 
 set( QT_STATIC 1 )
+set( QT_STATIC ${QT_STATIC} PARENT_SCOPE )
 
 if( QT_STATIC )
-    add_definitions( -DQT_OPENGL_ES_2_ANGLE_STATIC )
-
     find_package( OpenSSL REQUIRED )
 
     target_link_libraries( ${PROJECT_NAME}
