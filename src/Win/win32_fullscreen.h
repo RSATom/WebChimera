@@ -76,7 +76,7 @@ private:
 
     VLCWindowsManager& WM()
         { return *_wm; }
-    inline vlc_player* VP() const;
+    inline vlc::player_core* VP() const;
     inline const VLCViewResources& RC() const;
     inline const vlc_player_options* PO() const;
 
@@ -119,7 +119,7 @@ private:
 private:
      VLCWindowsManager& WM()
         { return *_WindowsManager; }
-    inline vlc_player* VP() const;
+    inline vlc::player_core* VP() const;
     inline const VLCViewResources& RC() const;
 
 public:
@@ -157,7 +157,7 @@ public:
     void CreateWindows( HWND hWindowedParentWnd );
     void DestroyWindows();
 
-    void LibVlcAttach( vlc_player* );
+    void LibVlcAttach( vlc::player_core* );
     void LibVlcDetach();
 
     void StartFullScreen();
@@ -168,7 +168,7 @@ public:
     HMODULE getHModule() const { return _hModule; };
     VLCHolderWnd* getHolderWnd() const { return _HolderWnd; }
     VLCFullScreenWnd* getFullScreenWnd() const { return _FSWnd; }
-    vlc_player* VP() const { return _vp && _vp->is_open() ? _vp : 0; }
+    vlc::player_core* VP() const { return _vp && _vp->is_open() ? _vp : 0; }
     const VLCViewResources& RC() const { return _rc; }
     const vlc_player_options* PO() const { return _po; }
 
@@ -188,7 +188,7 @@ private:
 
     HWND _hWindowedParentWnd;
 
-    vlc_player* _vp;
+    vlc::player_core* _vp;
 
     VLCHolderWnd* _HolderWnd;
     VLCFullScreenWnd* _FSWnd;
@@ -202,7 +202,7 @@ private:
 ////////////////////////////
 //inlines
 ////////////////////////////
-inline vlc_player* VLCHolderWnd::VP() const
+inline vlc::player_core* VLCHolderWnd::VP() const
 {
     return _wm->VP();
 }
@@ -217,7 +217,7 @@ inline const vlc_player_options* VLCHolderWnd::PO() const
     return _wm->PO();
 }
 
-inline vlc_player* VLCFullScreenWnd::VP() const
+inline vlc::player_core* VLCFullScreenWnd::VP() const
 {
     return _WindowsManager->VP();
 }
