@@ -19,6 +19,7 @@
 #pragma once
 
 #include <QUrl>
+#include <QQuickItemGrabResult>
 
 #include <QmlVlc/QmlVlcPlayer.h>
 
@@ -47,7 +48,7 @@ public:
     };
     Q_ENUMS( Platform )
 
-    QmlVlcSurfacePlayerProxy* getQmlVlcPlayer() const
+    QmlVlcPlayerProxy* getQmlVlcPlayer() const
         { return m_qmlVlcPlayer; }
 
     std::string getQmlError();
@@ -55,7 +56,7 @@ public:
     Q_PROPERTY( QString version READ get_version CONSTANT )
     Q_PROPERTY( Platform platform READ get_platform CONSTANT )
     Q_PROPERTY( QString bgcolor READ get_bgColor NOTIFY bgcolorChanged )
-    Q_PROPERTY( QmlVlcSurfacePlayerProxy* vlcPlayer READ getQmlVlcPlayer CONSTANT )
+    Q_PROPERTY( QmlVlcPlayerProxy* vlcPlayer READ getQmlVlcPlayer CONSTANT )
     Q_PROPERTY( bool fullscreen READ isFullscreen WRITE setFullscreen NOTIFY fullscreenChanged )
 
     Platform get_platform() const;
@@ -108,7 +109,7 @@ protected:
     QUrl getQmlSource();
 
 protected:
-    QmlVlcSurfacePlayerProxy* m_qmlVlcPlayer;
+    QmlVlcPlayerProxy* m_qmlVlcPlayer;
     std::string m_qmlError;
 #ifdef SNAPSHOT_ENABLED
     QSharedPointer<QQuickItemGrabResult> m_itemGrabResult;

@@ -27,6 +27,7 @@
 #include <QtQml>
 
 #ifdef SNAPSHOT_ENABLED
+#include <QQuickItem>
 #include <QQuickItemGrabResult>
 #endif
 

@@ -179,7 +179,7 @@ double JSInputAPI::get_length()
     ChimeraPtr plg = getPlugin();
     vlc_player& p = plg->get_player();
 
-    return static_cast<double>( p.get_length() );
+    return static_cast<double>( p.playback().get_length() );
 }
 
 double JSInputAPI::get_fps()
@@ -187,7 +187,7 @@ double JSInputAPI::get_fps()
     ChimeraPtr plg = getPlugin();
     vlc_player& p = plg->get_player();
 
-    return p.get_fps();
+    return p.playback().get_fps();
 }
 
 bool JSInputAPI::get_hasVout()
@@ -211,7 +211,7 @@ double JSInputAPI::get_position()
     ChimeraPtr plg = getPlugin();
     vlc_player& p = plg->get_player();
 
-    return p.get_position();
+    return p.playback().get_position();
 }
 
 void JSInputAPI::set_position( double pos )
@@ -219,7 +219,7 @@ void JSInputAPI::set_position( double pos )
     ChimeraPtr plg = getPlugin();
     vlc_player& p = plg->get_player();
 
-    p.set_position( static_cast<float>( pos ) );
+    p.playback().set_position( static_cast<float>( pos ) );
 }
 
 double JSInputAPI::get_time()
@@ -227,7 +227,7 @@ double JSInputAPI::get_time()
     ChimeraPtr plg = getPlugin();
     vlc_player& p = plg->get_player();
 
-    return static_cast<double>( p.get_time() );
+    return static_cast<double>( p.playback().get_time() );
 }
 
 void JSInputAPI::set_time( double t )
@@ -235,7 +235,7 @@ void JSInputAPI::set_time( double t )
     ChimeraPtr plg = getPlugin();
     vlc_player& p = plg->get_player();
 
-    return p.set_time( static_cast<libvlc_time_t>( t ) );
+    return p.playback().set_time( static_cast<libvlc_time_t>( t ) );
 }
 
 double JSInputAPI::get_rate()
@@ -243,7 +243,7 @@ double JSInputAPI::get_rate()
     ChimeraPtr plg = getPlugin();
     vlc_player& p = plg->get_player();
 
-    return p.get_rate();
+    return p.playback().get_rate();
 }
 
 void JSInputAPI::set_rate( double r )
@@ -251,7 +251,7 @@ void JSInputAPI::set_rate( double r )
     ChimeraPtr plg = getPlugin();
     vlc_player& p = plg->get_player();
 
-    p.set_rate( static_cast<float>( r ) );
+    p.playback().set_rate( static_cast<float>( r ) );
 }
 
 ////////////////////////////////////////////////////////////////////////////
@@ -295,7 +295,7 @@ FB::variant JSPlaylistItemsAPI::GetProperty( int idx )
     ChimeraPtr plg = getPlugin();
     vlc_player& p = plg->get_player();
 
-    if( idx < 0 || idx >= p.item_count() )
+    if( idx < 0 || static_cast<unsigned>( idx ) >= p.item_count() )
         return FB::variant();
 
     vlc::media media = p.get_media( idx );
@@ -1277,7 +1277,7 @@ double JSRootAPI::get_length()
     ChimeraPtr plg = getPlugin();
     vlc_player& p = plg->get_player();
 
-    return static_cast<double>( p.get_length() );
+    return static_cast<double>( p.playback().get_length() );
 }
 
 double JSRootAPI::get_position()
@@ -1285,7 +1285,7 @@ double JSRootAPI::get_position()
     ChimeraPtr plg = getPlugin();
     vlc_player& p = plg->get_player();
 
-    return p.get_position();
+    return p.playback().get_position();
 }
 
 void JSRootAPI::set_position( double pos )
@@ -1293,7 +1293,7 @@ void JSRootAPI::set_position( double pos )
     ChimeraPtr plg = getPlugin();
     vlc_player& p = plg->get_player();
 
-    p.set_position( static_cast<float>( pos ) );
+    p.playback().set_position( static_cast<float>( pos ) );
 }
 
 double JSRootAPI::get_time()
@@ -1301,7 +1301,7 @@ double JSRootAPI::get_time()
     ChimeraPtr plg = getPlugin();
     vlc_player& p = plg->get_player();
 
-    return static_cast<double>( p.get_time() );
+    return static_cast<double>( p.playback().get_time() );
 }
 
 void JSRootAPI::set_time( double t )
@@ -1309,7 +1309,7 @@ void JSRootAPI::set_time( double t )
     ChimeraPtr plg = getPlugin();
     vlc_player& p = plg->get_player();
 
-    p.set_time( static_cast<libvlc_time_t>( t ) );
+    p.playback().set_time( static_cast<libvlc_time_t>( t ) );
 }
 
 unsigned int JSRootAPI::get_volume()
