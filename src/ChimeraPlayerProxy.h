@@ -20,10 +20,10 @@
 
 #include <QmlVlc/QmlVlcPlayerProxy.h>
 
-class ChimeraQmlVlcPlayerProxy : public QmlVlcPlayerProxy
+class ChimeraPlayerProxy : public QmlVlcPlayerProxy
 {
 public:
-    explicit ChimeraQmlVlcPlayerProxy( const std::shared_ptr<vlc::playlist_player_core>& player,
-                                       QObject* parent );
-    ~ChimeraQmlVlcPlayerProxy();
+    explicit ChimeraPlayerProxy( const std::shared_ptr<vlc::playlist_player_core>& player,
+                                 QObject* parent );
+    ~ChimeraPlayerProxy();
 };

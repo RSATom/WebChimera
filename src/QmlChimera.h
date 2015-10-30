@@ -21,9 +21,8 @@
 #include <QUrl>
 #include <QQuickItemGrabResult>
 
-#include <QmlVlc/QmlVlcPlayer.h>
-
 #include "Chimera.h"
+#include "ChimeraPlayerProxy.h"
 
 #if ( QT_VERSION >= QT_VERSION_CHECK( 5, 4, 0 ) )
 #define SNAPSHOT_ENABLED 1
@@ -109,7 +108,8 @@ protected:
     QUrl getQmlSource();
 
 protected:
-    QmlVlcPlayerProxy* m_qmlVlcPlayer;
+    QPointer<ChimeraPlayerProxy> m_qmlVlcPlayer;
+
     std::string m_qmlError;
 #ifdef SNAPSHOT_ENABLED
     QSharedPointer<QQuickItemGrabResult> m_itemGrabResult;

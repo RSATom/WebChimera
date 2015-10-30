@@ -23,7 +23,7 @@
 #include <QAbstractNativeEventFilter>
 #include <QScreen>
 
-#include "ChimeraQmlVlcPlayerProxy.h"
+#include "ChimeraPlayerProxy.h"
 
 #include "QtConf.h"
 
@@ -106,7 +106,7 @@ bool Chimera_Win::onWindowAttached( FB::AttachedEvent* evt, FB::PluginWindowWin*
              m_quickViewPtr.data(), &QQuickView::setColor );
 
     QQmlContext* context = m_quickViewPtr->rootContext();
-    m_qmlVlcPlayer = new ChimeraQmlVlcPlayerProxy( get_player_ptr(), m_quickViewPtr.data() );
+    m_qmlVlcPlayer = new ChimeraPlayerProxy( get_player_ptr(), m_quickViewPtr.data() );
 
     //have to call applyPlayerOptions()
     //after QmlVlcSurfacePlayerProxy::classBegin

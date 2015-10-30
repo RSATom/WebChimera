@@ -16,16 +16,16 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#include "ChimeraQmlVlcPlayerProxy.h"
+#include "ChimeraPlayerProxy.h"
 
-ChimeraQmlVlcPlayerProxy::ChimeraQmlVlcPlayerProxy( const std::shared_ptr<vlc::playlist_player_core>& player,
-                                                    QObject* parent )
+ChimeraPlayerProxy::ChimeraPlayerProxy( const std::shared_ptr<vlc::playlist_player_core>& player,
+                                        QObject* parent )
     : QmlVlcPlayerProxy( player, parent )
 {
     classBegin();
 }
 
-ChimeraQmlVlcPlayerProxy::~ChimeraQmlVlcPlayerProxy()
+ChimeraPlayerProxy::~ChimeraPlayerProxy()
 {
     classEnd();
 }
