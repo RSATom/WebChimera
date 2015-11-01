@@ -64,6 +64,7 @@ bool ChimeraQuickView::nativeEvent( const QByteArray&, void* message, long* resu
 ////////////////////////////////////////////////////////////////////////////////
 //Chimera_Win class
 ////////////////////////////////////////////////////////////////////////////////
+static HMODULE llvmpipeModule = 0;
 void Chimera_Win::StaticInitialize()
 {
     OutputDebugString( L"Chimera_Win::StaticInitialize()\n" );
@@ -72,12 +73,17 @@ void Chimera_Win::StaticInitialize()
     InitQtConf( g_dllPath + "/../" );
 #endif
 
+    llvmpipeModule =
+        ::LoadLibraryW( FB::utf8_to_wstring( g_dllPath + "/../opengl32sw.dll" ).c_str() );
+
     QmlChimera::StaticInitialize();
 }
 
 void Chimera_Win::StaticDeinitialize()
 {
     OutputDebugString( L"Chimera_Win::StaticDeinitialize()\n" );
+
+    FreeLibrary( llvmpipeModule );
 }
 
 Chimera_Win::Chimera_Win()
