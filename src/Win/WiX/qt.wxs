@@ -29,6 +29,16 @@
 						</Component>
 					</Directory>
 
+					<Directory Id="qml_QtQuick_Window2" Name="Window2">
+						<Component Guid="{CC4CE363-1F0A-4F9F-B290-1D3271C84E7A}" Id="c_QT_qml_QtQuick_Window2">
+							<RegistryValue Root="HKCU" Key="SOFTWARE\${PLUGIN_NAME}\${FBSTRING_PLUGIN_VERSION}\qml\QtQuick\Window2"
+							               Name="QtUninstall" Type="string" Value="${Qt5Core_VERSION_STRING}" KeyPath="yes" />
+							<RemoveFolder On="uninstall" Id="u_QT_qml_QtQuick_Window2" />
+							<File Id="QtQuick_Window2_qmldir" Source="$(var.QTDIR)\qml\QtQuick\Window.2\qmldir" />
+							<File Id="QtQuick_Window2_plugins.qmltypes" Source="$(var.QTDIR)\qml\QtQuick\Window.2\plugins.qmltypes" />
+						</Component>
+					</Directory>
+
 					<Directory Id="qml_QtQuick_Controls" Name="Controls">
 						<Component Guid="{F4CC5A59-266C-4031-B04D-B86E30B87D39}" Id="c_QT_qml_QtQuick_Controls">
 							<RemoveFolder On="uninstall" Id="u_qml_QtQuick_Controls" />
@@ -244,6 +254,8 @@
 			<ComponentRef Id="c_QT_qml" />
 			<ComponentRef Id="c_QT_qml_QtQuick" />
 			<ComponentRef Id="c_QT_qml_QtQuick_Layouts" />
+			<ComponentRef Id="c_QT_qml_QtQuick_Window2" />
+
 			<ComponentRef Id="c_QT_qml_QtQuick.2" />
 			<ComponentRef Id="c_QT_qml_QtGraphicalEffects" />
 			<ComponentRef Id="c_QT_qml_QtGraphicalEffects_private" />

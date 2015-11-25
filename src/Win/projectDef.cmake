@@ -122,6 +122,7 @@ if( QT_STATIC )
     target_link_libraries( ${PROJECT_NAME} debug "$ENV{QTDIR}/qml/QtQuick.2/qtquick2plugind.lib" )
     target_link_libraries( ${PROJECT_NAME} debug "$ENV{QTDIR}/qml/QtQuick/Layouts/qquicklayoutsplugind.lib" )
     target_link_libraries( ${PROJECT_NAME} debug "$ENV{QTDIR}/qml/QtQuick/Controls/qtquickcontrolsplugind.lib" )
+    target_link_libraries( ${PROJECT_NAME} debug "$ENV{QTDIR}/qml/QtQuick/Window.2/windowplugind.lib" )
 
     target_link_libraries( ${PROJECT_NAME} optimized "$ENV{QTDIR}/lib/qtharfbuzzng.lib" )
     target_link_libraries( ${PROJECT_NAME} optimized "$ENV{QTDIR}/lib/translator.lib" )
@@ -132,6 +133,7 @@ if( QT_STATIC )
     target_link_libraries( ${PROJECT_NAME} optimized "$ENV{QTDIR}/qml/QtQuick.2/qtquick2plugin.lib" )
     target_link_libraries( ${PROJECT_NAME} optimized "$ENV{QTDIR}/qml/QtQuick/Layouts/qquicklayoutsplugin.lib" )
     target_link_libraries( ${PROJECT_NAME} optimized "$ENV{QTDIR}/qml/QtQuick/Controls/qtquickcontrolsplugin.lib" )
+    target_link_libraries( ${PROJECT_NAME} optimized "$ENV{QTDIR}/qml/QtQuick/Window.2/windowplugin.lib" )
 endif( QT_STATIC )
 
 set( WIX_HEAT_FLAGS
