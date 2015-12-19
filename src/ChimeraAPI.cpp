@@ -947,7 +947,7 @@ void JSVideoAPI::set_brightness( float v )
     return p.video().set_brightness( v );
 }
 
-float JSVideoAPI::get_hue()
+int JSVideoAPI::get_hue()
 {
     ChimeraPtr plg = getPlugin();
     vlc::player_core& p = plg->get_player();
@@ -955,7 +955,7 @@ float JSVideoAPI::get_hue()
     return p.video().get_hue();
 }
 
-void JSVideoAPI::set_hue( float v )
+void JSVideoAPI::set_hue( int v )
 {
     ChimeraPtr plg = getPlugin();
     vlc::player_core& p = plg->get_player();
