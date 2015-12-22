@@ -641,8 +641,8 @@ public:
     float get_brightness();
     void set_brightness( float v );
 
-    float get_hue();
-    void set_hue( float v );
+    int get_hue();
+    void set_hue( int v );
 
     float get_saturation();
     void set_saturation( float v );

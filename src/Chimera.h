@@ -62,7 +62,7 @@ private:
 public:
     libvlc_instance_t* getLibVlc()
         { return m_libvlc; }
-    vlc_player& get_player()
+    vlc::playlist_player_core& get_player()
         { return *m_player; }
     const std::shared_ptr<vlc_player>& get_player_ptr()
         { return m_player; }

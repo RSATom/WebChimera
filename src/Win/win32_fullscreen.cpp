@@ -391,7 +391,7 @@ void VLCWindowsManager::DestroyWindows()
     _FSWnd = 0;
 }
 
-void VLCWindowsManager::LibVlcAttach( vlc_player* vp )
+void VLCWindowsManager::LibVlcAttach( vlc::player_core* vp )
 {
     if( !_HolderWnd )
         return; //VLCWindowsManager::CreateWindows was not called
@@ -514,7 +514,7 @@ void VLCWindowsManager::VlcEvents( bool Attach )
     if( !VP() )
         return;
 
-    vlc_player& vp = *VP();
+    vlc::player_core& vp = *VP();
 
     libvlc_event_manager_t* em =
         libvlc_media_player_event_manager( vp.get_mp() );

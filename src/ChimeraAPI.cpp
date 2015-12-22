@@ -38,7 +38,7 @@ ChimeraPtr JSAudioAPI::getPlugin()
 unsigned JSAudioAPI::get_trackCount()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     return p.audio().track_count();
 }
@@ -46,7 +46,7 @@ unsigned JSAudioAPI::get_trackCount()
 bool JSAudioAPI::get_mute()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     return p.audio().is_muted();
 }
@@ -54,7 +54,7 @@ bool JSAudioAPI::get_mute()
 void JSAudioAPI::set_mute( bool m )
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     p.audio().set_mute( m );
 }
@@ -62,7 +62,7 @@ void JSAudioAPI::set_mute( bool m )
 unsigned int JSAudioAPI::get_volume()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     return p.audio().get_volume();
 }
@@ -70,7 +70,7 @@ unsigned int JSAudioAPI::get_volume()
 void JSAudioAPI::set_volume( unsigned int vol )
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     p.audio().set_volume( vol );
 }
@@ -78,7 +78,7 @@ void JSAudioAPI::set_volume( unsigned int vol )
 int JSAudioAPI::get_track()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     return p.audio().get_track();
 }
@@ -89,7 +89,7 @@ void JSAudioAPI::set_track( int idx )
         return;
 
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     p.audio().set_track( idx );
 }
@@ -97,7 +97,7 @@ void JSAudioAPI::set_track( int idx )
 unsigned int JSAudioAPI::get_channel()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     return p.audio().get_channel();
 }
@@ -105,7 +105,7 @@ unsigned int JSAudioAPI::get_channel()
 void JSAudioAPI::set_channel( unsigned int ch )
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     p.audio().set_channel( (libvlc_audio_output_channel_t) ch );
 }
@@ -113,7 +113,7 @@ void JSAudioAPI::set_channel( unsigned int ch )
 void JSAudioAPI::toggleMute()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     p.audio().toggle_mute();
 }
@@ -121,7 +121,7 @@ void JSAudioAPI::toggleMute()
 std::string JSAudioAPI::description( unsigned int trackID )
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     std::string track_name;
 
@@ -149,7 +149,7 @@ std::string JSAudioAPI::description( unsigned int trackID )
 int JSAudioAPI::get_delay()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     return p.audio().get_delay();
 }
@@ -157,7 +157,7 @@ int JSAudioAPI::get_delay()
 void JSAudioAPI::set_delay( int delay )
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     p.audio().set_delay( delay );
 }
@@ -177,23 +177,23 @@ ChimeraPtr JSInputAPI::getPlugin()
 double JSInputAPI::get_length()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
-    return static_cast<double>( p.get_length() );
+    return static_cast<double>( p.playback().get_length() );
 }
 
 double JSInputAPI::get_fps()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
-    return p.get_fps();
+    return p.playback().get_fps();
 }
 
 bool JSInputAPI::get_hasVout()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     return p.video().has_vout();
 }
@@ -201,7 +201,7 @@ bool JSInputAPI::get_hasVout()
 unsigned JSInputAPI::get_state()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     return p.get_state();
 }
@@ -209,49 +209,49 @@ unsigned JSInputAPI::get_state()
 double JSInputAPI::get_position()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
-    return p.get_position();
+    return p.playback().get_position();
 }
 
 void JSInputAPI::set_position( double pos )
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
-    p.set_position( static_cast<float>( pos ) );
+    p.playback().set_position( static_cast<float>( pos ) );
 }
 
 double JSInputAPI::get_time()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
-    return static_cast<double>( p.get_time() );
+    return static_cast<double>( p.playback().get_time() );
 }
 
 void JSInputAPI::set_time( double t )
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
-    return p.set_time( static_cast<libvlc_time_t>( t ) );
+    return p.playback().set_time( static_cast<libvlc_time_t>( t ) );
 }
 
 double JSInputAPI::get_rate()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
-    return p.get_rate();
+    return p.playback().get_rate();
 }
 
 void JSInputAPI::set_rate( double r )
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
-    p.set_rate( static_cast<float>( r ) );
+    p.playback().set_rate( static_cast<float>( r ) );
 }
 
 ////////////////////////////////////////////////////////////////////////////
@@ -269,7 +269,7 @@ ChimeraPtr JSPlaylistItemsAPI::getPlugin()
 unsigned int JSPlaylistItemsAPI::get_count()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::playlist_player_core& p = plg->get_player();
 
     return p.item_count();
 }
@@ -277,7 +277,7 @@ unsigned int JSPlaylistItemsAPI::get_count()
 void JSPlaylistItemsAPI::clear()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::playlist_player_core& p = plg->get_player();
 
     return p.clear_items();
 }
@@ -285,7 +285,7 @@ void JSPlaylistItemsAPI::clear()
 bool JSPlaylistItemsAPI::remove( unsigned int idx )
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::playlist_player_core& p = plg->get_player();
 
    return p.delete_item( idx );
 }
@@ -293,9 +293,9 @@ bool JSPlaylistItemsAPI::remove( unsigned int idx )
 FB::variant JSPlaylistItemsAPI::GetProperty( int idx )
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::playlist_player_core& p = plg->get_player();
 
-    if( idx < 0 || idx >= p.item_count() )
+    if( idx < 0 || static_cast<unsigned>( idx ) >= p.item_count() )
         return FB::variant();
 
     vlc::media media = p.get_media( idx );
@@ -334,7 +334,7 @@ ChimeraPtr JSPlaylistAPI::getPlugin()
 unsigned int JSPlaylistAPI::get_itemCount()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::playlist_player_core& p = plg->get_player();
 
     return p.item_count();
 }
@@ -342,7 +342,7 @@ unsigned int JSPlaylistAPI::get_itemCount()
 bool JSPlaylistAPI::get_isPlaying()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     return p.is_playing();
 }
@@ -350,7 +350,7 @@ bool JSPlaylistAPI::get_isPlaying()
 int JSPlaylistAPI::get_current()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::playlist_player_core& p = plg->get_player();
 
     return p.current_item();
 }
@@ -358,7 +358,7 @@ int JSPlaylistAPI::get_current()
 void JSPlaylistAPI::set_current( unsigned idx )
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::playlist_player_core& p = plg->get_player();
 
     p.set_current( idx );
 }
@@ -366,7 +366,7 @@ void JSPlaylistAPI::set_current( unsigned idx )
 unsigned JSPlaylistAPI::get_mode()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::playlist_player_core& p = plg->get_player();
 
     return p.get_playback_mode();
 }
@@ -377,7 +377,7 @@ void JSPlaylistAPI::set_mode( unsigned mode )
         return;
 
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::playlist_player_core& p = plg->get_player();
 
     return p.set_playback_mode( (vlc::playback_mode_e) mode );
 }
@@ -403,7 +403,7 @@ int JSPlaylistAPI::addWithOptions( const std::string& mrl,
 void JSPlaylistAPI::play()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     p.play();
 }
@@ -411,7 +411,7 @@ void JSPlaylistAPI::play()
 bool JSPlaylistAPI::playItem( unsigned int idx )
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::playlist_player_core& p = plg->get_player();
 
     return p.play( idx );
 }
@@ -419,7 +419,7 @@ bool JSPlaylistAPI::playItem( unsigned int idx )
 void JSPlaylistAPI::pause()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     p.pause();
 }
@@ -427,7 +427,7 @@ void JSPlaylistAPI::pause()
 void JSPlaylistAPI::togglePause()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     if ( p.is_playing() ) p.pause();
     else p.play();
@@ -436,7 +436,7 @@ void JSPlaylistAPI::togglePause()
 void JSPlaylistAPI::stop()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     p.stop();
 }
@@ -444,7 +444,7 @@ void JSPlaylistAPI::stop()
 void JSPlaylistAPI::next()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::playlist_player_core& p = plg->get_player();
 
     p.next();
 }
@@ -452,7 +452,7 @@ void JSPlaylistAPI::next()
 void JSPlaylistAPI::prev()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::playlist_player_core& p = plg->get_player();
 
     p.prev();
 }
@@ -460,7 +460,7 @@ void JSPlaylistAPI::prev()
 void JSPlaylistAPI::clear()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::playlist_player_core& p = plg->get_player();
 
     p.clear_items();
 }
@@ -468,7 +468,7 @@ void JSPlaylistAPI::clear()
 bool JSPlaylistAPI::removeItem( unsigned int idx )
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::playlist_player_core& p = plg->get_player();
 
     return p.delete_item( idx );
 }
@@ -476,7 +476,7 @@ bool JSPlaylistAPI::removeItem( unsigned int idx )
 void JSPlaylistAPI::advanceItem( unsigned idx, int count )
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::playlist_player_core& p = plg->get_player();
 
     p.advance_item( idx, count );
 }
@@ -496,7 +496,7 @@ ChimeraPtr JSSubtitleAPI::getPlugin()
 unsigned JSSubtitleAPI::get_trackCount()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     return p.subtitles().track_count();
 }
@@ -504,7 +504,7 @@ unsigned JSSubtitleAPI::get_trackCount()
 int JSSubtitleAPI::get_track()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     return p.subtitles().get_track();
 }
@@ -515,7 +515,7 @@ void JSSubtitleAPI::set_track( int idx )
         return;
 
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     return p.subtitles().set_track( idx );
 }
@@ -523,7 +523,7 @@ void JSSubtitleAPI::set_track( int idx )
 std::string JSSubtitleAPI::description( unsigned int sID )
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     std::string s_name;
 
@@ -551,7 +551,7 @@ std::string JSSubtitleAPI::description( unsigned int sID )
 int JSSubtitleAPI::get_delay()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     return p.subtitles().get_delay();
 }
@@ -559,7 +559,7 @@ int JSSubtitleAPI::get_delay()
 void JSSubtitleAPI::set_delay( int delay )
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     p.subtitles().set_delay( delay );
 }
@@ -615,7 +615,7 @@ ChimeraPtr JSMarqueeAPI::getPlugin()
 std::string JSMarqueeAPI::get_text()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     std::string text;
     char* t = libvlc_video_get_marquee_string( p.get_mp(), libvlc_marquee_Text );
@@ -628,7 +628,7 @@ std::string JSMarqueeAPI::get_text()
 void JSMarqueeAPI::set_text( const std::string& t )
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     libvlc_video_set_marquee_string( p.get_mp(), libvlc_marquee_Text, t.c_str() );
 }
@@ -648,7 +648,7 @@ void JSMarqueeAPI::set_position( const std::string& position )
 int JSMarqueeAPI::get_marquee_int( libvlc_video_marquee_option_t o )
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     return libvlc_video_get_marquee_int( p.get_mp(), o );
 }
@@ -656,7 +656,7 @@ int JSMarqueeAPI::get_marquee_int( libvlc_video_marquee_option_t o )
 void JSMarqueeAPI::set_marquee_int( libvlc_video_marquee_option_t o, int i )
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     libvlc_video_set_marquee_int( p.get_mp(), o, i );
 }
@@ -688,7 +688,7 @@ void JSLogoAPI::set_position( const std::string& position )
 void JSLogoAPI::file( const std::string& f )
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     libvlc_video_set_logo_string( p.get_mp(), libvlc_logo_file, f.c_str() );
 }
@@ -696,7 +696,7 @@ void JSLogoAPI::file( const std::string& f )
 int JSLogoAPI::get_logo_int( libvlc_video_logo_option_t o )
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     return libvlc_video_get_logo_int( p.get_mp(), o );
 }
@@ -704,7 +704,7 @@ int JSLogoAPI::get_logo_int( libvlc_video_logo_option_t o )
 void JSLogoAPI::set_logo_int( libvlc_video_logo_option_t o, int i )
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     libvlc_video_set_logo_int( p.get_mp(), o, i );
 }
@@ -724,7 +724,7 @@ ChimeraPtr JSDeinterlaceAPI::getPlugin()
 void JSDeinterlaceAPI::enable( const std::string& mode )
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     libvlc_video_set_deinterlace( p.get_mp(), mode.c_str() );
 }
@@ -732,7 +732,7 @@ void JSDeinterlaceAPI::enable( const std::string& mode )
 void JSDeinterlaceAPI::disable()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     libvlc_video_set_deinterlace( p.get_mp(), "" );
 }
@@ -752,7 +752,7 @@ ChimeraPtr JSVideoAPI::getPlugin()
 void JSVideoAPI::getVideoSize( unsigned* width, unsigned* height )
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     libvlc_media_t* media = libvlc_media_player_get_media( p.get_mp() );
     if( media && !libvlc_media_is_parsed( media ) )
@@ -802,7 +802,7 @@ unsigned int JSVideoAPI::get_height()
 unsigned JSVideoAPI::get_trackCount()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     return p.video().track_count();
 }
@@ -810,7 +810,7 @@ unsigned JSVideoAPI::get_trackCount()
 int JSVideoAPI::get_track()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     return p.video().get_track();
 }
@@ -821,7 +821,7 @@ void JSVideoAPI::set_track( int idx )
         return;
 
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     p.video().set_track( idx );
 }
@@ -850,7 +850,7 @@ void JSVideoAPI::toggleFullscreen()
 std::string JSVideoAPI::get_aspectRatio()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     std::string aspectRatio;
     char* ar = libvlc_video_get_aspect_ratio( p.get_mp() );
@@ -864,7 +864,7 @@ std::string JSVideoAPI::get_aspectRatio()
 void JSVideoAPI::set_aspectRatio( const std::string& ar )
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     libvlc_video_set_aspect_ratio( p.get_mp(), ar.c_str() );
 }
@@ -872,7 +872,7 @@ void JSVideoAPI::set_aspectRatio( const std::string& ar )
 std::string JSVideoAPI::get_crop()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     std::string crop;
     char* c = libvlc_video_get_crop_geometry( p.get_mp() );
@@ -886,7 +886,7 @@ std::string JSVideoAPI::get_crop()
 void JSVideoAPI::set_crop( const std::string& c )
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     libvlc_video_set_crop_geometry( p.get_mp(), c.c_str() );
 }
@@ -894,7 +894,7 @@ void JSVideoAPI::set_crop( const std::string& c )
 int JSVideoAPI::get_teletext()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     return libvlc_video_get_teletext( p.get_mp() );
 }
@@ -902,7 +902,7 @@ int JSVideoAPI::get_teletext()
 void JSVideoAPI::set_teletext( unsigned int t )
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     return libvlc_video_set_teletext( p.get_mp(), t );
 }
@@ -910,7 +910,7 @@ void JSVideoAPI::set_teletext( unsigned int t )
 void JSVideoAPI::toggleTeletext()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     libvlc_toggle_teletext( p.get_mp() );
 }
@@ -918,7 +918,7 @@ void JSVideoAPI::toggleTeletext()
 float JSVideoAPI::get_contrast()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     return p.video().get_contrast();
 }
@@ -926,7 +926,7 @@ float JSVideoAPI::get_contrast()
 void JSVideoAPI::set_contrast( float v )
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     return p.video().set_contrast( v );
 }
@@ -934,7 +934,7 @@ void JSVideoAPI::set_contrast( float v )
 float JSVideoAPI::get_brightness()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     return p.video().get_brightness();
 }
@@ -942,23 +942,23 @@ float JSVideoAPI::get_brightness()
 void JSVideoAPI::set_brightness( float v )
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     return p.video().set_brightness( v );
 }
 
-float JSVideoAPI::get_hue()
+int JSVideoAPI::get_hue()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     return p.video().get_hue();
 }
 
-void JSVideoAPI::set_hue( float v )
+void JSVideoAPI::set_hue( int v )
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     return p.video().set_hue( v );
 }
@@ -966,7 +966,7 @@ void JSVideoAPI::set_hue( float v )
 float JSVideoAPI::get_saturation()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     return p.video().get_saturation();
 }
@@ -974,7 +974,7 @@ float JSVideoAPI::get_saturation()
 void JSVideoAPI::set_saturation( float v )
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     return p.video().set_saturation( v );
 }
@@ -982,7 +982,7 @@ void JSVideoAPI::set_saturation( float v )
 float JSVideoAPI::get_gamma()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     return p.video().get_gamma();
 }
@@ -990,7 +990,7 @@ float JSVideoAPI::get_gamma()
 void JSVideoAPI::set_gamma( float v )
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     return p.video().set_gamma( v );
 }
@@ -1116,7 +1116,7 @@ std::string JSMediaDescAPI::get_mrl()
 bool JSMediaDescAPI::get_disabled()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::playlist_player_core& p = plg->get_player();
 
     int idx = p.find_media_index( get_media() );
     return idx < 0 ? false : p.is_item_disabled( idx );
@@ -1125,7 +1125,7 @@ bool JSMediaDescAPI::get_disabled()
 void JSMediaDescAPI::set_disabled( bool disabled )
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::playlist_player_core& p = plg->get_player();
 
     int idx = p.find_media_index( get_media() );
     if( idx >= 0 ) {
@@ -1136,7 +1136,7 @@ void JSMediaDescAPI::set_disabled( bool disabled )
 std::string JSMediaDescAPI::get_setting()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::playlist_player_core& p = plg->get_player();
 
     int idx = p.find_media_index( get_media() );
     if( idx >= 0 ) {
@@ -1149,7 +1149,7 @@ std::string JSMediaDescAPI::get_setting()
 void JSMediaDescAPI::set_setting( const std::string& setting )
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::playlist_player_core& p = plg->get_player();
 
     int idx = p.find_media_index( get_media() );
     if( idx >= 0 ) {
@@ -1163,7 +1163,7 @@ void JSMediaDescAPI::set_setting( const std::string& setting )
 vlc::media JSCurrentMediaDescAPI::get_media()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     return p.current_media();
 }
@@ -1220,7 +1220,7 @@ std::string JSRootAPI::get_vlcVersion()
 void JSRootAPI::play( const std::string& mrl )
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::playlist_player_core& p = plg->get_player();
 
     p.clear_items();
 
@@ -1233,7 +1233,7 @@ void JSRootAPI::play( const std::string& mrl )
 void JSRootAPI::pause()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     p.pause();
 }
@@ -1241,7 +1241,7 @@ void JSRootAPI::pause()
 void JSRootAPI::togglePause()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     if ( p.is_playing() ) p.pause();
     else p.play();
@@ -1250,7 +1250,7 @@ void JSRootAPI::togglePause()
 void JSRootAPI::stop()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::playlist_player_core& p = plg->get_player();
 
     p.stop();
     p.clear_items();
@@ -1259,7 +1259,7 @@ void JSRootAPI::stop()
 void JSRootAPI::toggleMute()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     p.audio().toggle_mute();
 }
@@ -1267,7 +1267,7 @@ void JSRootAPI::toggleMute()
 bool JSRootAPI::get_playing()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     return p.is_playing();
 }
@@ -1275,47 +1275,47 @@ bool JSRootAPI::get_playing()
 double JSRootAPI::get_length()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
-    return static_cast<double>( p.get_length() );
+    return static_cast<double>( p.playback().get_length() );
 }
 
 double JSRootAPI::get_position()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
-    return p.get_position();
+    return p.playback().get_position();
 }
 
 void JSRootAPI::set_position( double pos )
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
-    p.set_position( static_cast<float>( pos ) );
+    p.playback().set_position( static_cast<float>( pos ) );
 }
 
 double JSRootAPI::get_time()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
-    return static_cast<double>( p.get_time() );
+    return static_cast<double>( p.playback().get_time() );
 }
 
 void JSRootAPI::set_time( double t )
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
-    p.set_time( static_cast<libvlc_time_t>( t ) );
+    p.playback().set_time( static_cast<libvlc_time_t>( t ) );
 }
 
 unsigned int JSRootAPI::get_volume()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     return p.audio().get_volume();
 }
@@ -1323,7 +1323,7 @@ unsigned int JSRootAPI::get_volume()
 void JSRootAPI::set_volume( unsigned int v )
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     p.audio().set_volume( v );
 }
@@ -1347,7 +1347,7 @@ void JSRootAPI::set_bgcolor( const std::string& bg )
 unsigned JSRootAPI::get_state()
 {
     ChimeraPtr plg = getPlugin();
-    vlc_player& p = plg->get_player();
+    vlc::player_core& p = plg->get_player();
 
     return p.get_state();
 };
