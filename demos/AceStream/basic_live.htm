@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8"/>
+<title>Test page for Chimera Web Plugin (AceStream edition)</title>
+
+<script type="text/javascript">
+    function getByID(id)
+    {
+        return document.getElementById(id)
+    }
+    function plugin1()
+    {
+        return getByID('plugin_inst_1');
+    }
+</script>
+
+</head>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-47515513-1', 'rsatom.github.io');
+  ga('send', 'pageview');
+</script>
+
+<body>
+
+<h1>Chimera Web Plugin.</h1>
+
+<object id="plugin_inst_1" type="application/x-chimera-as-plugin" width="320" height="240">
+<param name="qmlsrc" value="basic_live.qml" />
+<param name="debug" value="true" />
+</object><br>
+
+<br>
+<b>Note: Requires AceStream edition of WebChimera Plugin</b>
+</body>
+
+</html>

@@ -1,0 +1,19 @@
+<html> <head>
+<script type="text/javascript" src="qrc:///qtwebchannel/qwebchannel.js"></script>
+<script type="text/javascript">
+function l() {
+    new QWebChannel(qt.webChannelTransport,
+        function(channel) {
+            setInterval(
+                function() {
+                    channel.objects.player.togglePause();
+                }, 3000 );
+        }
+    );
+};
+</script>
+</head>
+<body onload='l();'>
+test
+</body>
+</html>
