@@ -56,7 +56,6 @@
 							<RegistryValue Root="HKCU" Key="SOFTWARE\${PLUGIN_NAME}\${FBSTRING_PLUGIN_VERSION}" Name="OpenSSLUninstall" Type="string" Value="${FBSTRING_PLUGIN_VERSION}" KeyPath="yes" />
 							<File Id="libeay32.dll" Source="$(var.OPENSSL_ROOT_DIR)\libeay32.dll" />
 							<File Id="ssleay32.dll" Source="$(var.OPENSSL_ROOT_DIR)\ssleay32.dll" />
-							<File Id="msvcr90.dll" Source="$(var.OPENSSL_ROOT_DIR)\msvcr90.dll" />
 						</Component>
 
 						<Directory Id="lua" Name="lua">

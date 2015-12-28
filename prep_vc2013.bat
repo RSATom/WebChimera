@@ -4,4 +4,3 @@ set SAVE_CD=%CD%
 cd %THIS_BAT_PATH%\deps\firebreath\
 call prep2013.cmd "..\..\src" "..\..\build_win_vc2013" -Wno-dev
 cd %SAVE_CD%
-pause
